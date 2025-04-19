@@ -15,6 +15,7 @@
 \setmainfont{Linux Libertine O}
 \setsansfont{Linux Biolinum O}
 
+\graphicspath{{./fig/}}
 
 \setlength{\parindent}{0em}
 \addtolength{\parskip}{1ex}
@@ -135,7 +136,7 @@
         Category 
         \subsection{Category}
         \begin{definition*}[Category]
-            A category $\mathcal{C}$ is specified by the following:
+            A \emph{category} $\mathcal{C}$ is specified by the following:
             \begin{itemize}
                 \item 
                     a collection of objects $\textbf{obj}(\mathcal{C})$, whose elements are called $\mathcal{C}$-objects;
@@ -154,7 +155,7 @@
             satisfying the following properties:
             \begin{itemize}
                 \item 
-                    \textbf{(Unit Law)}
+                    \textbf{(Unit Laws)}
                     for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have:
                     \begin{equation} \label{law: unit}
                         \textbf{id}_Y \circ f = f = f \circ \textbf{id}_X
@@ -168,14 +169,41 @@
             \end{itemize}
 
             [Considering adding different notations for morphisms, composition, identity morphisms, etc.]
+
             [Considering adding a diagram for the definition of category]
+
             [Considering adding examples of categories]
-            
+
         \end{definition*}
 
+        Before other definitions, we need to get familiar with the notation of commutative diagrams.
+        \subsubsection{Commutative diagrams}
+        A \emph{diagram} in a category $\mathcal{C}$ is a directed graph whose vertices are $\mathcal{C}$-objects and whose edges are $\mathcal{C}$-morphisms.
+
+        A diagram is \emph{commutative} (or \emph{commutes}) if any two finite paths in the graph between any two vertices $X$ and $Y$ in the diagram determine the equal morphism $f \in \mathcal{C}{(X,Y)}$ under the composition of morphisms.
+
+        \begin{figure}[htb!]
+            \centering
+            \begin{minipage}{0.3\textwidth}
+                \centering
+                \includegraphics[width=0.8\textwidth]{2_2_1_unit_laws.pdf}
+                \caption{Commutative diagram for Unit Laws}
+                \label{fig: unit_laws}
+            \end{minipage} \hspace{0.2\textwidth}
+            \begin{minipage}{0.3\textwidth}
+                \centering
+                \includegraphics[width=0.8\textwidth]{2_2_1_associativity_law.pdf}
+                \caption{Commutative diagram for Associativity Law}
+                \label{fig: associativity_law}
+            \end{minipage}
+        \end{figure}
+
+        As examples of commutative diagrams, Figure \ref{fig: associativity_law} and Figure \ref{fig: unit_laws} are commutative diagrams for the unit laws and associativity law respectively. 
+
+        \subsection{Cartesian closed category}
         \subsection{Functor}
         \begin{definition*}[Functor]
-            A functor $F$ from a category $\mathcal{C}$ to a category $\mathcal{D}$ is specified by the following:
+            Given two categories $\mathcal{C}$ and $\mathcal{D}$, a \emph{functor} $F: \mathcal{C} \to \mathcal{D}$ is specified by:
             \begin{itemize}
                 \item 
                     a function 
@@ -208,42 +236,121 @@
         [Considering adding examples of functors: e.g. free functor, forgetful functor, etc.]
 
         \subsection{Natural transformation}
-        Before introducing the definition of natural transformation, we need to get familiar with the notation of commutative diagrams.
+        \begin{definition*}[Natural transformation]
 
+            Given two categories $\mathcal{C}$ and $\mathcal{D}$, and two functors $F,G: \mathcal{C} \to \mathcal{D}$, a \emph{natural transformation} $\theta : F \to G$ is a family of morphisms $\theta_X \in \mathcal{D}{(F(X),G(X))}$ for each $X \in \textbf{obj}(\mathcal{C})$ such that for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, the following diagram 
+            \begin{equation}
+                \vcenter{\hbox{\includegraphics[width=0.3\textwidth]{2_2_3_natural_transformation.pdf}}}
+                \label{cd: natural_transformation}
+            \end{equation}
+            
+            commutes in $\mathcal{D}$, i.e. the following equation holds:
+            \begin{equation} \label{law: natural_transformation}
+                G(f) \circ \theta_X = \theta_Y \circ F(f)
+            \end{equation}
 
-        \subsection{Presheaf}
+        \end{definition*}
+        [Considering adding examples of natural transformations]
 
         \subsection{Functor category}
-
-        \subsection{Cartesian closed category}
+        \begin{definition*}[Functor category]
+            Given two categories $\mathcal{C}$ and $\mathcal{D}$, the \emph{functor category} $\mathcal{D}^{\mathcal{C}}$ is the category satisfying the following:
+            \begin{itemize}
+                \item 
+                    the objects of $\mathcal{D}^{\mathcal{C}}$ are all functors $\mathcal{C} \to \mathcal{D}$;
+                \item 
+                    given two functors $F,G: \mathcal{C} \to \mathcal{D}$, the morphisms from $F$ to $G$ in $\mathcal{D}^{\mathcal{C}}$ are all natural transformations $\theta : F \to G$;
+                \item
+                    composition and identity morphisms in $\mathcal{D}^{\mathcal{C}}$ are defined as follows:
+                    \begin{itemize}
+                        \item 
+                            the identity morphism $\textbf{id}_F$ on $F$ is defined as $\theta_X = \textbf{id}_{F(X)}$ for all $X \in \textbf{obj}(\mathcal{C})$;
+                        \item
+                            the composition of two natural transformations $\theta : F \to G$ and $\phi : G \to H$ is defined as $(\phi \circ \theta)_X = \phi_X \circ \theta_X$ for all $X \in \textbf{obj}(\mathcal{C})$.
+                    \end{itemize}
+            \end{itemize}
+        \end{definition*}
 
         \subsection{Yoneda lemma}
+        \begin{definition*}[Yoneda functor]
+            Given a category $\mathcal{C}$, the \emph{Yoneda functor} $y: \mathcal{C} \to \mathcal{C}^{\mathcal{C}^{op}}$ is defined as follows:
+            \begin{itemize}
+                \item 
+                    for each $X \in \textbf{obj}(\mathcal{C})$, $y(X)$ is the functor $y(X): \mathcal{C}^{op} \to \textbf{Set}$ defined as:
+                    \[ y(X)(Y) = \mathcal{C}{(Y,X)} \]
+                    for all $Y \in \textbf{obj}(\mathcal{C})$;
+                \item
+                    for each $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $y(f)$ is the natural transformation $y(f): y(X) \to y(Y)$ defined as:
+                    \[ y(f)_Y = f \circ - : y(X)(Y) \to y(Y)(Y) \]
+                    for all $Y \in \textbf{obj}(\mathcal{C})$.
+                    In other words, $y(f)_Y$ is the function that takes an element $g \in y(X)(Y) = \mathcal{C}{(Y,X)}$ and returns the element $f \circ g \in y(Y)(Y) = \mathcal{C}{(Y,Y)}$.
+                    The function $y(f)_Y$ is a morphism in $\mathcal{C}^{\mathcal{C}^{op}}$ from $y(X)(Y)$ to $y(Y)(Y)$.
+                    In other words, $y(f)_Y$ is a morphism in $\mathcal{C}^{\mathcal{C}^{op}}$ from the functor $y(X)$ to the functor $y(Y)$.
+                    The morphism $y(f)_Y$ is defined for all $Y \in \textbf{obj}(\mathcal{C})$.
+                    In other words, $y(f)$ is a natural transformation from the functor $y(X)$ to the functor $y(Y)$.
+            \end{itemize}
+        \end{definition*}
 
-        \subsection{Functor categories}
+        \begin{definition*}[Yoneda lemma]
+            Given a category $\mathcal{C}$, the \emph{Yoneda lemma} states that for any functor $F: \mathcal{C} \to \textbf{Set}$, there is a natural isomorphism:
+            \[ \begin{aligned}
+                \textbf{Nat}(y(X),F) &\cong F(X) \\
+                \theta &\mapsto \theta_X
+            \end{aligned} \]
+            for all $X \in \textbf{obj}(\mathcal{C})$, where $\textbf{Nat}(y(X),F)$ is the set of natural transformations from the functor $y(X)$ to the functor $F$.
+        \end{definition*}
+
+        \subsection{Presheaf}
+        \begin{definition*}[Presheaf]
+            Given a category $\mathcal{C}$, a \emph{presheaf} on $\mathcal{C}$ is a functor $F: \mathcal{C}^{op} \to \textbf{Set}$.
+            A presheaf is a contravariant functor, which means that it reverses the direction of morphisms.
+            In other words, a presheaf is a functor that takes objects in $\mathcal{C}$ and assigns them sets, and takes morphisms in $\mathcal{C}$ and assigns them functions between the corresponding sets.
+            The presheaf $F$ is defined as follows:
+            \begin{itemize}
+                \item 
+                    for each $X \in \textbf{obj}(\mathcal{C})$, $F(X)$ is a set;
+                \item
+                    for each $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $F(f)$ is a function $F(Y) \to F(X)$.
+                    In other words, $F(f)$ is a function that takes an element $g \in F(Y)$ and returns the element $f \circ g \in F(X)$.
+                    The function $F(f)$ is a morphism in $\mathcal{C}^{op}$ from $F(Y)$ to $F(X)$.
+                    In other words, $F(f)$ is a morphism in $\mathcal{C}^{op}$ from the functor $F(Y)$ to the functor $F(X)$.
+                    The morphism $F(f)$ is defined for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$.
+                    In other words, $F(f)$ is a natural transformation from the functor $F(Y)$ to the functor $F(X)$.
+            \end{itemize}
+        \end{definition*}
+
+        \subsection{Cartesian closed structure in presheaf categories}
+        
+
 
     \section{Agda}
+        \subsection{Standard library}
 
-    \section{Requirement Analysis}
+        \subsection{Dependent Types}
+
+        \subsection{Curry-Howard Correspondence}
+
+        \subsection{Equality}
+
+        \subsection{Proof Example}
+        
+        \subsection{Interactive programming with holes}
+
+        \section{Requirement Analysis}
 
     \section{Tools Used}
     Completing the project is an iterative process. I used Git \cite{git} for version control, and work had been synchronised with a GitHub \cite{github} repository for backup.
 
     For the development environment, I tried both Emacs \cite{emacs} and Visual Studio Code \cite{vscode} with an agda-mode extension \cite{agda_mode} on Windows Subsystem for Linux with Ubuntu \cite{wsl_ubuntu} 22.04 LTS. I am more familiar with the snippet and syntax highlighting features of Visual Studio Code, so I used it for most of the development. 
-    
-    The interactive development of Agda with holes and type checking is very useful for debugging. 
 
     Code from the PLFA tutorial and Agda standard library \cite{agda_std} were used as references. 
 
-    \begin{enumerate}
-        \item 
-            Tools used:
-            git version control
+\chapter{Implementation}
 
-            have tried emacs
-            vscode interactive 
-    \end{enumerate}
+\chapter{Evaluation}
 
-
+\chapter{Conclusion}
 
     \printbibliography
+
 \end{document}
