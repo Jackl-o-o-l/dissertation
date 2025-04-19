@@ -1,0 +1,650 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{Agda}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{hash=ba7f3373bd143b65c456fdcbbb82879f}{%
+           family={Norell},
+           familyi={N\bibinitperiod},
+           given={Ulf},
+           giveni={U\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Savannah, GA, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{ba7f3373bd143b65c456fdcbbb82879f}
+      \strng{fullhash}{ba7f3373bd143b65c456fdcbbb82879f}
+      \strng{bibnamehash}{ba7f3373bd143b65c456fdcbbb82879f}
+      \strng{authorbibnamehash}{ba7f3373bd143b65c456fdcbbb82879f}
+      \strng{authornamehash}{ba7f3373bd143b65c456fdcbbb82879f}
+      \strng{authorfullhash}{ba7f3373bd143b65c456fdcbbb82879f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Dependently typed languages have for a long time been used to describe proofs about programs. Traditionally, dependent types are used mostly for stating and proving the properties of the programs and not in defining the programs themselves. An impressive example is the certified compiler by Leroy (2006) implemented and proved correct in Coq (Bertot and Castéran 2004).Recently there has been an increased interest in dependently typed programming, where the aim is to write programs that use the dependent type system to a much higher degree. In this way a lot of the properties that were previously proved separately can be integrated in the type of the program, in many cases adding little or no complexity to the definition of the program. New languages, such as Epigram (McBride and McKinna 2004), are being designed, and existing languages are being extended with new features to accomodate these ideas, for instance the work on dependently typed programming in Coq by Sozeau (2007).This talk gives an overview of the Agda programming language (Norell 2007), whose main focus is on dependently typed programming. Agda provides a rich set of inductive types with a powerful mechanism for pattern matching, allowing dependently typed programs to be written with minimal fuss. To read about programming in Agda, see the lecture notes from the Advanced Functional Programming summer school (Norell 2008) and the work by Oury and Swierstra (2008).In the talk a number of examples of interesting dependently typed programs chosen from the domain of programming language implementation are presented as they are implemented in Agda.}
+      \field{booktitle}{Proceedings of the 4th International Workshop on Types in Language Design and Implementation}
+      \field{isbn}{9781605584201}
+      \field{series}{TLDI '09}
+      \field{title}{Dependently typed programming in Agda}
+      \field{year}{2009}
+      \field{pages}{1\bibrangedash 2}
+      \range{pages}{2}
+      \verb{doi}
+      \verb 10.1145/1481861.1481862
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/1481861.1481862
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/1481861.1481862
+      \endverb
+      \keyw{dependent types,programming}
+    \endentry
+    \entry{Reynolds}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{hash=34c2c5f9ff95cb3442400d374c40483b}{%
+           family={Reynolds},
+           familyi={R\bibinitperiod},
+           given={John\bibnamedelima C.},
+           giveni={J\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Francisco, California, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{fullhash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{bibnamehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{authorbibnamehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{authornamehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{authorfullhash}{34c2c5f9ff95cb3442400d374c40483b}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In the early 80's Oles and Reynolds devised a semantic model of Algol-like languages using a category of functors from a category of store shapes to the category of predomains. Here we will show how a variant of this idea can be used to define the translation of an Algol-like language to intermediate code in a uniform way that avoids unnecessary temporary variables, provides control-flow translation of boolean expressions, permits online expansion of procedures, and minimizes the storage overhead of calls of closed procedures. The basic idea is to replace continuations by instruction sequences and store shapes by descriptions of the structure of the run-time stack.}
+      \field{booktitle}{Proceedings of the 22nd ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages}
+      \field{isbn}{0897916921}
+      \field{series}{POPL '95}
+      \field{title}{Using functor categories to generate intermediate code}
+      \field{year}{1995}
+      \field{pages}{25\bibrangedash 36}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1145/199448.199452
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/199448.199452
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/199448.199452
+      \endverb
+    \endentry
+    \entry{essence}{inbook}{}
+      \name{author}{1}{}{%
+        {{hash=34c2c5f9ff95cb3442400d374c40483b}{%
+           family={Reynolds},
+           familyi={R\bibinitperiod},
+           given={John\bibnamedelima C.},
+           giveni={J\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {USA}%
+      }
+      \list{publisher}{1}{%
+        {Birkhauser Boston Inc.}%
+      }
+      \strng{namehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{fullhash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{bibnamehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{authorbibnamehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{authornamehash}{34c2c5f9ff95cb3442400d374c40483b}
+      \strng{authorfullhash}{34c2c5f9ff95cb3442400d374c40483b}
+      \field{extraname}{2}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{ALGOL-like Languages, Volume 1}
+      \field{isbn}{0817638806}
+      \field{title}{The essence of ALGOL}
+      \field{year}{1997}
+      \field{pages}{67\bibrangedash 88}
+      \range{pages}{22}
+    \endentry
+    \entry{Oles_1}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=cd0dd48dee272c1153d3d9e855154144}{%
+           family={Oles},
+           familyi={O\bibinitperiod},
+           given={Frank\bibnamedelima Joseph},
+           giveni={F\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {USA}%
+      }
+      \list{publisher}{1}{%
+        {Syracuse University}%
+      }
+      \strng{namehash}{cd0dd48dee272c1153d3d9e855154144}
+      \strng{fullhash}{cd0dd48dee272c1153d3d9e855154144}
+      \strng{bibnamehash}{cd0dd48dee272c1153d3d9e855154144}
+      \strng{authorbibnamehash}{cd0dd48dee272c1153d3d9e855154144}
+      \strng{authornamehash}{cd0dd48dee272c1153d3d9e855154144}
+      \strng{authorfullhash}{cd0dd48dee272c1153d3d9e855154144}
+      \field{extraname}{1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Here we create a framework for handling the semantics of fully typed programming languages with imperative features, higher-order ALGOL-like procedures, block structure, and implicit conversions. Our approach involves the introduction of a new family of programming languages, the coercive typed (lamda)-calculi, denoted by L in the body of the dissertation. By appropriately choosing the linguistic constants (i.e. generators) of L, we can view phrases of variants of ALGOL as syntactically sugared phrases of L.This dissertation breaks into three parts. In the first part, consisting of the first chapter, we supply basic definitions and motivate the idea that functor categories arise naturally in the explanation of block structure and stack discipline. The second part, consisting of the next three chapters, is dedicated to the general theory of the semantics of the coercive typed (lamda)-calculus; the interplay between posets, algebras, and Cartesian closed categories is particularly intense here. The remaining four chapters make up the final part, in which we apply the general theory to give both direct and continuation semantics for desugared variants of ALGOL. To do so, it is necessary to show certain functor categories are Cartesian closed and to describe a category (SIGMA) of store shapes. An interesting novelty in the presentation of continuation semantics is the view that commands form a procedural, rather than a primitive, phrase type.}
+      \field{note}{AAI8301650}
+      \field{title}{A category-theoretic approach to the semantics of programming languages}
+      \field{type}{phdthesis}
+      \field{year}{1982}
+    \endentry
+    \entry{Oles_2}{article}{}
+      \name{author}{1}{}{%
+        {{hash=f1ee7f080630792a36e87012d61502f0}{%
+           family={Oles},
+           familyi={O\bibinitperiod},
+           given={Frank\bibnamedelima J.},
+           giveni={F\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{f1ee7f080630792a36e87012d61502f0}
+      \strng{fullhash}{f1ee7f080630792a36e87012d61502f0}
+      \strng{bibnamehash}{f1ee7f080630792a36e87012d61502f0}
+      \strng{authorbibnamehash}{f1ee7f080630792a36e87012d61502f0}
+      \strng{authornamehash}{f1ee7f080630792a36e87012d61502f0}
+      \strng{authorfullhash}{f1ee7f080630792a36e87012d61502f0}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{DAIMI Report Series}
+      \field{month}{1}
+      \field{number}{156}
+      \field{title}{Type Algebras, Functor Categories, and Block Structure}
+      \field{volume}{12}
+      \field{year}{1983}
+      \verb{doi}
+      \verb 10.7146/dpb.v12i156.7430
+      \endverb
+      \verb{urlraw}
+      \verb https://tidsskrift.dk/daimipb/article/view/7430
+      \endverb
+      \verb{url}
+      \verb https://tidsskrift.dk/daimipb/article/view/7430
+      \endverb
+    \endentry
+    \entry{CompCert}{article}{}
+      \name{author}{1}{}{%
+        {{hash=437df325bdf126ab15c356676db2c0d5}{%
+           family={Leroy},
+           familyi={L\bibinitperiod},
+           given={Xavier},
+           giveni={X\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{437df325bdf126ab15c356676db2c0d5}
+      \strng{fullhash}{437df325bdf126ab15c356676db2c0d5}
+      \strng{bibnamehash}{437df325bdf126ab15c356676db2c0d5}
+      \strng{authorbibnamehash}{437df325bdf126ab15c356676db2c0d5}
+      \strng{authornamehash}{437df325bdf126ab15c356676db2c0d5}
+      \strng{authorfullhash}{437df325bdf126ab15c356676db2c0d5}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper reports on the development and formal verification (proof of semantic preservation) of CompCert, a compiler from Clight (a large subset of the C programming language) to PowerPC assembly code, using the Coq proof assistant both for programming the compiler and for proving its correctness. Such a verified compiler is useful in the context of critical software and its formal verification: the verification of the compiler guarantees that the safety properties proved on the source code hold for the executable compiled code as well.}
+      \field{issn}{0001-0782}
+      \field{journaltitle}{Commun. ACM}
+      \field{month}{7}
+      \field{number}{7}
+      \field{title}{Formal verification of a realistic compiler}
+      \field{volume}{52}
+      \field{year}{2009}
+      \field{pages}{107\bibrangedash 115}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1145/1538788.1538814
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/1538788.1538814
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/1538788.1538814
+      \endverb
+    \endentry
+    \entry{CakeML}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=bc70ef110d75b816e145c90b654d84eb}{%
+           family={Kumar},
+           familyi={K\bibinitperiod},
+           given={Ramana},
+           giveni={R\bibinitperiod}}}%
+        {{hash=252a9f312905933ebf5c567099ef9b22}{%
+           family={Myreen},
+           familyi={M\bibinitperiod},
+           given={Magnus\bibnamedelima O.},
+           giveni={M\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=5f4f59c4ab0dd44df8053b075d95507e}{%
+           family={Norrish},
+           familyi={N\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=04b670f6d1f73db0f24b85e5b4562755}{%
+           family={Owens},
+           familyi={O\bibinitperiod},
+           given={Scott},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Diego, California, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{e8aff2214f88d231efb11d64093b1e9a}
+      \strng{fullhash}{66b580108ae317a12dfba92026dcc31e}
+      \strng{bibnamehash}{66b580108ae317a12dfba92026dcc31e}
+      \strng{authorbibnamehash}{66b580108ae317a12dfba92026dcc31e}
+      \strng{authornamehash}{e8aff2214f88d231efb11d64093b1e9a}
+      \strng{authorfullhash}{66b580108ae317a12dfba92026dcc31e}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We have developed and mechanically verified an ML system called CakeML, which supports a substantial subset of Standard ML. CakeML is implemented as an interactive read-eval-print loop (REPL) in x86-64 machine code. Our correctness theorem ensures that this REPL implementation prints only those results permitted by the semantics of CakeML. Our verification effort touches on a breadth of topics including lexing, parsing, type checking, incremental and dynamic compilation, garbage collection, arbitrary-precision arithmetic, and compiler bootstrapping.Our contributions are twofold. The first is simply in building a system that is end-to-end verified, demonstrating that each piece of such a verification effort can in practice be composed with the others, and ensuring that none of the pieces rely on any over-simplifying assumptions. The second is developing novel approaches to some of the more challenging aspects of the verification. In particular, our formally verified compiler can bootstrap itself: we apply the verified compiler to itself to produce a verified machine-code implementation of the compiler. Additionally, our compiler proof handles diverging input programs with a lightweight approach based on logical timeout exceptions. The entire development was carried out in the HOL4 theorem prover.}
+      \field{booktitle}{Proceedings of the 41st ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages}
+      \field{isbn}{9781450325448}
+      \field{series}{POPL '14}
+      \field{title}{CakeML: a verified implementation of ML}
+      \field{year}{2014}
+      \field{pages}{179\bibrangedash 191}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1145/2535838.2535841
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/2535838.2535841
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/2535838.2535841
+      \endverb
+      \keyw{ML,compiler bootstrapping,compiler verification,machine code verification,read-eval-print loop,verified garbage collection.,verified parsing,verified type checking}
+    \endentry
+    \entry{Lean4}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=04ffe79f369bf9f16e299fcf4f98e780}{%
+           family={Moura},
+           familyi={M\bibinitperiod},
+           given={Leonardo\bibnamedelima de},
+           giveni={L\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+        {{hash=f0eef0e3dc5cf232456ab1f5460e2ef4}{%
+           family={Ullrich},
+           familyi={U\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=0fb7e4129542e3e84c6115bee2a2b227}{%
+           family={Platzer},
+           familyi={P\bibinitperiod},
+           given={André},
+           giveni={A\bibinitperiod}}}%
+        {{hash=dd1c8983ac85362d3aa2a529a62b0620}{%
+           family={Sutcliffe},
+           familyi={S\bibinitperiod},
+           given={Geoff},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{fullhash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{bibnamehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{authorbibnamehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{authornamehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{authorfullhash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{editorbibnamehash}{1c4255ef6c180f317b8d14066696be61}
+      \strng{editornamehash}{1c4255ef6c180f317b8d14066696be61}
+      \strng{editorfullhash}{1c4255ef6c180f317b8d14066696be61}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Lean 4 is a reimplementation of the Lean interactive theorem prover (ITP) in Lean itself. It addresses many shortcomings of the previous versions and contains many new features. Lean 4 is fully extensible: users can modify and extend the parser, elaborator, tactics, decision procedures, pretty printer, and code generator. The new system has a hygienic macro system custom-built for ITPs. It contains a new typeclass resolution procedure based on tabled resolution, addressing significant performance problems reported by the growing user base. Lean 4 is also an efficient functional programming language based on a novel programming paradigm called functional but in-place. Efficient code generation is crucial for Lean users because many write custom proof automation procedures in Lean itself.}
+      \field{booktitle}{Automated Deduction -- CADE 28}
+      \field{isbn}{978-3-030-79876-5}
+      \field{title}{The Lean 4 Theorem Prover and Programming Language}
+      \field{year}{2021}
+      \field{pages}{625\bibrangedash 635}
+      \range{pages}{11}
+    \endentry
+    \entry{Dybjer}{misc}{}
+      \name{author}{3}{}{%
+        {{hash=089bb43a1278884db548621724a37492}{%
+           family={Castellan},
+           familyi={C\bibinitperiod},
+           given={Simon},
+           giveni={S\bibinitperiod}}}%
+        {{hash=dc5a6afa22ce6a610bb38bb46b9b05b9}{%
+           family={Clairambault},
+           familyi={C\bibinitperiod},
+           given={Pierre},
+           giveni={P\bibinitperiod}}}%
+        {{hash=bdd189d12ca169d8e07b3b5c936e668c}{%
+           family={Dybjer},
+           familyi={D\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{88dd83018aa35a16f319d2cee1a551a6}
+      \strng{fullhash}{88dd83018aa35a16f319d2cee1a551a6}
+      \strng{bibnamehash}{88dd83018aa35a16f319d2cee1a551a6}
+      \strng{authorbibnamehash}{88dd83018aa35a16f319d2cee1a551a6}
+      \strng{authornamehash}{88dd83018aa35a16f319d2cee1a551a6}
+      \strng{authorfullhash}{88dd83018aa35a16f319d2cee1a551a6}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LO}
+      \field{eprinttype}{arXiv}
+      \field{title}{Categories with Families: Unityped, Simply Typed, and Dependently Typed}
+      \field{year}{2020}
+      \verb{eprint}
+      \verb 1904.00827
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1904.00827
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1904.00827
+      \endverb
+    \endentry
+    \entry{Jacobs}{incollection}{}
+      \name{editor}{1}{}{%
+        {{hash=bf424ec58729aa7d35e9d57ec1c7d40d}{%
+           family={Jacobs},
+           familyi={J\bibinitperiod},
+           given={Bart},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{bf424ec58729aa7d35e9d57ec1c7d40d}
+      \strng{fullhash}{bf424ec58729aa7d35e9d57ec1c7d40d}
+      \strng{bibnamehash}{bf424ec58729aa7d35e9d57ec1c7d40d}
+      \strng{editorbibnamehash}{bf424ec58729aa7d35e9d57ec1c7d40d}
+      \strng{editornamehash}{bf424ec58729aa7d35e9d57ec1c7d40d}
+      \strng{editorfullhash}{bf424ec58729aa7d35e9d57ec1c7d40d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Publisher Summary This chapter discusses calculi with dependent types and describes them categorically. The chapter reviews a variation on simple-type theory (STT), that is, the dependent-type theory (DTT). Dependent types are widely used in mathematical practice, such as in algebra as a set (or type) of n * m matrices, with entries from the reals. There are two kinds of extensions of DTT: the logical extensions—leading to dependently typed predicate logic to reason about terms and types in DTT, and type-theoretic extensions—combining type dependency and polymorphism (forming the basis of proof tools like LEGO or COQ). One can define strong coproducts in DTT, analogous to strong sum and equality. The difference between weak and strong coproducts + lies in their elimination rules. In the weak case, there is a direct extension of the rule used in STT. The strong coproducts are more natural in DTT than the weak ones. The chapter discusses many examples of CCompCs.}
+      \field{booktitle}{Categorical logic and type theory}
+      \field{issn}{0049-237X}
+      \field{series}{Studies in Logic and the Foundations of Mathematics}
+      \field{title}{Chapter 10 First order dependent type theory}
+      \field{volume}{141}
+      \field{year}{1998}
+      \field{pages}{581\bibrangedash 644}
+      \range{pages}{64}
+      \verb{doi}
+      \verb https://doi.org/10.1016/S0049-237X(98)80040-2
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0049237X98800402
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0049237X98800402
+      \endverb
+    \endentry
+    \entry{Cat_Agda}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=fb82a243d9407e55411547fd02e4f039}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Jason\bibnamedelimb Z.\bibnamedelimi S.},
+           giveni={J\bibinitperiod\bibinitdelim Z\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=90e0ce01e5f496d374a631f92177ea75}{%
+           family={Carette},
+           familyi={C\bibinitperiod},
+           given={Jacques},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Virtual, Denmark}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{440b08df2767f3a07de1395537b9e893}
+      \strng{fullhash}{440b08df2767f3a07de1395537b9e893}
+      \strng{bibnamehash}{440b08df2767f3a07de1395537b9e893}
+      \strng{authorbibnamehash}{440b08df2767f3a07de1395537b9e893}
+      \strng{authornamehash}{440b08df2767f3a07de1395537b9e893}
+      \strng{authorfullhash}{440b08df2767f3a07de1395537b9e893}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The generality and pervasiveness of category theory in modern mathematics makes it a frequent and useful target of formalization. It is however quite challenging to formalize, for a variety of reasons. Agda currently (i.e. in 2020) does not have a standard, working formalization of category theory. We document our work on solving this dilemma. The formalization revealed a number of potential design choices, and we present, motivate and explain the ones we picked. In particular, we find that alternative definitions or alternative proofs from those found in standard textbooks can be advantageous, as well as "fit" Agda's type theory more smoothly. Some definitions regarded as equivalent in standard textbooks turn out to make different "universe level" assumptions, with some being more polymorphic than others. We also pay close attention to engineering issues so that the library integrates well with Agda's own standard library, as well as being compatible with as many of supported type theories in Agda as possible.}
+      \field{booktitle}{Proceedings of the 10th ACM SIGPLAN International Conference on Certified Programs and Proofs}
+      \field{isbn}{9781450382991}
+      \field{series}{CPP 2021}
+      \field{title}{Formalizing category theory in Agda}
+      \field{year}{2021}
+      \field{pages}{327\bibrangedash 342}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1145/3437992.3439922
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3437992.3439922
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3437992.3439922
+      \endverb
+      \keyw{formal mathematics,category theory,Agda}
+    \endentry
+    \entry{plfa}{book}{}
+      \name{author}{3}{}{%
+        {{hash=b4d861345944ddeeaf658a11c2f0f6a7}{%
+           family={Wadler},
+           familyi={W\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+        {{hash=aafe0fbc03f4cad5bf6120862f1dc7b9}{%
+           family={Kokke},
+           familyi={K\bibinitperiod},
+           given={Wen},
+           giveni={W\bibinitperiod}}}%
+        {{hash=fa7b77ef39f581211101f39213e32a97}{%
+           family={Siek},
+           familyi={S\bibinitperiod},
+           given={Jeremy\bibnamedelima G.},
+           giveni={J\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{db8fca859412fc842a381c09530cd24a}
+      \strng{fullhash}{db8fca859412fc842a381c09530cd24a}
+      \strng{bibnamehash}{db8fca859412fc842a381c09530cd24a}
+      \strng{authorbibnamehash}{db8fca859412fc842a381c09530cd24a}
+      \strng{authornamehash}{db8fca859412fc842a381c09530cd24a}
+      \strng{authorfullhash}{db8fca859412fc842a381c09530cd24a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{title}{Programming Language Foundations in {A}gda}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://plfa.inf.ed.ac.uk/20.08/
+      \endverb
+      \verb{url}
+      \verb https://plfa.inf.ed.ac.uk/20.08/
+      \endverb
+    \endentry
+    \entry{git}{misc}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-04-15}
+      \field{title}{Git}
+      \verb{urlraw}
+      \verb https://git-scm.com/
+      \endverb
+      \verb{url}
+      \verb https://git-scm.com/
+      \endverb
+    \endentry
+    \entry{github}{misc}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-04-15}
+      \field{title}{GitHub}
+      \verb{urlraw}
+      \verb https://github.com/
+      \endverb
+      \verb{url}
+      \verb https://github.com/
+      \endverb
+    \endentry
+    \entry{emacs}{misc}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-04-15}
+      \field{title}{GNU Emacs}
+      \verb{urlraw}
+      \verb https://www.gnu.org/software/emacs/
+      \endverb
+      \verb{url}
+      \verb https://www.gnu.org/software/emacs/
+      \endverb
+    \endentry
+    \entry{vscode}{misc}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-04-15}
+      \field{title}{Visual Studio Code}
+      \verb{urlraw}
+      \verb https://code.visualstudio.com/
+      \endverb
+      \verb{url}
+      \verb https://code.visualstudio.com/
+      \endverb
+    \endentry
+    \entry{agda_mode}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=e5b603f43170da2d56b7c24a3392f46f}{%
+           family={LUA},
+           familyi={L\bibinitperiod},
+           given={Ting-Gian},
+           giveni={T\bibinithyphendelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{e5b603f43170da2d56b7c24a3392f46f}
+      \strng{fullhash}{e5b603f43170da2d56b7c24a3392f46f}
+      \strng{bibnamehash}{e5b603f43170da2d56b7c24a3392f46f}
+      \strng{authorbibnamehash}{e5b603f43170da2d56b7c24a3392f46f}
+      \strng{authornamehash}{e5b603f43170da2d56b7c24a3392f46f}
+      \strng{authorfullhash}{e5b603f43170da2d56b7c24a3392f46f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-04-15}
+      \field{title}{agda-mode}
+      \verb{urlraw}
+      \verb https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode
+      \endverb
+      \verb{url}
+      \verb https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode
+      \endverb
+    \endentry
+    \entry{wsl_ubuntu}{misc}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-04-15}
+      \field{title}{Windows Subsystem for Linux (WSL)}
+      \verb{urlraw}
+      \verb https://ubuntu.com/desktop/wsl
+      \endverb
+      \verb{url}
+      \verb https://ubuntu.com/desktop/wsl
+      \endverb
+    \endentry
+    \entry{agda_std}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=124aed1302c63431439f072d1feff72f}{%
+           family={{The Agda Community}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{124aed1302c63431439f072d1feff72f}
+      \strng{fullhash}{124aed1302c63431439f072d1feff72f}
+      \strng{bibnamehash}{124aed1302c63431439f072d1feff72f}
+      \strng{authorbibnamehash}{124aed1302c63431439f072d1feff72f}
+      \strng{authornamehash}{124aed1302c63431439f072d1feff72f}
+      \strng{authorfullhash}{124aed1302c63431439f072d1feff72f}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Release date: 2024-09-07}
+      \field{title}{Agda Standard Library}
+      \field{version}{2.1.1}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://github.com/agda/agda-stdlib
+      \endverb
+      \verb{url}
+      \verb https://github.com/agda/agda-stdlib
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,0 +1,249 @@
+\documentclass[12pt,twoside,a4paper]{report}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[vmargin=2.5cm, hmargin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{stackengine}
+\usepackage{minitoc}
+\usepackage{amsthm}
+
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+
+\setlength{\parindent}{0em}
+\addtolength{\parskip}{1ex}
+
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{ref.bib}
+
+\theoremstyle{definition}
+\newtheorem*{definition*}{Definition}
+
+\newcounter{motivation}
+\renewcommand{\themotivation}{\Roman{motivation}}
+
+\newcommand{\motivation}[1]{%
+    \refstepcounter{motivation}%
+    \vspace{1.5em}%
+    \noindent\textbf{Motivation \themotivation.  #1}
+    \par
+    \expandafter\edef\csname savedmotivation\themotivation\endcsname{%
+        \noexpand\noindent\noexpand\textbf{Motivation \themotivation. #1}\noexpand\par
+    }%
+}
+
+\begin{document}
+
+\dominitoc
+
+\title{Using functor categories to generate intermediate code with Agda}
+\author{Jack Gao}
+\date{\today}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\chapter{Introduction}
+    \minitoc
+    An Algol-like language is a typed lambda calculus with store. In this dissertation, the source language is an Algol-like language with the following primitive types:
+    \begin{itemize}
+        \item 
+            \textbf{comm}: the commands
+        \item 
+            \textbf{intexp}: the integer expressions
+        \item 
+            \textbf{intacc}: the integer acceptors
+        \item 
+            \textbf{intvar}: the integer variables
+    \end{itemize}
+    and the set $\Theta$ of types is defined as follows:
+    \[ \Theta := \textbf{comm} \mid \textbf{intexp} \mid \textbf{intacc} \mid \textbf{intvar} \mid \Theta \to \Theta \]
+
+    [Considering adding an example of Algol-like language here]
+
+    The target language is an assembly-style intermediate language for a stack machine. It is defined with four stack-descriptor-indexed families of non-terminals: 
+    \begin{itemize}
+        \item 
+            $\langle\text{L}_{sd}\rangle$: lefthand sides
+        \item 
+            $\langle\text{S}_{sd}\rangle$: Simple righthand sides
+        \item
+            $\langle\text{R}_{sd}\rangle$: righthand sides
+        \item
+            $\langle\text{I}_{sd}\rangle$: instruction sequences
+    \end{itemize}
+
+    The grammer of the target language is specified in Chapter 3.
+
+    This dissertation presents an implementation of a compiler from the source language to the target language with Agda \cite{Agda}. This implementation is based on the work of Reynolds \cite{Reynolds}, who presented a denotational semantics of Algol-like languages in the form of a presheaf category over stack descriptors. The compiler is implemented as a functor from the source language to the target language. The implementation is verified with Agda's type system, which ensures that the generated code is well-typed and adheres to the semantics of both the source and target languages. This implementation proves and refines Reynolds' work, providing a practical example of how to use functor categories to generate intermediate code.
+
+    \section{Motivation and related work}
+        The denotational semantics of Algol-like languages can be structured as a presheaf category over stack descriptors, which has been shown by Reynolds \cite{essence} and Oles \cite{Oles_1} \cite{Oles_2}. By interpreting the source language into this category, where objects of the category represent instruction sequences parameterised by stack layouts, the semantic model directly yields a compiler. The mathematical structure of the compiler has been specified by Reynolds in his paper ``Using Functor Categories to Generate Intermediate Code'' \cite{Reynolds}.
+
+        This project is motivated and guided by the following:
+
+        \motivation{Implementation of the compiler}
+        Reynolds concluded that he did not have a proper dependently typed programming language in hand, so his compiler remained a partial function theoretically. We aim to provide a computer implementation of this theoretical framework in a dependently typed programming language.
+        
+
+        \motivation{Formal verification of the compiler}
+        The terms in Reynolds' work are also written by hand. Terms are complicated and error-prone, and it is difficult to verify the correctness of the terms. We aim to provide a formalisation of the terms in a proof assistant to verify the correctness of the terms.
+        
+        \motivation{Trend of verified compilers}
+        The rise of verified compilers including CompCert \cite{CompCert}, CakeML \cite{CakeML} reflects a broader trend toward trustworthy systems, where correctness proofs replace testing for critical guarantees. Like Lean 4 \cite{Lean4}, we leverage dependent types to internalise the verification of correctness of terms.
+
+    
+    \section{Language choice: Agda's advantages}
+        Agda \cite{Agda} is a dependently typed programming language and proof assistant. Agda captures the source language's intrinsic sytax with indexed families, which contains only well-typed terms. Therefore, it focuses on the correct programs and rules out the ill-typed nonsensical inputs. 
+
+        (Example of Agda)
+
+        Dependently typed languages provide a natural framework for expressing functor categories is proven both theoretically and practically. There have been dependent-type-theoretic model of categories \cite{Dybjer}, and it has been shown that functor categories arise naturally as dependent function types \cite{Jacobs}. A formalisation of Category Theory, including Cartesian Closed Categories, functors and presheaves has been developed in Agda by Hu and Caratte \cite{Cat_Agda}. Other proof assistants, such as Isabelle/Hol, does not have a dependently typed language structure, and thus cannot express the functor categories as naturally as Agda.
+
+        [Do I need a table for comparing other proof assistants and Agda?]
+
+    \section{Contributions}
+        Addressed the two motivations presented in 1.1 and contributed to the following:
+        \begin{quote}
+            \savedmotivationI
+            We implemented the compiler from the source language to the target language in Agda. 
+
+            \savedmotivationII
+            We formalised the terms in the source language and target language in Agda, and proved that the compiler is a functor from the source language to the target language. 
+
+            \savedmotivationIII
+            This implementation follows the trend of verified compilers, and provides a practical example of how to use functor categories to generate intermediate code.
+        \end{quote}
+
+
+\chapter{Preparation}
+    \minitoc
+
+    \section{Starting Point}
+    Prior to this project, I had no experience with Agda. Although I was aware of the open-source online tutorial \textit{Programming Language Foundations in Agda} (PLFA) \cite{plfa}, my preparation was limited to setting up the Agda environment on my laptop by following the ``Front Matter'' section of the tutorial.
+
+    I did not have any other experience with compiler beyond Part IB Compiler Construction Course. I had no prior exposure to category theory and type theory before the Part II lectures.
+
+    \section{Category theory background}
+        Category 
+        \subsection{Category}
+        \begin{definition*}[Category]
+            A category $\mathcal{C}$ is specified by the following:
+            \begin{itemize}
+                \item 
+                    a collection of objects $\textbf{obj}(\mathcal{C})$, whose elements are called $\mathcal{C}$-objects;
+                \item 
+                    for each $X, Y \in \textbf{obj}(\mathcal{C})$, a collection of morphisms $\mathcal{C}{(X,Y)}$, whose elements are called $\mathcal{C}$-morphisms from $X$ to $Y$;
+                \item 
+                    for each $X \in \textbf{obj}(\mathcal{C})$, an element $\textbf{id}_X \in \mathcal{C}{(X,X)}$ called the identity morphism on $X$;
+                \item 
+                    for each $X, Y, Z \in \textbf{obj}(\mathcal{C})$, a function 
+                    \[\begin{aligned}
+                        \mathcal{C}{(X,Y)} \times \mathcal{C}{(Y,Z)} &\to \mathcal{C}{(X,Z)} \\
+                        (f,g) &\mapsto g \circ f
+                    \end{aligned}\]
+                    called the composition of morphisms;
+            \end{itemize}
+            satisfying the following properties:
+            \begin{itemize}
+                \item 
+                    \textbf{(Unit Law)}
+                    for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have:
+                    \begin{equation} \label{law: unit}
+                        \textbf{id}_Y \circ f = f = f \circ \textbf{id}_X
+                    \end{equation}
+                \item
+                    \textbf{(Associativity Law)}
+                    for all $X, Y, Z, W \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, $h \in \mathcal{C}{(Z,W)}$, we have:
+                    \begin{equation} \label{law: associativity}
+                        h \circ (g \circ f) = (h \circ g) \circ f
+                    \end{equation}
+            \end{itemize}
+
+            [Considering adding different notations for morphisms, composition, identity morphisms, etc.]
+            [Considering adding a diagram for the definition of category]
+            [Considering adding examples of categories]
+            
+        \end{definition*}
+
+        \subsection{Functor}
+        \begin{definition*}[Functor]
+            A functor $F$ from a category $\mathcal{C}$ to a category $\mathcal{D}$ is specified by the following:
+            \begin{itemize}
+                \item 
+                    a function 
+                    \[\begin{aligned}
+                        \textbf{obj}(\mathcal{C}) &\to \textbf{obj}(\mathcal{D}) \\
+                        X &\mapsto F(X)
+                    \end{aligned}\]
+
+                \item 
+                    for each $X, Y \in \textbf{obj}(\mathcal{C})$, a function 
+                    \[\begin{aligned}
+                        \mathcal{C}{(X,Y)} &\to \mathcal{D}{(F(X),F(Y))} \\
+                        f &\mapsto F(f)
+                    \end{aligned}\]
+            \end{itemize}
+            satisfying the following properties:
+            \begin{itemize}
+                \item 
+                    for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have:
+                    \begin{equation} \label{law: functor_id}
+                        F(\textbf{id}_X) = \textbf{id}_{F(X)}
+                    \end{equation}
+                \item
+                    for all $X, Y, Z \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, we have:
+                    \begin{equation} \label{law: functor_comp}
+                        F(g \circ f) = F(g) \circ F(f)
+                    \end{equation}
+            \end{itemize}
+        \end{definition*}
+        [Considering adding examples of functors: e.g. free functor, forgetful functor, etc.]
+
+        \subsection{Natural transformation}
+        Before introducing the definition of natural transformation, we need to get familiar with the notation of commutative diagrams.
+
+
+        \subsection{Presheaf}
+
+        \subsection{Functor category}
+
+        \subsection{Cartesian closed category}
+
+        \subsection{Yoneda lemma}
+
+        \subsection{Functor categories}
+
+    \section{Agda}
+
+    \section{Requirement Analysis}
+
+    \section{Tools Used}
+    Completing the project is an iterative process. I used Git \cite{git} for version control, and work had been synchronised with a GitHub \cite{github} repository for backup.
+
+    For the development environment, I tried both Emacs \cite{emacs} and Visual Studio Code \cite{vscode} with an agda-mode extension \cite{agda_mode} on Windows Subsystem for Linux with Ubuntu \cite{wsl_ubuntu} 22.04 LTS. I am more familiar with the snippet and syntax highlighting features of Visual Studio Code, so I used it for most of the development. 
+    
+    The interactive development of Agda with holes and type checking is very useful for debugging. 
+
+    Code from the PLFA tutorial and Agda standard library \cite{agda_std} were used as references. 
+
+    \begin{enumerate}
+        \item 
+            Tools used:
+            git version control
+
+            have tried emacs
+            vscode interactive 
+    \end{enumerate}
+
+
+
+    \printbibliography
+\end{document}
