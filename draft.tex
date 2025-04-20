@@ -11,11 +11,12 @@
 \usepackage{stackengine}
 \usepackage{minitoc}
 \usepackage{amsthm}
+\usepackage{listings}
 
 \setmainfont{Linux Libertine O}
 \setsansfont{Linux Biolinum O}
 
-\graphicspath{{./fig/}}
+\graphicspath{{./fig/category_theory/}}
 
 \setlength{\parindent}{0em}
 \addtolength{\parskip}{1ex}
@@ -176,31 +177,135 @@
 
         \end{definition*}
 
-        Before other definitions, we need to get familiar with the notation of commutative diagrams.
-        \subsubsection{Commutative diagrams}
-        A \emph{diagram} in a category $\mathcal{C}$ is a directed graph whose vertices are $\mathcal{C}$-objects and whose edges are $\mathcal{C}$-morphisms.
+            \subsubsection{Opposite category}
+            The idea of opposite category is that if we have a category $\mathcal{C}$, we can reverse the direction of all morphisms in $\mathcal{C}$ to obtain a new category $\mathcal{C}^{\textbf{op}}$.
 
-        A diagram is \emph{commutative} (or \emph{commutes}) if any two finite paths in the graph between any two vertices $X$ and $Y$ in the diagram determine the equal morphism $f \in \mathcal{C}{(X,Y)}$ under the composition of morphisms.
+            \begin{definition*}[Opposite category]
+                Given a category $\mathcal{C}$, its \emph{opposite category} $\mathcal{C}^{\textbf{op}}$ is specified by:
+                \begin{itemize}
+                    \item 
+                        the objects of $\mathcal{C}^{\textbf{op}}$ are the same as those of $\mathcal{C}$;
+                    \item 
+                        for each $X, Y \in \textbf{obj}(\mathcal{C})$, the morphisms from $X$ to $Y$ in $\mathcal{C}^{\textbf{op}}$ are the morphisms from $Y$ to $X$ in $\mathcal{C}$;
+                    \item 
+                        the identity morphism on $X$ in $\mathcal{C}^{\textbf{op}}$ is the identity morphism on $X$ in $\mathcal{C}$;
+                    \item 
+                        the composition of morphisms in $\mathcal{C}^{\textbf{op}}$ is defined as the composition of morphisms in $\mathcal{C}$.
+                \end{itemize}
+            \end{definition*}
 
-        \begin{figure}[htb!]
-            \centering
-            \begin{minipage}{0.3\textwidth}
+                % \paragraph{The principle of duality}
+                % Whenever one defines a concept or proves a theorem in category theory $\mathcal{C}$, one can obtain another concept or theorem in the opposite category $\mathcal{C}^{\textbf{op}}$, called the \emph{dual} of the original concept or theorem, by reversing all arrows in the original concept or theorem.
+
+            The notation of commutative diagram is widely used in category theory as a convenient visual representation of the relationships between objects and morphisms in a category.
+            \subsubsection{Commutative diagrams}
+            A \emph{diagram} in a category $\mathcal{C}$ is a directed graph whose vertices are $\mathcal{C}$-objects and whose edges are $\mathcal{C}$-morphisms.
+
+            A diagram is \emph{commutative} (or \emph{commutes}) if any two finite paths in the graph between any two vertices $X$ and $Y$ in the diagram determine the equal morphism $f \in \mathcal{C}{(X,Y)}$ under the composition of morphisms.
+
+            \begin{figure}[htb!]
                 \centering
-                \includegraphics[width=0.8\textwidth]{2_2_1_unit_laws.pdf}
-                \caption{Commutative diagram for Unit Laws}
-                \label{fig: unit_laws}
-            \end{minipage} \hspace{0.2\textwidth}
-            \begin{minipage}{0.3\textwidth}
-                \centering
-                \includegraphics[width=0.8\textwidth]{2_2_1_associativity_law.pdf}
-                \caption{Commutative diagram for Associativity Law}
-                \label{fig: associativity_law}
-            \end{minipage}
-        \end{figure}
+                \begin{minipage}{0.3\textwidth}
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{unit_laws.pdf}
+                    \caption{Commutative diagram for Unit Laws}
+                    \label{fig: unit_laws}
+                \end{minipage} \hspace{0.2\textwidth}
+                \begin{minipage}{0.3\textwidth}
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{associativity_law.pdf}
+                    \caption{Commutative diagram for Associativity Law}
+                    \label{fig: associativity_law}
+                \end{minipage}
+            \end{figure}
 
-        As examples of commutative diagrams, Figure \ref{fig: associativity_law} and Figure \ref{fig: unit_laws} are commutative diagrams for the unit laws and associativity law respectively. 
+            As examples of commutative diagrams, Figure \ref{fig: associativity_law} and Figure \ref{fig: unit_laws} are commutative diagrams for the unit laws and associativity law respectively. 
 
+        \subsection{Isomorphism}
+        \begin{definition*}[Isomorphism]
+            Given a category $\mathcal{C}$, a $C$-morphism $f : X \to Y$ is called an \emph{isomorphism} if there exists a $C$-morphism $g : Y \to X$ such that the following diagram commutes:
+            \begin{equation}
+                \vcenter{\hbox{\includegraphics[width=0.3\textwidth]{isomorphism.pdf}}}
+                \label{cd: isomorphism}
+            \end{equation}
+            In other words, $f$ is an isomorphism if there exists a morphism $g$ such that $g \circ f = \textbf{id}_X$ and $f \circ g = \textbf{id}_Y$.
+
+            The morphism $g$ is uniquely determined by $f$ and is called the \emph{inverse} of $f$, denoted as $f^{-1}$.
+
+            Given two objects $X$ and $Y$ in a category $\mathcal{C}$, if there exists an isomorphism from $X$ to $Y$, we say that $X$ and $Y$ are \emph{isomorphic} in $\mathcal{C}$ and write $X \cong Y$.
+
+        \end{definition*}
+        [Considering adding examples of isomorphism]
+        
+
+        \subsection{Terminal object}
+        \begin{definition*}[Terminal object]
+            Given a category $\mathcal{C}$, an object $T \in \textbf{obj}(\mathcal{C})$ is called a \emph{terminal object} if for all $X \in \textbf{obj}(\mathcal{C})$, there exists a unique \textbf{C}-morphism $f : X \to T$.
+        \end{definition*}
+        [Considering adding examples of terminal object]
+
+        Terminal objects are unique up to isomorphism. In other words, we have
+        \begin{itemize}
+            \item 
+                if $T$ and $T'$ are both terminal objects in $\mathcal{C}$, then there exists a unique isomorphism $f : T \to T'$.
+            \item
+                if $T$ is a terminal object in $\mathcal{C}$ and $T \cong T'$, then $T'$ is also a terminal object in $\mathcal{C}$.
+        \end{itemize}
+
+        % \subsection{Initial object}
+        % \begin{definition*}[Initial object]
+        %     Given a category $\mathcal{C}$, an object $I \in \textbf{obj}(\mathcal{C})$ is called an \emph{initial object} if for all $X \in \textbf{obj}(\mathcal{C})$, there exists a unique \textbf{C}-morphism $f : I \to X$.
+        % \end{definition*}
+        % Initial object is dual to terminal object. By the principle of duality, initial objects are unique up to isomorphism. In other words, we have
+        % \begin{itemize}
+        %     \item 
+        %         if $I$ and $I'$ are both initial objects in $\mathcal{C}$, then there exists a unique isomorphism $f : I \to I'$.
+        %     \item
+        %         if $I$ is an initial object in $\mathcal{C}$ and $I \cong I'$, then $I'$ is also an initial object in $\mathcal{C}$.
+        % \end{itemize}
+
+        \subsection{Binary product}
+        \begin{definition*}[Binary product]
+            Given a category $\mathcal{C}$, the \emph{binary product} of two objects $X$ and $Y$ in $\mathcal{C}$ is specified by
+            \begin{itemize}
+                \item a $\mathcal{C}$-object $X \times Y$;
+                \item two $\mathcal{C}$-morphisms $\pi_1 : X \times Y \to X$ and $\pi_2 : X \times Y \to Y$ called the \emph{projections} of $X \times Y$;
+            \end{itemize}
+            such that for all $Z \in \textbf{obj}(\mathcal{C})$ and morphisms $f : Z \to X$ and $g : Z \to Y$, there exists a unique morphism $u : Z \to X \times Y$ such that the following diagram commutes in $\mathcal{C}$:
+            \begin{equation}
+                \vcenter{\hbox{\includegraphics[width=0.4\textwidth]{binary_product.pdf}}}
+                \label{cd: binary_product}
+            \end{equation}
+            The unique morphism $u$ is written as 
+            \[ \langle x, y \rangle : Z \to X \times Y \]
+            where $x = \pi_1 \circ u$ and $y = \pi_2 \circ u$.
+        \end{definition*}
+        It can be shown that the binary product is unique up to (unique) isomorphism.
+
+
+        \subsection{Exponential}
+        \begin{definition*}[Exponential]
+            Given a category $\mathcal{C}$ with binary products, the \emph{exponential} of two objects $X$ and $Y$ in $\mathcal{C}$ is specified by
+            \begin{itemize}
+                \item a $\mathcal{C}$-object $X \Rightarrow Y$;
+                \item a $\mathcal{C}$-morphism $\textbf{app} : (X \Rightarrow Y) \times X \to Y$ called the \emph{application} of $X \Rightarrow Y$;
+            \end{itemize}
+            such that for all $Z \in \textbf{obj}(\mathcal{C})$ and morphisms $f : Z \times X \to Y$, there exists a unique morphism $u : Z \to X \Rightarrow Y$ such that the following diagram commutes in $\mathcal{C}$:
+            \begin{equation}
+                \vcenter{\hbox{\includegraphics[width=0.4\textwidth]{exponential.pdf}}}
+                \label{cd: exponential}
+            \end{equation}
+            We write $\textbf{cur} f$ for the unique morphism $u$ such that $f = \textbf{app} \circ (\textbf{cur} f \times \textbf{id}_X)$, 
+            where $\textbf{cur} f$ is called the \emph{currying} of $f$.
+        \end{definition*}
+        It can be shown that the exponential is unique up to (unique) isomorphism.
+
+    
         \subsection{Cartesian closed category}
+        \begin{definition*}[Cartesian closed category]
+            A category $\mathcal{C}$ is called a \emph{Cartesian closed category} (ccc) if it has a terminal object, binary products and exponentials of any two objects.
+        \end{definition*}
+
         \subsection{Functor}
         \begin{definition*}[Functor]
             Given two categories $\mathcal{C}$ and $\mathcal{D}$, a \emph{functor} $F: \mathcal{C} \to \mathcal{D}$ is specified by:
@@ -240,7 +345,7 @@
 
             Given two categories $\mathcal{C}$ and $\mathcal{D}$, and two functors $F,G: \mathcal{C} \to \mathcal{D}$, a \emph{natural transformation} $\theta : F \to G$ is a family of morphisms $\theta_X \in \mathcal{D}{(F(X),G(X))}$ for each $X \in \textbf{obj}(\mathcal{C})$ such that for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, the following diagram 
             \begin{equation}
-                \vcenter{\hbox{\includegraphics[width=0.3\textwidth]{2_2_3_natural_transformation.pdf}}}
+                \vcenter{\hbox{\includegraphics[width=0.3\textwidth]{natural_transformation.pdf}}}
                 \label{cd: natural_transformation}
             \end{equation}
             
@@ -324,19 +429,29 @@
 
 
     \section{Agda}
-        \subsection{Standard library}
+        \subsection{Basic datatypes and pattern matching}
+        We will go through a simple example in PLFA \cite{plfa} to illustrate the basic datatypes and pattern matching in Agda.
 
         \subsection{Dependent Types}
 
-        \subsection{Curry-Howard Correspondence}
 
-        \subsection{Equality}
+        \subsection{Curry-Howard-Lambek correspondence}
 
-        \subsection{Proof Example}
+        \subsection{Equality, congruence and substitution}
+
+        % \subsection{Proof Example}
+
+        \subsection{Standard library}
         
         \subsection{Interactive programming with holes}
+        A feature of Agda is that it allows us to write programs with holes interatively. A hole is a placeholder for a term that we have not yet defined. By leaving holes in place of undefined terms, we can write programs that are incomplete but still type-check, and Agda's type checker will guide completion of the program: the context window displays inferred types of the holes, available variables and candidate terms with their types. Holes also supports case split and refinement, which means we can fill in a hole partially and split it into smaller holes. 
 
-        \section{Requirement Analysis}
+        [Considering adding examples of holes and case split, see https://plfa.github.io/Naturals/]
+
+        In my implementation, I used holes to write the terms in the compiler. The complex terms are incrementally filled and verified by interatively refining partial implementations, reducing post-hoc debugging and ensuring robustness.
+
+
+    \section{Requirement Analysis}
 
     \section{Tools Used}
     Completing the project is an iterative process. I used Git \cite{git} for version control, and work had been synchronised with a GitHub \cite{github} repository for backup.
