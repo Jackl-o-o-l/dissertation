@@ -29,6 +29,7 @@
 \newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
 
 \begin{document}
+\begin{prev}
 \begin{code}
 data ℕ : Set where
   zero : ℕ
@@ -38,4 +39,5 @@ data Vec (A : Set) : ℕ → Set where
   []  : Vec A zero
   _∷_ : ∀{n : ℕ} (x : A) (xs : Vec A n) → Vec A (suc n)
 \end{code}
+\end{prev}
 \end{document}

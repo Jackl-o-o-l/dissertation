@@ -29,6 +29,7 @@
 \newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
 
 \begin{document}
+\begin{prev}
 \begin{code}
 data _≡_ {A : Set} (x : A) : A → Set where
   refl : x ≡ x
@@ -45,4 +46,5 @@ cong f refl = refl
 subst : ∀ {A : Set} {x y : A} (P : A → Set) → x ≡ y → P x → P y
 subst P refl px = px
 \end{code}
+\end{prev}
 \end{document}
