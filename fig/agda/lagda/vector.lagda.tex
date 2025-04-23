@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{prev}
+\setlength\PreviewBorder{0pt}
+
+\usepackage{agda}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathabx}
+
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+
+\usepackage{newunicodechar}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{∸}{\ensuremath{\dotdiv}}
+\newunicodechar{∀}{\ensuremath{\forall}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
+\newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
+\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
+\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
+
+\begin{document}
+\begin{code}
+data ℕ : Set where
+  zero : ℕ
+  suc  : ℕ → ℕ
+
+data Vec (A : Set) : ℕ → Set where
+  []  : Vec A zero
+  _∷_ : ∀{n : ℕ} (x : A) (xs : Vec A n) → Vec A (suc n)
+\end{code}
+\end{document}

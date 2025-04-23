@@ -1,0 +1,96 @@
+\documentclass{article}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{prev}
+\setlength\PreviewBorder{0pt}
+
+\usepackage{agda}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{graphicx}
+
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+
+\usepackage{newunicodechar}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{∸}{\ensuremath{\dotdiv}}
+\newunicodechar{∀}{\ensuremath{\forall}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
+\newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
+\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
+\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
+\newcommand{\shortcolon}{\scalebox{1}[0.8]{:}}
+\newunicodechar{∷}{\ensuremath{\mathbin{\shortcolon\shortcolon}}}
+
+\begin{document}
+\begin{prev}
+\begin{code}%
+% \>[0]\AgdaKeyword{data}\AgdaSpace{}%
+% \AgdaDatatype{ℕ}\AgdaSpace{}%
+% \AgdaSymbol{:}\AgdaSpace{}%
+% \AgdaPrimitive{Set}\AgdaSpace{}%
+% \AgdaKeyword{where}\<%
+% \\
+% \>[0][@{}l@{\AgdaIndent{0}}]%
+% \>[2]\AgdaInductiveConstructor{zero}\AgdaSpace{}%
+% \AgdaSymbol{:}\AgdaSpace{}%
+% \AgdaDatatype{ℕ}\<%
+% \\
+% %
+% \>[2]\AgdaInductiveConstructor{suc}%
+% \>[7]\AgdaSymbol{:}\AgdaSpace{}%
+% \AgdaDatatype{ℕ}\AgdaSpace{}%
+% \AgdaSymbol{→}\AgdaSpace{}%
+% \AgdaDatatype{ℕ}\<%
+% \\
+% %
+% \\[\AgdaEmptyExtraSkip]%
+\>[0]\AgdaKeyword{data}\AgdaSpace{}%
+\AgdaDatatype{Vec}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{A}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaPrimitive{Set}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaDatatype{ℕ}\AgdaSpace{}%
+\AgdaSymbol{→}\AgdaSpace{}%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaKeyword{where}\<%
+\\
+\>[0][@{}l@{\AgdaIndent{0}}]%
+\>[2]\AgdaInductiveConstructor{[]}%
+\>[6]\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaDatatype{Vec}\AgdaSpace{}%
+\AgdaBound{A}\AgdaSpace{}%
+\AgdaInductiveConstructor{zero}\<%
+\\
+%
+\>[2]\AgdaOperator{\AgdaInductiveConstructor{\AgdaUnderscore{}∷\AgdaUnderscore{}}}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaSymbol{∀\{}\AgdaBound{n}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaDatatype{ℕ}\AgdaSymbol{\}}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{x}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaBound{A}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{xs}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaDatatype{Vec}\AgdaSpace{}%
+\AgdaBound{A}\AgdaSpace{}%
+\AgdaBound{n}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaSymbol{→}\AgdaSpace{}%
+\AgdaDatatype{Vec}\AgdaSpace{}%
+\AgdaBound{A}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaInductiveConstructor{suc}\AgdaSpace{}%
+\AgdaBound{n}\AgdaSymbol{)}\<%
+\end{code}
+\end{prev}
+\end{document}

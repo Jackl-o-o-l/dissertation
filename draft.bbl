@@ -525,9 +525,240 @@
       \verb https://plfa.inf.ed.ac.uk/20.08/
       \endverb
     \endentry
-    \entry{git}{misc}{}
+    \entry{basic_cat}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=82417a4f76230e108804a8ce467246af}{%
+           family={Leinster},
+           familyi={L\bibinitperiod},
+           given={Tom},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{82417a4f76230e108804a8ce467246af}
+      \strng{fullhash}{82417a4f76230e108804a8ce467246af}
+      \strng{bibnamehash}{82417a4f76230e108804a8ce467246af}
+      \strng{authorbibnamehash}{82417a4f76230e108804a8ce467246af}
+      \strng{authornamehash}{82417a4f76230e108804a8ce467246af}
+      \strng{authorfullhash}{82417a4f76230e108804a8ce467246af}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.CT}
+      \field{eprinttype}{arXiv}
+      \field{title}{Basic Category Theory}
+      \field{year}{2016}
+      \verb{eprint}
+      \verb 1612.09375
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1612.09375
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1612.09375
+      \endverb
+    \endentry
+    \entry{scott-lambda}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=cf3b63c577143e7ddf272693c8301798}{%
+           family={Scott},
+           familyi={S\bibinitperiod},
+           given={Dana\bibnamedelima S.},
+           giveni={D\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Oxford}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{cf3b63c577143e7ddf272693c8301798}
+      \strng{fullhash}{cf3b63c577143e7ddf272693c8301798}
+      \strng{bibnamehash}{cf3b63c577143e7ddf272693c8301798}
+      \strng{authorbibnamehash}{cf3b63c577143e7ddf272693c8301798}
+      \strng{authornamehash}{cf3b63c577143e7ddf272693c8301798}
+      \strng{authorfullhash}{cf3b63c577143e7ddf272693c8301798}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Relating Theories of the Lambda-Calculus: Dedicated to Professor H.~B. Curry on the Occasion of His 80th Birthday}
+      \field{title}{Relating Theories of the $\lambda$-Calculus}
+      \field{year}{1974}
+      \field{pages}{406}
+      \range{pages}{1}
+    \endentry
+    \entry{curry-howard}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{hash=c9327b4c1657a867218fda636a4f3623}{%
+           family={Griffin},
+           familyi={G\bibinitperiod},
+           given={Timothy\bibnamedelima G.},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Francisco, California, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{c9327b4c1657a867218fda636a4f3623}
+      \strng{fullhash}{c9327b4c1657a867218fda636a4f3623}
+      \strng{bibnamehash}{c9327b4c1657a867218fda636a4f3623}
+      \strng{authorbibnamehash}{c9327b4c1657a867218fda636a4f3623}
+      \strng{authornamehash}{c9327b4c1657a867218fda636a4f3623}
+      \strng{authorfullhash}{c9327b4c1657a867218fda636a4f3623}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The programming language Scheme contains the control construct call/cc that allows access to the current continuation (the current control context). This, in effect, provides Scheme with first-class labels and jumps. We show that the well-known formulae-as-types correspondence, which relates a constructive proof of a formula α to a program of type α, can be extended to a typed Idealized Scheme. What is surprising about this correspondence is that it relates classical proofs to typed programs. The existence of computationally interesting “classical programs” —programs of type α, where α holds classically, but not constructively — is illustrated by the definition of conjunctively, disjunctive, and existential types using standard classical definitions. We also prove that all evaluations of typed terms in Idealized Scheme are finite.}
+      \field{booktitle}{Proceedings of the 17th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages}
+      \field{isbn}{0897913434}
+      \field{series}{POPL '90}
+      \field{title}{A formulae-as-type notion of control}
+      \field{year}{1989}
+      \field{pages}{47\bibrangedash 58}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1145/96709.96714
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/96709.96714
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/96709.96714
+      \endverb
+    \endentry
+    \entry{lambek}{inproceedings}{}
+      \name{author}{1}{}{%
+        {{hash=dcdaa68018161d2153831584aabf501a}{%
+           family={Lambek},
+           familyi={L\bibinitperiod},
+           given={Joachim},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer-Verlag}%
+      }
+      \strng{namehash}{dcdaa68018161d2153831584aabf501a}
+      \strng{fullhash}{dcdaa68018161d2153831584aabf501a}
+      \strng{bibnamehash}{dcdaa68018161d2153831584aabf501a}
+      \strng{authorbibnamehash}{dcdaa68018161d2153831584aabf501a}
+      \strng{authornamehash}{dcdaa68018161d2153831584aabf501a}
+      \strng{authorfullhash}{dcdaa68018161d2153831584aabf501a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the Thirteenth Spring School of the LITP on Combinators and Functional Programming Languages}
+      \field{isbn}{3540171843}
+      \field{title}{Cartesian Closed Categories and Typed Lambda- calculi}
+      \field{year}{1985}
+      \field{pages}{136\bibrangedash 175}
+      \range{pages}{40}
+    \endentry
+    \entry{cat_context}{book}{}
+      \name{author}{1}{}{%
+        {{hash=45a94503b2898b54c4e429a46414d3ad}{%
+           family={Riehl},
+           familyi={R\bibinitperiod},
+           given={Emily},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Mineola, NY}%
+      }
+      \list{publisher}{1}{%
+        {Dover Publications}%
+      }
+      \strng{namehash}{45a94503b2898b54c4e429a46414d3ad}
+      \strng{fullhash}{45a94503b2898b54c4e429a46414d3ad}
+      \strng{bibnamehash}{45a94503b2898b54c4e429a46414d3ad}
+      \strng{authorbibnamehash}{45a94503b2898b54c4e429a46414d3ad}
+      \strng{authornamehash}{45a94503b2898b54c4e429a46414d3ad}
+      \strng{authorfullhash}{45a94503b2898b54c4e429a46414d3ad}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Category Theory in Context}
+      \field{year}{2016}
+      \verb{urlraw}
+      \verb https://math.jhu.edu/~eriehl/context.pdf
+      \endverb
+      \verb{url}
+      \verb https://math.jhu.edu/~eriehl/context.pdf
+      \endverb
+    \endentry
+    \entry{cat_lecture_notes}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=5f4c7561267bbc8da5d4b87470063342}{%
+           family={Pitts},
+           familyi={P\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=043d5c96c5db9d9fc4388fe324b620b4}{%
+           family={Fiore},
+           familyi={F\bibinitperiod},
+           given={Marcelo},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Computer Laboratory, University of Cambridge}%
+      }
+      \strng{namehash}{f09504a2cb38d04ada42873d262abe8b}
+      \strng{fullhash}{f09504a2cb38d04ada42873d262abe8b}
+      \strng{bibnamehash}{f09504a2cb38d04ada42873d262abe8b}
+      \strng{authorbibnamehash}{f09504a2cb38d04ada42873d262abe8b}
+      \strng{authornamehash}{f09504a2cb38d04ada42873d262abe8b}
+      \strng{authorfullhash}{f09504a2cb38d04ada42873d262abe8b}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Lecture notes, University of Cambridge}
+      \field{title}{Category Theory Lecture Notes}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://www.cl.cam.ac.uk/teaching/2425/CAT/CATLectureNotes.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.cl.cam.ac.uk/teaching/2425/CAT/CATLectureNotes.pdf
+      \endverb
+    \endentry
+    \entry{agda_std}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=124aed1302c63431439f072d1feff72f}{%
+           family={{The Agda Community}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{124aed1302c63431439f072d1feff72f}
+      \strng{fullhash}{124aed1302c63431439f072d1feff72f}
+      \strng{bibnamehash}{124aed1302c63431439f072d1feff72f}
+      \strng{authorbibnamehash}{124aed1302c63431439f072d1feff72f}
+      \strng{authornamehash}{124aed1302c63431439f072d1feff72f}
+      \strng{authorfullhash}{124aed1302c63431439f072d1feff72f}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Release date: 2024-09-07}
+      \field{title}{Agda Standard Library}
+      \field{version}{2.1.1}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://github.com/agda/agda-stdlib
+      \endverb
+      \verb{url}
+      \verb https://github.com/agda/agda-stdlib
+      \endverb
+    \endentry
+    \entry{git}{misc}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
       \field{title}{Git}
@@ -539,8 +770,8 @@
       \endverb
     \endentry
     \entry{github}{misc}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
       \field{title}{GitHub}
@@ -552,8 +783,8 @@
       \endverb
     \endentry
     \entry{emacs}{misc}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
       \field{title}{GNU Emacs}
@@ -565,8 +796,8 @@
       \endverb
     \endentry
     \entry{vscode}{misc}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
       \field{title}{Visual Studio Code}
@@ -615,33 +846,6 @@
       \endverb
       \verb{url}
       \verb https://ubuntu.com/desktop/wsl
-      \endverb
-    \endentry
-    \entry{agda_std}{misc}{}
-      \name{author}{1}{}{%
-        {{hash=124aed1302c63431439f072d1feff72f}{%
-           family={{The Agda Community}},
-           familyi={T\bibinitperiod}}}%
-      }
-      \strng{namehash}{124aed1302c63431439f072d1feff72f}
-      \strng{fullhash}{124aed1302c63431439f072d1feff72f}
-      \strng{bibnamehash}{124aed1302c63431439f072d1feff72f}
-      \strng{authorbibnamehash}{124aed1302c63431439f072d1feff72f}
-      \strng{authornamehash}{124aed1302c63431439f072d1feff72f}
-      \strng{authorfullhash}{124aed1302c63431439f072d1feff72f}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{note}{Release date: 2024-09-07}
-      \field{title}{Agda Standard Library}
-      \field{version}{2.1.1}
-      \field{year}{2024}
-      \verb{urlraw}
-      \verb https://github.com/agda/agda-stdlib
-      \endverb
-      \verb{url}
-      \verb https://github.com/agda/agda-stdlib
       \endverb
     \endentry
   \enddatalist
