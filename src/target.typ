@@ -19,21 +19,24 @@ record SD : Set where
 
 -- Stack descriptor operations    
 _+ₛ_ : SD → ℕ → SD
-⟨ S_f , S_d ⟩ +ₛ n = ⟨ S_f , S_d + n ⟩
+⟨ f , d ⟩ +ₛ n = ⟨ f , d + n ⟩
 
 _∸ₛ_ : SD → ℕ → SD
-⟨ S_f , S_d ⟩ ∸ₛ n = ⟨ S_f , S_d ∸ n ⟩
+⟨ f , d ⟩ ∸ₛ n = ⟨ f , d ∸ n ⟩
 
 -- _-ₛ_ : (sd : SD) → (n : ℕ) → n ≤ SD.d sd → SD
 -- (⟨ S_f , S_d ⟩ -ₛ n) p = ⟨ S_f , (S_d - n) p ⟩
 
-_-ₛ_ : (sd : SD) → (n : ℕ) → (p : n ≤ SD.d sd) → SD
-(⟨ S_f , S_d ⟩ -ₛ n) p = ⟨ S_f , (S_d - n) p ⟩
+_-ₛ_ : (sd : SD) → (n : ℕ) → (n≤d : n ≤ SD.d sd) → SD
+(⟨ f , d ⟩ -ₛ n) n≤d = ⟨ f , (d - n) n≤d ⟩
+
+-ₛ≡ : ∀ {f d d' n} → {n≤d' : n ≤ d'} → (d' - n) n≤d' ≡ d → ⟨ f , d ⟩ ≡ (⟨ f , d' ⟩ -ₛ n) n≤d'
+-ₛ≡ p rewrite p = refl
 
 -- Stack descriptor lexicographic ordering
 data _≤ₛ_ : SD → SD → Set where
-    <-f : ∀ {S_f S'_f S_d S'_d} → S_f < S'_f → ⟨ S_f , S_d ⟩ ≤ₛ ⟨ S'_f , S'_d ⟩
-    ≤-d : ∀ {S_f S_d S'_d} → S_d ≤ S'_d → ⟨ S_f , S_d ⟩ ≤ₛ ⟨ S_f , S'_d ⟩
+    <-f : ∀ {f f' d d'} → f < f' → ⟨ f , d ⟩ ≤ₛ ⟨ f' , d' ⟩
+    ≤-d : ∀ {f d d'} → d ≤ d' → ⟨ f , d ⟩ ≤ₛ ⟨ f , d' ⟩
 
 ≤ₛ-refl : ∀{sd : SD} → sd ≤ₛ sd
 ≤ₛ-refl {⟨ f , d ⟩} = ≤-d ≤-refl
@@ -44,6 +47,8 @@ data _≤ₛ_ : SD → SD → Set where
 ≤ₛ-trans (≤-d _) (<-f f'<f'') = <-f f'<f''
 ≤ₛ-trans (≤-d d≤d') (≤-d d'≤d'') = ≤-d (≤-trans d≤d' d'≤d'')
 
++ₛ→≤ₛ : ∀{sd : SD} → ∀{n : ℕ} → sd ≤ₛ sd +ₛ n
++ₛ→≤ₛ = ≤-d +→≤ 
 
 -- Operator
 data UnaryOp : Set where 
@@ -61,7 +66,7 @@ data RelOp : Set where
 -- Nonterminals
 -- Lefthand sides
 data L (sd : SD) : Set where
-    l-var : (sdᵛ : SD) → sdᵛ ≤ₛ sd ∸ₛ 1 → L sd
+    l-var : (sdᵛ : SD) → sdᵛ ≤ₛ sd → L sd
     l-sbrs : L sd
 
 -- Simple righthand sides
@@ -78,11 +83,11 @@ data R (sd : SD) : Set where
 -- Instruction sequences
 data I (sd : SD) : Set where
     stop : I sd
-    assign_inc : (δ : ℕ) → L (sd +ₛ δ) → R sd → I (sd +ₛ δ) → I sd
-    assign_dec : (δ : ℕ) → (p : δ ≤ SD.d sd) → L ((sd -ₛ δ) p) → R sd → I ((sd -ₛ δ) p)  → I sd
-    if-then-else_inc : (δ : ℕ) → S sd → RelOp → S sd → I (sd +ₛ δ) → I (sd +ₛ δ) → I sd
-    if-then-else_dec : (δ : ℕ) → (p : δ ≤ SD.d sd) → S sd → RelOp → S sd → I ((sd -ₛ δ) p) → I ((sd -ₛ δ) p) → I sd
-    adjustdisp_inc : (δ : ℕ) → I (sd +ₛ δ) → I sd
-    adjustdisp_dec : (δ : ℕ) → (p : δ ≤ SD.d sd) → I ((sd -ₛ δ) p) → I sd
-    popto : (sd' : SD) → sd' ≤ₛ sd → I sd' → I sd
+    assign-inc : (δ : ℕ) → L (sd +ₛ δ) → R sd → I (sd +ₛ δ) → I sd
+    assign-dec : (δ : ℕ) → (δ≤d : δ ≤ SD.d sd) → L ((sd -ₛ δ) δ≤d) → R sd → I ((sd -ₛ δ) δ≤d)  → I sd
+    if-then-else-inc : (δ : ℕ) → S sd → RelOp → S sd → I (sd +ₛ δ) → I (sd +ₛ δ) → I sd
+    if-then-else-dec : (δ : ℕ) → (δ≤d : δ ≤ SD.d sd) → S sd → RelOp → S sd → I ((sd -ₛ δ) δ≤d) → I ((sd -ₛ δ) δ≤d) → I sd
+    adjustdisp-inc : (δ : ℕ) → I (sd +ₛ δ) → I sd
+    adjustdisp-dec : (δ : ℕ) → (δ≤d : δ ≤ SD.d sd) → I ((sd -ₛ δ) δ≤d) → I sd
+    popto : (sd' : SD) → sd' ≤ₛ sd → I sd' → I sd 
 ```

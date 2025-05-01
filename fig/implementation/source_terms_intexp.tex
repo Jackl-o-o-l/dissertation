@@ -1,0 +1,24 @@
+\documentclass[border=0mm]{standalone}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{ebproof}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\begin{document}
+	\begin{prooftree}
+		\hypo{\mathbb{Z}}
+		\infer1[\textsc{Lit}]{Γ ⊢ \textsf{intexp}}
+	\end{prooftree}
+	\quad
+	\begin{prooftree}
+		\hypo{Γ ⊢ \textsf{intexp}}
+		\infer1[\textsc{Neg}]{Γ ⊢ \textsf{intexp}}
+	\end{prooftree}
+	\quad
+	\begin{prooftree}
+		\hypo{Γ ⊢ \textsf{intexp}}
+		\hypo{Γ ⊢ \textsf{intexp}}
+		\infer2[\textsc{Plus}]{Γ ⊢ \textsf{intexp}}
+	\end{prooftree}
+\end{document}

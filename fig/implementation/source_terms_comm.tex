@@ -1,0 +1,18 @@
+\documentclass[border=0mm]{standalone}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{ebproof}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\begin{document}
+	\begin{prooftree}
+		\infer0[Skip]{Γ ⊢ \textsf{comm}}
+	\end{prooftree}
+	\quad
+	\begin{prooftree}
+		\hypo{Γ ⊢ \textsf{comm}}
+		\hypo{Γ ⊢ \textsf{comm}}
+		\infer2[\textsc{Seq}]{Γ ⊢ \textsf{comm}}
+	\end{prooftree}
+\end{document}

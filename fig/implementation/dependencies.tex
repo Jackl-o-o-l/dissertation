@@ -1,0 +1,30 @@
+\documentclass[border=0mm]{standalone}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\begin{document}
+	\begin{tikzpicture}[
+		node distance=1cm and 1cm,
+		every node/.style={draw, rounded corners=2pt, minimum width=2.5cm, minimum height=1cm, align=center},
+		arrow/.style={-{Latex}, thick}
+	]
+	
+		% Nodes
+		\node (lib) {lib.agda};
+		\node[below left=of lib] (source) {source.agda};
+		\node[below right=of lib] (target) {target.agda};
+		\node[below left=of target] (compiler) {compiler.agda};
+		
+		% Arrows
+		\draw[arrow] (lib) -- (source);
+		\draw[arrow] (lib) -- (target);
+		\draw[arrow] (source) -- (compiler);
+		\draw[arrow] (target) -- (compiler);
+		\draw[arrow] (lib) -- (compiler);
+		
+	\end{tikzpicture}
+\end{document}

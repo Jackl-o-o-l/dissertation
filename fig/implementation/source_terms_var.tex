@@ -1,0 +1,13 @@
+\documentclass[border=0mm]{standalone}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{ebproof}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\begin{document}
+	\begin{prooftree}
+		\hypo{A \in Γ}
+		\infer1[\textsc{Var}]{Γ ⊢ A}
+	\end{prooftree}
+\end{document}

@@ -14,13 +14,17 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{xeCJK}
+\usepackage{dirtree}
+\usepackage{float}
+\usepackage{pdfpages}
+\usepackage{atbegshi}
 
 
 \setmainfont{Linux Libertine O}
 \setsansfont{Linux Biolinum O}
 \setCJKmainfont{Noto Serif CJK JP}
 
-\graphicspath{{./fig/category_theory/}{./fig/agda/lagda/latex/}}
+\graphicspath{{./fig/category_theory/}{./fig/agda/lagda/latex/}{./fig/implementation/}{./proposal/}{./code/}}
 
 \setlength{\parindent}{0em}
 \addtolength{\parskip}{1ex}
@@ -29,10 +33,16 @@
 \addbibresource{ref.bib}
 
 \theoremstyle{definition}
-\newtheorem*{definition*}{Definition}
+\newtheorem{definition}{Definition}
 
 \theoremstyle{definition}
-\newtheorem*{theorem*}{Theorem}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+\theoremstyle{definition}
+\newtheorem{prf}{Proof}
 
 \newcounter{motivation}
 \renewcommand{\themotivation}{\Roman{motivation}}
@@ -48,6 +58,7 @@
 }
 
 \newcommand{\secref}[1]{\S\ref{#1}}
+\newcommand{\chapref}[1]{\ref{#1}}
 
 \definecolor{mediumblue}{HTML}{0000CD}
 \definecolor{green}{HTML}{008B00}
@@ -61,92 +72,130 @@
 
 \newcommand{\yo}{\mathord{\text{\kern0.03em \scalebox{0.8}{よ}\kern0.03em}}}
 
+\newcommand{\bracket}[1]{\left\langle #1 \right\rangle}
+
 \begin{document}
 
 \dominitoc
 
-\title{Using functor categories to generate intermediate code with Agda}
-\author{Jack Gao}
-\date{\today}
-\maketitle
+\begin{titlepage}
+    \begin{flushright}
+        \textbf{\Large Jack Gao}
+    \end{flushright}
+    
+    \vspace{12em}
+
+    \begin{center}
+        \textbf{\huge Using functor categories to generate intermediate code with Agda}
+        \vspace{3em}
+
+        {\Large Computer Science Tripos - Part II Dissertation}
+        \vspace{1em}
+
+        {\Large Homerton College}
+        \vspace{1em}
+
+        {\large \today}
+    \end{center}
+\end{titlepage}
+
+\begin{titlepage}
+    \vspace*{5em}
+    \textbf{\LARGE Declaration of Originality}
+    \vspace{2em}
+
+    I, the candidate for Part II of the Computer Science Tripos with Blind Grading Number 2330G, hereby declare that this report and the work described in it are my own work, unaided except as may be specified below, and that the report does not contain material that has already been used to any substantial extent for a comparable purpose. In preparation of this report, I adhered to the Department of Computer Science and Technology AI Policy. I am content for my report to be made available to the students and staff of the University.
+    \vspace{1em}
+
+    Date: \today
+\end{titlepage}
+
+\begin{titlepage}
+    \vspace*{5em}
+    \textbf{\LARGE Proforma}
+    \vspace{2em}
+
+    \begin{tabular}{ll}
+        \textbf{Candidate Number:} & 2330G \\
+        \textbf{Title of Project:} & Using functor categories to generate intermediate code with Agda \\
+        \textbf{Examination} & Computer Science Tripos - Part II - 2025 \\
+        \textbf{Word-Count:} & [wordcount] \\
+        \textbf{Code line count:} & [linecount] \\
+        \textbf{Project Originator:} & Yulong Huang \\
+        \textbf{Project Supervisor:} & Yulong Huang and Yufeng Li \\
+    \end{tabular}
+
+    \vspace{2em}
+    \textbf{\Large Original Aims of the Project}
+    \vspace{1em}
+
+    \vspace{2em}
+    \textbf{\Large Work Completed}
+    \vspace{1em}
+
+    \vspace{2em}
+    \textbf{\Large Special Difficulties}
+    \vspace{1em}
+\end{titlepage}
 
 \tableofcontents
 \newpage
 
 \chapter{Introduction}
     \minitoc
-    An Algol-like language is a typed lambda calculus with store. In this dissertation, the source language is an Algol-like language with the following primitive types:
-    \begin{itemize}
-        \item 
-            \textbf{comm}: the commands
-        \item 
-            \textbf{intexp}: the integer expressions
-        \item 
-            \textbf{intacc}: the integer acceptors
-        \item 
-            \textbf{intvar}: the integer variables
-    \end{itemize}
-    and the set $\Theta$ of types is defined as follows:
-    \[ \Theta := \textbf{comm} \mid \textbf{intexp} \mid \textbf{intacc} \mid \textbf{intvar} \mid \Theta \to \Theta \]
+    Programming languages act as a bridge between human thought and machine execution. They exist in two complementary realms: the human realm, where intent is expressed through abstractions like variables and functions, and the machine realm, where low-level instructions are executed on hardware. 
 
-    [Considering adding an example of Algol-like language here]
+    Denotational semantics is related to the human realms. It provides a theoretical framework for defining the meaning of programming languages by interpreting them into mathematical objects. By formalising the denotational semantics of a programming language, we ensure that its abstraction align with human intuition. 
 
-    The target language is an assembly-style intermediate language for a stack machine. It is defined with four stack-descriptor-indexed families of non-terminals: 
-    \begin{itemize}
-        \item 
-            $\langle\text{L}_{sd}\rangle$: lefthand sides
-        \item 
-            $\langle\text{S}_{sd}\rangle$: Simple righthand sides
-        \item
-            $\langle\text{R}_{sd}\rangle$: righthand sides
-        \item
-            $\langle\text{I}_{sd}\rangle$: instruction sequences
-    \end{itemize}
+    Compilers are related to the machine realms. They are programs that translate high-level code into executable instructions, resolving abstractions into concrete operations like memory allocation and register management. Compilers are essential for turning human-written code into physical computation.
 
-    The grammer of the target language is specified in Chapter 3. [Add exact section/subsection here]
+    This project explores how the two process can be deeply connected by demonstrating how denotational semantics can directly generate a compiler. Simple Typed Lambda Calculus (STLC) is a well-studied programming language that serves as a foundation for many modern languages. It has denotational semantics in cartesian closed categories, shown by Lambek~\cite{lambek}. As a ccc, presheaf categories over store locations can be used to model STLC with stores, as shown by by Reynolds~\cite{essence} and Oles~\cite{Oles_1}~\cite{Oles_2}. Instead, Reynolds~\cite{Reynolds} presented a denotational semantics of STLC with stores in the form of a presheaf category over compiler states. By interpresting the source language into the presheaf category over stack descriptors, where objects of the category represent instruction sequences parameterised by stack layouts, the semantic model directly yields a compiler. 
+    
+    I implement this compiler for STLC with stores in a dependently typed programming language, Agda~\cite{Agda}. The compiler is a functor (structure-preserving map) from the source language's semantic domain to the target language's instruction set. The implementation is verified with Agda's type system, which ensures that the generated code is well-typed and adheres to the semantics of both the source and target languages.
 
-    This dissertation presents an implementation of a compiler from the source language to the target language with Agda~\cite{Agda}. This implementation is based on the work of Reynolds~\cite{Reynolds}, who presented a denotational semantics of Algol-like languages in the form of a presheaf category over stack descriptors. The compiler is implemented as a functor from the source language to the target language. The implementation is verified with Agda's type system, which ensures that the generated code is well-typed and adheres to the semantics of both the source and target languages. This implementation proves and refines Reynolds' work, providing a practical example of how to use functor categories to generate intermediate code.
+    This work both validates and refines Reynolds' theory, offering a concrete example of how category-theoretic semantics can generate intermediate code. The project also serves as a practical demonstration of the power of dependently typed programming languages can mechanise the link between theory and practice.
 
-    \section{Motivation and related work} \label{sec: motivation}
-        The denotational semantics of Algol-like languages can be structured as a presheaf category over stack descriptors, which has been shown by Reynolds~\cite{essence} and Oles~\cite{Oles_1}~\cite{Oles_2}. By interpreting the source language into this category, where objects of the category represent instruction sequences parameterised by stack layouts, the semantic model directly yields a compiler. The mathematical structure of the compiler has been specified by Reynolds in his paper ``Using Functor Categories to Generate Intermediate Code''~\cite{Reynolds}.
-
+    \section{Motivation} \label{sec: motivation}
         This project is motivated and guided by the following:
 
         \motivation{Implementation of the compiler}
-        Reynolds concluded that he did not have a proper dependently typed programming language in hand, so his compiler remained a partial function theoretically. We aim to provide a computer implementation of this theoretical framework in a dependently typed programming language.
+        Reynolds concluded that he did not have a proper dependently typed programming language in hand, so his compiler remained a partial function. I aim to provide a computer implementation of this theoretical framework in a dependently typed programming language.
         
 
         \motivation{Formal verification of the compiler}
-        The terms in Reynolds' work are also written by hand. Terms are complicated and error-prone, and it is difficult to verify the correctness of the terms. We aim to provide a formalisation of the terms in a proof assistant to verify the correctness of the terms.
+        Reynolds' work presented detailed definitions of denotational semantics of STLC with stores, which are complicated and error-prone. The rise of verified compilers including CompCert~\cite{CompCert}, CakeML~\cite{CakeML} reflects a broader trend toward trustworthy systems, where correctness proofs replace testing for critical guarantees. I aim to provide a formalisation of the definition in a proof assistant to verify the correctness of the given denotational semantics.
         
-        \motivation{Trend of verified compilers}
-        The rise of verified compilers including CompCert~\cite{CompCert}, CakeML~\cite{CakeML} reflects a broader trend toward trustworthy systems, where correctness proofs replace testing for critical guarantees. Like Lean 4~\cite{Lean4}, we leverage dependent types to internalise the verification of correctness of terms.
+        % \motivation{Trend of verified compilers}
+        % The rise of verified compilers including CompCert~\cite{CompCert}, CakeML~\cite{CakeML} reflects a broader trend toward trustworthy systems, where correctness proofs replace testing for critical guarantees. Like Lean 4~\cite{Lean4}, we leverage dependent types to internalise the verification of correctness of terms.
 
     
     \section{Language choice: Agda's advantages}
         Agda~\cite{Agda} is a dependently typed programming language and proof assistant. Agda captures the source language's intrinsic sytax with indexed families, which contains only well-typed terms. Therefore, it focuses on the correct programs and rules out the ill-typed nonsensical inputs. 
 
-        Dependently typed languages provide a natural framework for expressing functor categories is proven both theoretically and practically. There have been dependent-type-theoretic model of categories~\cite{Dybjer}, and it has been shown that functor categories arise naturally as dependent function types~\cite{Jacobs}. A formalisation of Category Theory, including cartesian closed categories, functors and presheaves has been developed in Agda by Hu and Caratte~\cite{Cat_Agda}. Other proof assistants, such as Isabelle/Hol, does not have a dependently typed language structure, and thus cannot express the functor categories as naturally as Agda. Agda also provides an interactive environment for writing and verifying programs, which will be further discussed in \secref{subsec: holes}.
+        Dependently typed languages provide a natural framework for expressing functor categories is proven both theoretically and practically. There have been dependent-type-theoretic model of categories~\cite{Dybjer}, and it has been shown that functor categories arise naturally as dependent function types~\cite{Jacobs}. A formalisation of Category Theory, including cartesian closed categories, functors and presheaves has been developed in Agda by Hu and Caratte~\cite{Cat_Agda}. Other proof assistants, such as Isabelle/Hol, does not have a dependently typed language structure, and thus cannot express the functor categories as naturally as Agda. 
 
-        [Do I need a table for comparing other proof assistants and Agda?]
+        Compared to other dependently typed languages, Agda is more balanced in terms of programming and proving. Its \og{\textsf{with}}-abstraction and \og{\textsf{rewrite}} construction allow for a more flexible and powerful way to define and manipulate terms. The \og{\textsf{with}}-abstraction allows us to inspect intermediate values in a term, which gives a refined view of a function's argument. The \og{\textsf{rewrite}} construction allows us to define new terms by expanding existing terms, which avoids rewriting proofs of similar structures.
 
+        Agda also provides an interactive environment for writing and verifying programs, which will be further discussed in \secref{subsec: holes}.
 
     \section{Contributions}
         Addressed the three motivations presented in \secref{sec: motivation} and contributed to the following:
         \begin{quote}
             \savedmotivationI
-            We implemented the compiler from the source language to the target language in Agda. 
+            I implemented the compiler from the source language to the target language in Agda. 
 
             \savedmotivationII
-            We formalised the terms in the source language and target language in Agda, and proved that the compiler is a functor from the source language to the target language. 
+            I formalised the terms in the source language and target language in Agda, and proved that the compiler is a functor from the source language to the target language. 
 
-            \savedmotivationIII
-            This implementation follows the trend of verified compilers, and provides a practical example of how to use functor categories to generate intermediate code.
+            % \savedmotivationIII
+            % This implementation follows the trend of verified compilers, and provides a practical example of how to use functor categories to generate intermediate code.
         \end{quote}
 
 
 \chapter{Preparation}
     \minitoc
+
+    For implementing the compiler, I need to understand the theoretical background of presheaves and functor categories that are used as the denotational semantics of the source language, and I need to understand Agda's dependent types to correctly express the dependent function space of presheaf exponentials. This chapter begins with my starting point and an introduction to category theory, followed by a brief overview of the dependently typed programming language Agda, and requirements analysis of the compiler.
 
     \section{Starting Point}
     Prior to this project, I had no experience with Agda. Although I was aware of the open-source online tutorial \textit{Programming Language Foundations in Agda} (PLFA)~\cite{plfa}, my preparation was limited to setting up the Agda environment on my laptop by following the ``Front Matter'' section of the tutorial.
@@ -154,17 +203,18 @@
     I did not have any other experience with compiler beyond Part IB Compiler Construction Course. I had no prior exposure to category theory and type theory before the Part II lectures.
 
 
-    \section{Category theory background} \label{sec: cat}
+    \section{Category theory} \label{sec: cat}
         Category theory provides a high-level abstraction from which we can reason about the structure of mathematical objects and their relationships. It provides us a ``bird's eye view'' of the mathematics which enable us to spot patterns that are difficult to see in the details~\cite{basic_cat}. More specifically, it provides a ``purer'' view of functions that is not derived from sets~\cite{scott-lambda}. Compared to set theory which is ``element-oriented'', category theory is ``function-oriented'' and ``morphism-oriented''. We understand structures not via elements but by how they transform into each other. 
 
-        Notation in category theory is similar to that in set theory and type theory. For example, $A, B, \dots$ are used to denote objects, sets, or types, and arrows are used to denote morphisms or functions (e.g.\ $A \to B$). There is a deeper connection between category theory and type theory. Curry-Howard correspondence~\cite{curry-howard} states that there is a correspondence between logic and type theory, where propositions correspond to types and proofs correspond to terms. This correspondence was later extended by Joachim Lambek, who showed that cartesian closed categories provide a natural semantic setting for the simply typed lambda calculus~\cite{lambek}. Under this perspective, types become objects in a category, and programs correspond to morphisms. We will further explore this connection in \secref{subsec: curry-howard-lambek}.
+        Notation in category theory is similar to that in set theory and type theory. For example, $A, B, \dots$ are used to denote objects, sets, or types, and arrows are used to denote morphisms or functions (e.g.\ $A \to B$). There is a deeper connection between category theory and type theory, which will 
+        be discussed in \secref{subsec: curry-howard-lambek}. 
 
 
         The following is a brief introduction to the basic concepts of category theory, which is based on the work of Leinster~\cite{basic_cat}, 
         Riehl~\cite{cat_context}, and the lecture notes of Part II Category Theory by Andrew Pitts and Marcelo Fiore~\cite{cat_lecture_notes}.
 
         \subsection{Category}
-        \begin{definition*}[Category]
+        \begin{definition}[Category]
             A \emph{category} $\mathcal{C}$ is specified by the following:
             \begin{itemize}
                 \item 
@@ -196,25 +246,49 @@
                         h \circ (g \circ f) = (h \circ g) \circ f
                     \end{equation}
             \end{itemize}
-        \end{definition*}
+        \end{definition}
 
-        An example of category is the category of sets, denoted as $\mathcal{Set}$, specifed by:
-        \begin{itemize}
-            \item 
-                the objects of $\mathcal{Set}$ are a fixed universe of sets;
-            \item
-                for each $X, Y \in \textbf{obj}(\mathcal{Set})$, the morphisms from $X$ to $Y$ in $\mathcal{Set}$ are the functions from $X$ to $Y$;
-            \item
-                the identity morphism on $X$ in $\mathcal{Set}$ is the identity function on $X$;
-            \item
-                the composition of morphisms in $\mathcal{Set}$ is defined as the composition of functions.
-        \end{itemize}
-        Associativity law and unit laws are satisfied in $\mathcal{Set}$, since the composition of functions is associative and the identity function compose with any function is the function itself.
+        \begin{example}[$\mathcal{Set}$]
+            An example of category is the category of sets, denoted as $\mathcal{Set}$, specifed by:
+            \begin{itemize}
+                \item 
+                    the objects of $\mathcal{Set}$ are a fixed universe of sets;
+                \item
+                    for each $X, Y \in \textbf{obj}(\mathcal{Set})$, the morphisms from $X \to Y$ in $\mathcal{Set}$ are the functions $X \to Y$;
+                \item
+                    the identity morphism on $X$ in $\mathcal{Set}$ is the identity function on $X$;
+                \item
+                    the composition of morphisms in $\mathcal{Set}$ is defined as the composition of functions.
+            \end{itemize}
+            Associativity law and unit laws are satisfied in $\mathcal{Set}$, since the composition of functions is associative and the identity function compose with any function is the function itself.
+        \end{example}
+
+        \begin{example}[$\mathcal{Poset}$]
+            Another example of category is the category of posets, denoted as $\mathcal{Poset}$, specified by:
+            \begin{itemize}
+                \item 
+                    the objects of $\mathcal{Poset}$ are a fixed universe of posets, which is a set $P$ with a binary relation $\subseteq$ that is 
+                    \begin{itemize}
+                        \item reflexive: $\forall x \in P, x \subseteq x$;
+                        \item transitive: $\forall x, y, z \in P, x \subseteq y \land y \subseteq z \implies x \subseteq z$;
+                        \item antisymmetric: $\forall x, y \in P, x \subseteq y \land y \subseteq x \implies x = y$.
+                    \end{itemize}
+                \item
+                    for each $X, Y \in \textbf{obj}(\mathcal{Poset})$, the morphisms from $X$ to $Y$ in $\mathcal{Poset}$ are the monotone (order-preserving) functions from $X$ to $Y$;
+                \item
+                    the identity morphism on $X$ in $\mathcal{Poset}$ is the identity function on $X$;
+                \item
+                    the composition of morphisms in $\mathcal{Poset}$ is defined as the composition of functions.
+            \end{itemize}
+            Associativity law and unit laws are satisfied in $\mathcal{Poset}$, since the set of monotone functions contains identity functions and is closed under composition.
+
+            $\mathcal{Poset}$ is used later for stack descriptors in the denotational semantics of the source language.
+        \end{example}
 
             \subsubsection{Opposite category}
             The idea of opposite category is that if we have a category $\mathcal{C}$, we can reverse the direction of all morphisms in $\mathcal{C}$ to obtain a new category $\mathcal{C}^{\textbf{op}}$.
 
-            \begin{definition*}[Opposite category]
+            \begin{definition}[Opposite category]
                 Given a category $\mathcal{C}$, its \emph{opposite category} $\mathcal{C}^{\textbf{op}}$ is specified by:
                 \begin{itemize}
                     \item 
@@ -226,7 +300,7 @@
                     \item 
                         the composition of morphisms in $\mathcal{C}^{\textbf{op}}$ is defined as the composition of morphisms in $\mathcal{C}$.
                 \end{itemize}
-            \end{definition*}
+            \end{definition}
 
                 % \paragraph{The principle of duality}
                 % Whenever one defines a concept or proves a theorem in category theory $\mathcal{C}$, one can obtain another concept or theorem in the opposite category $\mathcal{C}^{\textbf{op}}$, called the \emph{dual} of the original concept or theorem, by reversing all arrows in the original concept or theorem.
@@ -237,7 +311,7 @@
 
             A diagram is \emph{commutative} (or \emph{commutes}) if any two finite paths in the graph between any two vertices $X$ and $Y$ in the diagram determine the equal morphism $f \in \mathcal{C}{(X,Y)}$ under the composition of morphisms.
 
-            \begin{figure}[htb!]
+            \begin{figure}[H]
                 \centering
                 \begin{minipage}{0.3\textwidth}
                     \centering
@@ -257,7 +331,7 @@
 
         
         \subsection{Isomorphism}
-        \begin{definition*}[Isomorphism]
+        \begin{definition}[Isomorphism]
             Given a category $\mathcal{C}$, a $C$-morphism $f : X \to Y$ is called an \emph{isomorphism} if there exists a $C$-morphism $g : Y \to X$ such that the following diagram commutes:
             \begin{equation}
                 \vcenter{\hbox{\includegraphics[width=0.3\textwidth]{isomorphism.pdf}}}
@@ -269,83 +343,99 @@
 
             Given two objects $X$ and $Y$ in a category $\mathcal{C}$, if there exists an isomorphism from $X$ to $Y$, we say that $X$ and $Y$ are \emph{isomorphic} in $\mathcal{C}$ and write $X \cong Y$.
 
-        \end{definition*}
+        \end{definition}
 
-        [Considering adding examples of isomorphism]
-        
-        
-        \subsection{Terminal object}
-        \begin{definition*}[Terminal object]
-            Given a category $\mathcal{C}$, an object $T \in \textbf{obj}(\mathcal{C})$ is called a \emph{terminal object} if for all $X \in \textbf{obj}(\mathcal{C})$, there exists a unique \textbf{C}-morphism $f : X \to T$.
-        \end{definition*}
-        [Considering adding examples of terminal object]
-
-        Terminal objects are unique up to isomorphism. In other words, we have
-        \begin{itemize}
-            \item 
-                if $T$ and $T'$ are both terminal objects in $\mathcal{C}$, then there exists a unique isomorphism $f : T \to T'$.
-            \item
-                if $T$ is a terminal object in $\mathcal{C}$ and $T \cong T'$, then $T'$ is also a terminal object in $\mathcal{C}$.
-        \end{itemize}
-
-        % \subsection{Initial object}
-        % \begin{definition*}[Initial object]
-        %     Given a category $\mathcal{C}$, an object $I \in \textbf{obj}(\mathcal{C})$ is called an \emph{initial object} if for all $X \in \textbf{obj}(\mathcal{C})$, there exists a unique \textbf{C}-morphism $f : I \to X$.
-        % \end{definition*}
-        % Initial object is dual to terminal object. By the principle of duality, initial objects are unique up to isomorphism. In other words, we have
-        % \begin{itemize}
-        %     \item 
-        %         if $I$ and $I'$ are both initial objects in $\mathcal{C}$, then there exists a unique isomorphism $f : I \to I'$.
-        %     \item
-        %         if $I$ is an initial object in $\mathcal{C}$ and $I \cong I'$, then $I'$ is also an initial object in $\mathcal{C}$.
-        % \end{itemize}
-
-        
-        \subsection{Binary product}
-        \begin{definition*}[Binary product]
-            Given a category $\mathcal{C}$, the \emph{binary product} of two objects $X$ and $Y$ in $\mathcal{C}$ is specified by
-            \begin{itemize}
-                \item a $\mathcal{C}$-object $X \times Y$;
-                \item two $\mathcal{C}$-morphisms $\pi_1 : X \times Y \to X$ and $\pi_2 : X \times Y \to Y$ called the \emph{projections} of $X \times Y$;
-            \end{itemize}
-            such that for all $Z \in \textbf{obj}(\mathcal{C})$ and morphisms $f : Z \to X$ and $g : Z \to Y$, there exists a unique morphism $u : Z \to X \times Y$ such that the following diagram commutes in $\mathcal{C}$:
-            \begin{equation}
-                \vcenter{\hbox{\includegraphics[width=0.4\textwidth]{binary_product.pdf}}}
-                \label{cd: binary_product}
-            \end{equation}
-            The unique morphism $u$ is written as 
-            \[ \langle x, y \rangle : Z \to X \times Y \]
-            where $x = \pi_1 \circ u$ and $y = \pi_2 \circ u$.
-        \end{definition*}
-        It can be shown that the binary product is unique up to (unique) isomorphism.
-
-
-        \subsection{Exponential}
-        \begin{definition*}[Exponential]
-            Given a category $\mathcal{C}$ with binary products, the \emph{exponential} of two objects $X$ and $Y$ in $\mathcal{C}$ is specified by
-            \begin{itemize}
-                \item a $\mathcal{C}$-object $X \Rightarrow Y$;
-                \item a $\mathcal{C}$-morphism $\textbf{app} : (X \Rightarrow Y) \times X \to Y$ called the \emph{application} of $X \Rightarrow Y$;
-            \end{itemize}
-            such that for all $Z \in \textbf{obj}(\mathcal{C})$ and morphisms $f : Z \times X \to Y$, there exists a unique morphism $u : Z \to X \Rightarrow Y$ such that the following diagram commutes in $\mathcal{C}$:
-            \begin{equation}
-                \vcenter{\hbox{\includegraphics[width=0.4\textwidth]{exponential.pdf}}}
-                \label{cd: exponential}
-            \end{equation}
-            We write $\textbf{cur} f$ for the unique morphism $u$ such that $f = \textbf{app} \circ (\textbf{cur} f \times \textbf{id}_X)$, 
-            where $\textbf{cur} f$ is called the \emph{currying} of $f$.
-        \end{definition*}
-        It can be shown that the exponential is unique up to (unique) isomorphism.
-
-    
         \subsection{Cartesian closed category}
-        \begin{definition*}[Cartesian closed category]
+            \subsubsection{Terminal object}
+            \begin{definition}[Terminal object]
+                Given a category $\mathcal{C}$, an object $T \in \textbf{obj}(\mathcal{C})$ is called a \emph{terminal object} if for all $X \in \textbf{obj}(\mathcal{C})$, there exists a unique \textbf{C}-morphism $f : X \to T$.
+            \end{definition}
+            Terminal objects are unique up to isomorphism. In other words, we have
+            \begin{itemize}
+                \item 
+                    if $T$ and $T'$ are both terminal objects in $\mathcal{C}$, then there exists a unique isomorphism $f : T \to T'$.
+                \item
+                    if $T$ is a terminal object in $\mathcal{C}$ and $T \cong T'$, then $T'$ is also a terminal object in $\mathcal{C}$.
+            \end{itemize}
+            \begin{example}[Terminal object in $\mathcal{Set}$]
+                $\mathcal{Set}$ has a terminal object $\{\ast\}$, which is an arbitrary singleton set containing a single element $\ast$.
+
+                For any set $X$, there exists a unique function $f : X \to \{\ast\}$ that maps every element of $X$ to the single element $\ast$ in $\{\ast\}$.
+                
+                There is a unique isomorphism $f : \{\ast\} \to \{\cdot\}$ for any two singleton sets $\{\ast\}$ and $\{\cdot\}$, which is $f(\ast) = \cdot$.
+            \end{example}
+
+            
+            \subsubsection{Binary product}
+            \begin{definition}[Binary product]
+                Given a category $\mathcal{C}$, the \emph{binary product} of two objects $X$ and $Y$ in $\mathcal{C}$ is specified by
+                \begin{itemize}
+                    \item a $\mathcal{C}$-object $X \times Y$;
+                    \item two $\mathcal{C}$-morphisms $\pi_1 : X \times Y \to X$ and $\pi_2 : X \times Y \to Y$ called the \emph{projections} of $X \times Y$;
+                \end{itemize}
+                such that for all $Z \in \textbf{obj}(\mathcal{C})$ and morphisms $f : Z \to X$ and $g : Z \to Y$, there exists a unique morphism $u : Z \to X \times Y$ such that the following diagram commutes in $\mathcal{C}$:
+                \begin{equation}
+                    \vcenter{\hbox{\includegraphics[width=0.4\textwidth]{binary_product.pdf}}}
+                    \label{cd: binary_product}
+                \end{equation}
+                The unique morphism $u$ is written as 
+                \[ \bracket{ f, g } : Z \to X \times Y \]
+                where $f = \pi_1 \circ u$ and $g = \pi_2 \circ u$.
+            \end{definition}
+            It can be shown that the binary product is unique up to (unique) isomorphism.
+
+            \begin{example}[Binary product in $\mathcal{Set}$]
+                The binary product of two sets $X$ and $Y$ in $\mathcal{Set}$ is the Cartesian product $X \times Y = \{(x,y) \mid x \in X \land y \in Y\}$, where $(x,y)$ are ordered pairs.
+
+                We have the following projections:
+                \begin{itemize}
+                    \item 
+                        $\pi_1 : X \times Y \to X$ is defined as $\pi_1(x,y) = x$ for all $(x,y) \in X \times Y$;
+                    \item
+                        $\pi_2 : X \times Y \to Y$ is defined as $\pi_2(x,y) = y$ for all $(x,y) \in X \times Y$.
+                \end{itemize}
+
+            
+                For any set $Z$, for any functions $f : Z \to X$ and $g : Z \to Y$, the unique morphism $u : Z \to X \times Y$ is defined as:
+                \[u(z) = (f(z), g(z)) \text{ for all $z \in Z$.}\]
+            \end{example}
+
+
+
+            \subsubsection{Exponential}
+            \begin{definition}[Exponential]
+                Given a category $\mathcal{C}$ with binary products, the \emph{exponential} of two objects $X$ and $Y$ in $\mathcal{C}$ is specified by
+                \begin{itemize}
+                    \item a $\mathcal{C}$-object $X \Rightarrow Y$;
+                    \item a $\mathcal{C}$-morphism $\textbf{app} : (X \Rightarrow Y) \times X \to Y$ called the \emph{application} of $X \Rightarrow Y$;
+                \end{itemize}
+                such that for all $Z \in \textbf{obj}(\mathcal{C})$ and morphisms $f : Z \times X \to Y$, there exists a unique morphism $u : Z \to X \Rightarrow Y$ such that the following diagram commutes in $\mathcal{C}$:
+                \begin{equation}
+                    \vcenter{\hbox{\includegraphics[width=0.4\textwidth]{exponential.pdf}}}
+                    \label{cd: exponential}
+                \end{equation}
+                We write $\textbf{cur} f$ for the unique morphism $u$ such that $f = \textbf{app} \circ (\textbf{cur} f \times \textbf{id}_X)$, 
+                where $\textbf{cur} f$ is called the \emph{currying} of $f$.
+            \end{definition}
+            It can be shown that the exponential is unique up to (unique) isomorphism.
+
+            \begin{example}[Exponential in $\mathcal{Set}$]
+                The exponential of two sets $X$ and $Y$ in $\mathcal{Set}$ is the set of all functions from $X$ to $Y$.
+
+                Function application gives the morphism $\textbf{app} : (X \Rightarrow Y) \times X \to Y$ as $\textbf{app}(f,x) = f(x)$ for all $f \in X \Rightarrow Y$ and $x \in X$.
+
+                The currying operation transform a function $f : Z \times X \to Y$ into a function $\textbf{cur} f : Z \to (X \Rightarrow Y)$, which is defined as $\textbf{cur} f(z) = \lambda x.f(z,x)$ for all $z \in Z$ and $x \in X$.
+
+                
+            \end{example}
+
+        \begin{definition}[Cartesian closed category]
             A category $\mathcal{C}$ is called a \emph{Cartesian closed category} (ccc) if it has a terminal object, binary products and exponentials of any two objects.
-        \end{definition*}
+        \end{definition}
 
         
         \subsection{Functor}
-        \begin{definition*}[Functor]
+        \begin{definition}[Functor]
             Given two categories $\mathcal{C}$ and $\mathcal{D}$, a \emph{functor} $F: \mathcal{C} \to \mathcal{D}$ is specified by:
             \begin{itemize}
                 \item 
@@ -365,23 +455,15 @@
             satisfying the following properties:
             \begin{itemize}
                 \item 
-                    for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have:
-                    \begin{equation} \label{law: functor_id}
-                        F(\textbf{id}_X) = \textbf{id}_{F(X)}
-                    \end{equation}
+                    for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have: $ F(\textbf{id}_X) = \textbf{id}_{F(X)}$
                 \item
-                    for all $X, Y, Z \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, we have:
-                    \begin{equation} \label{law: functor_comp}
-                        F(g \circ f) = F(g) \circ F(f)
-                    \end{equation}
+                    for all $X, Y, Z \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, we have: $F(g \circ f) = F(g) \circ F(f)$
             \end{itemize}
-        \end{definition*}
-
-        [Considering adding examples of functors: e.g. free functor, forgetful functor, etc.]
+        \end{definition}
 
         
         \subsection{Natural transformation}
-        \begin{definition*}[Natural transformation]
+        \begin{definition}[Natural transformation]
 
             Given two categories $\mathcal{C}$ and $\mathcal{D}$, and two functors $F,G: \mathcal{C} \to \mathcal{D}$, a \emph{natural transformation} $\theta : F \to G$ is a family of morphisms $\theta_X \in \mathcal{D}{(F(X),G(X))}$ for each $X \in \textbf{obj}(\mathcal{C})$ such that for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, the following diagram 
             \begin{equation}
@@ -389,18 +471,13 @@
                 \label{cd: natural_transformation}
             \end{equation}
             
-            commutes in $\mathcal{D}$, i.e. the following equation holds:
-            \begin{equation} \label{law: natural_transformation}
-                G(f) \circ \theta_X = \theta_Y \circ F(f)
-            \end{equation}
+            commutes in $\mathcal{D}$, i.e. $G(f) \circ \theta_X = \theta_Y \circ F(f)$
 
-        \end{definition*}
-
-        [Considering adding examples of natural transformations]
+        \end{definition}
 
         
         \subsection{Functor category}
-        \begin{definition*}[Functor category]
+        \begin{definition}[Functor category]
             Given two categories $\mathcal{C}$ and $\mathcal{D}$, the \emph{functor category} $\mathcal{D}^{\mathcal{C}}$ is the category satisfying the following:
             \begin{itemize}
                 \item 
@@ -416,10 +493,10 @@
                             the composition of two natural transformations $\theta : F \to G$ and $\phi : G \to H$ is defined as $(\phi \circ \theta)_X = \phi_X \circ \theta_X$ for all $X \in \textbf{obj}(\mathcal{C})$.
                     \end{itemize}
             \end{itemize}
-        \end{definition*}
+        \end{definition}
 
         \subsection{Presheaf category}
-        \begin{definition*}[Presheaf]
+        \begin{definition}[Presheaf]
             Given a category $\mathcal{C}$, a \emph{presheaf} on $\mathcal{C}$ is a functor $F: \mathcal{C}^{\textbf{op}} \to \textbf{Set}$.
             A presheaf is a contravariant functor, which means that it reverses the direction of morphisms.
             In other words, a presheaf is a functor that takes objects in $\mathcal{C}$ and assigns them sets, and takes morphisms in $\mathcal{C}$ and assigns them functions between the corresponding sets.
@@ -430,26 +507,26 @@
                 \item
                     for each $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $F(f)$ is a function $F(Y) \to F(X)$.
             \end{itemize}
-        \end{definition*}
+        \end{definition}
 
-        \begin{definition*}[Presheaf category]
-            Given a category $\mathcal{C}$, the \emph{presheaf category} $\mathcal{P}(\mathcal{C})$ is the functor category $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$.
+        \begin{definition}[Presheaf category]
+            Given a category $\mathcal{C}$, the \emph{presheaf category} $\hat{\mathcal{C}}$ is the is the functor category $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$, which explicitly contains the following:
             \begin{itemize}
                 \item 
-                    the objects of $\mathcal{P}(\mathcal{C})$ are all presheaves on $\mathcal{C}$;
+                    the objects of $\hat{\mathcal{C}}$ are all presheaves on $\mathcal{C}$;
                 \item
-                    given two presheaves $F,G: \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$, the morphisms from $F$ to $G$ in $\mathcal{P}(\mathcal{C})$ are all natural transformations $\theta : F \to G$.
+                    given two presheaves $F,G: \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$, the morphisms from $F$ to $G$ in $\hat{\mathcal{C}}$ are all natural transformations $\theta : F \to G$.
             \end{itemize}
-        \end{definition*}
+        \end{definition}
 
 
 
         \subsection{Yoneda lemma}
-        \begin{definition*}[Yoneda functor]
-            Given a category $\mathcal{C}$, the \emph{Yoneda functor} $\yo: \mathcal{C} \to \mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$ is defined as follows:
+        \begin{definition}[Yoneda functor]
+            Given a category $\mathcal{C}$, the \emph{Yoneda functor} $\yo: \mathcal{C} \to \hat{\mathcal{C}}$ is defined as follows:
             \begin{itemize}
                 \item 
-                    for each $X \in \textbf{obj}(\mathcal{C})$, $\yo(X)$ is the functor $y(X) : \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$ defined as:
+                    for each $X \in \textbf{obj}(\mathcal{C})$, $\yo(X)$ is the functor $\mathcal{C}^{\textbf{op}} \to \mathcal{Set}$ defined as:
                     \begin{equation} \label{eq: yoneda_element}
                         \yo(X)(Y) = \mathcal{C}{(Y,X)}
                     \end{equation}
@@ -465,23 +542,23 @@
                     for all $Z \in \textbf{obj}(\mathcal{C})$.
                 \end{itemize}
 
-        \end{definition*}
+        \end{definition}
 
-        \begin{theorem*}[Yoneda lemma]
+        \begin{theorem}[Yoneda lemma]
             Given a category $\mathcal{C}$, the \emph{Yoneda lemma} states that for each object $X \in \textbf{obj}(\mathcal{C})$ and any functor $F: \mathcal{C} \to \textbf{Set}$, there is a natural isomorphism:
             \begin{equation} \label{eq: yoneda_lemma}
-                \mathcal{Set}^{\mathcal{C}^{\textbf{op}}}(\yo(X), F) \cong F(X)
+                {\hat{\mathcal{C}}}(\yo(X), F) \cong F(X)
             \end{equation}
-        \end{theorem*}
+        \end{theorem}
 
 
 
         \subsection{Cartesian closed structure in presheaf categories}
-        \begin{theorem*}[Cartesian closed structure in presheaf categories]
-            Given a small category $\mathcal{C}$, the presheaf category $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$ is a Cartesian closed category.
+        \begin{prf}[Cartesian closed structure in presheaf categories]
+            Given a small category $\mathcal{C}$, the presheaf category $\hat{\mathcal{C}}$ is a Cartesian closed category.
             \begin{itemize}
                 \item 
-                    The terminal object in $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$ is the constant functor $\mathbf{1} : \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$, given by 
+                    The terminal object in $\hat{\mathcal{C}}$ is the constant functor $\mathbf{1} : \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$, given by 
                     \begin{equation}
                         \begin{cases}
                             \mathbf{1}(X) = \{\ast\} & \text{for all } X \in \textbf{obj}(\mathcal{C}) \\
@@ -490,7 +567,7 @@
                     \end{equation}
 
                 \item
-                    The binary product in $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$ is given by the product of functors, which is defined as follows:
+                    The binary product in $\hat{\mathcal{C}}$ is given by the product of functors, which is defined as follows:
                     \begin{equation}
                         \begin{aligned}
                             (F \times G)(X) &= F(X) \times G(X) \\
@@ -499,15 +576,15 @@
                     \end{equation}
 
                 \item
-                    The exponential in $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$ is given by the Yoneda lemma,
+                    The exponential in $\hat{\mathcal{C}}$ is derived from the Yoneda lemma,
                     \begin{equation}
                         \begin{aligned}
-                            G^{F}(X) &= \mathcal{Set}^{\mathcal{C}^{\textbf{op}}}(\yo(X) \times F, G) \\
-                            G^{F}(f)(\theta) &= \theta \circ (\yo(f) \times \textbf{id}_F) \quad \text{for all } \theta \in \mathcal{Set}^{\mathcal{C}^{\textbf{op}}}(\yo(Y) \times F, G)
+                            G^{F}(X) &= \hat{\mathcal{C}}(\yo(X) \times F, G) \\
+                            G^{F}(f)(\theta) &= \theta \circ (\yo(f) \times \textbf{id}_F) \quad \text{for all } \theta \in \hat{\mathcal{C}}(\yo(Y) \times F, G)
                         \end{aligned}
                     \end{equation}
             \end{itemize}
-        \end{theorem*}
+        \end{prf}
         
 
 
@@ -537,8 +614,8 @@
         Here we define a datatype $\mb{\mathsf{Vec}}$ for vectors. The type of vectors is dependent on the length of the vector. With dependent types, we can encode properties directly into types and ensure that they are satisfied at compile time.
 
         \subsection{Curry-Howard-Lambek correspondence} \label{subsec: curry-howard-lambek}
-        As introduced in \secref{sec: cat}, Curry-Howard correspondence states that there is a correspondence between logic and type theory, and Lambek extended this correspondence to show that cartesian closed categories provide a natural semantic setting for the simply typed lambda calculus. They can be summarised as follows:
-        \begin{table}[htb!]
+        Curry-Howard correspondence~\cite{curry-howard} establishes an isomorphism between logic and type theory, where propositions correspond to types and proofs correspond to terms. This correspondence forms the foundation of functional programming languages that can be used to implement proofs. Building upon this, Joachim Lambek showed that cartesian closed categories provide a natural semantic setting for the simply typed lambda calculus (STLC)~\cite{lambek}. The Curry-Howard-Lambek correspondence can be summarized as follows:
+        \begin{table}[H]
             \centering
             \begin{tabular}{|c|c|c|}
                 \hline
@@ -548,11 +625,11 @@
                 Proof & Term & Morphism \\
                 Falsity & Empty type & Initial object \\
                 Truth & Unit type & Terminal object \\
-                Implication & Function type & Exponential object \\
+                Implication & Function type & Exponential \\
                 Conjunction & Product type & Product \\
                 Disjunction & Sum type & Coproduct \\
-                Universal quantification & Dependent product type &  \\
-                Existential quantification & Dependent sum type &  \\
+                % Universal quantification & Dependent product type &  \\
+                % Existential quantification & Dependent sum type &  \\
                 \hline
             \end{tabular}
             \caption{Curry-Howard-Lambek correspondence}
@@ -579,8 +656,7 @@
         
         In the inductive case, we need to show $\gn{\mathsf{suc}}\ n \mb{{}+{}} \gn{\mathsf{zero}} \equiv \gn{\mathsf{suc}}\ n$. We can use the definition of the plus function to rewrite the left-hand side as $\gn{\mathsf{suc}}\ (n \mb{{}+{}} \gn{\mathsf{zero}})$. By the inductive hypothesis, we know that $n \mb{{}+{}} \gn{\mathsf{zero}} \equiv n$, so we can substitute $n$ for $n \mb{{}+{}} \gn{\mathsf{zero}}$ in the right-hand side by congruence, and we are done.
 
-        \subsection{Proof Example}
-        [decide exact example here]
+        % \subsection{With and Rewrite}
 
         \subsection{Standard library}
         The Agda standard library~\cite{agda_std} is a collection of modules that provide a wide range of useful functions and types. It includes modules for basic data types, such as natural numbers, lists, and vectors. In my implementation, however, I defined most of the basic data types and functions from scratch for the following two reasons:
@@ -618,30 +694,182 @@
     \end{itemize}
     The success criteria of the project is that the compiler can compile a term in the source language to a term in the target language, and the output term is well-typed in the target language.
 
+\chapter{Implementation} \label{chap: implementation}
+    \minitoc
+    This chapter details the implementation of the compiler in Agda. Starting with a brief overview of the tools used, it then describes the directory structure and file dependencies. Then it discusses the 
+    followed by the implementation of the source language, the target language, and finally the compiler.
+    
 
-    \section{Tools Used}
+    \section{Tools used}
+    The project is implemented in Agda 2.7.0.1, which is the latest stable version at the time of writing.
+
     Completing the project is an iterative process. I used Git~\cite{git} for version control, and work had been synchronised with a GitHub~\cite{github} repository for backup.
 
     For the development environment, I tried both Emacs~\cite{emacs} and Visual Studio Code~\cite{vscode} with an agda-mode extension~\cite{agda_mode} on Windows Subsystem for Linux with Ubuntu~\cite{wsl_ubuntu} 22.04 LTS. I am more familiar with the snippet and syntax highlighting features of Visual Studio Code, so I used it for most of the development. 
 
-    Code from the PLFA tutorial and Agda standard library~\cite{agda_std} were used as references. 
+    Code from the PLFA tutorial and Agda standard library~\cite{agda_std} were used as references for implementation of the source language and the customised library. Apart from that, the code is written from scratch.
 
-    \section{Summary}
+    \section{Repository Overview}
+        \subsection{Directory structure}
+        The repository contains two independent implementations of the compiler, organised as follows:
+        \dirtree{%
+            .1 ..
+            .2 fin.
+            .3 lib.agda.
+            .3 source.agda.
+            .3 target.agda.
+            .3 compiler.agda.
+            .2 proof.
+            .3 lib.agda.
+            .3 source.agda.
+            .3 target.agda.
+            .3 compiler.agda.
+        }
+
+        \subsection{File dependencies and descriptions}
+        The dependency graph for each implementation is identical as follows:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\textwidth]{dependencies.pdf}
+            \caption{Dependency graph for the compiler}
+            \label{fig: dependencies}
+        \end{figure}
+
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{l l l}
+                \hline
+                \textbf{File} & \textbf{Description}\\
+                \hline
+                lib.agda & Shared utilities (e.g. natural numbers and operations, equality, etc.) \\
+                source.agda & Source language syntax \\
+                target.agda & Target language (stack machine) instructions \\
+                compiler.agda & Compiler functor \\
+                \hline
+            \end{tabular}
+            \caption{File descriptions}
+            \label{tab: file_descriptions}
+        \end{table}
+
+    \section{Source Language}
+    A Simply Typed Lambda Calculus (STLC) is a typed lambda calculus with only one type constructor ($\to$) that builds function types. 
+    
+        \subsection{Types}
+        In this dissertation, the source language is an STLC with the following primitive types:
+        \begin{itemize}
+            \item 
+                \textbf{comm}: the commands
+            \item 
+                \textbf{intexp}: the integer expressions
+            \item 
+                \textbf{intacc}: the integer acceptors
+            \item 
+                \textbf{intvar}: the integer variables
+        \end{itemize}
+        and the set $\Theta$ of types is defined as follows:
+        \[ \Theta := \textbf{comm} \mid \textbf{intexp} \mid \textbf{intacc} \mid \textbf{intvar} \mid \Theta \to \Theta \]
+
+        which corresponds with the following agda implementation:
+        \[\includegraphics[width=\textwidth]{/source/types.pdf}\]
+
+        \subsection{Contexts, variables and the lookup judgement}
+        We define the context as a finite list of types. When we are looking up a variable, the type of the variable is either on the top of the context or in the tail of the context. The context and the lookup judgement are defined as follows:
+        \[\includegraphics[width=\textwidth]{/source/contexts.pdf}\]
+
+
+        \subsection{Terms and the typing judgement}
+        The terms and the typing judgement are described in the following rules:
+        \begin{itemize}
+            \item For any variable we have 
+                \[\includegraphics{source_terms_var.pdf}\]
+            \item For lambda abstraction we have
+                \[\includegraphics{source_terms_lambda.pdf}\]
+            \item For command we have
+                \[\includegraphics{source_terms_comm.pdf}\]
+            \item For integer expression we have
+                \[\includegraphics{source_terms_intexp.pdf}\]
+        \end{itemize}
+
+        The corresponding Agda implementation is as follows:
+        \[\includegraphics[width=\textwidth]{/source/terms.pdf}\]
+
+
+    \section{Target Language}
+    The target language is an assembly-style intermediate language for a stack machine. It is defined with four stack-descriptor-indexed families of non-terminals: 
     \begin{itemize}
         \item 
-        requirement Analysis
-
+            $\bracket{\text{L}_{sd}}$: lefthand sides
+        \item 
+            $\bracket{\text{S}_{sd}}$: Simple righthand sides
         \item
-        tools and engineering approach
-
+            $\bracket{\text{R}_{sd}}$: righthand sides
+        \item
+            $\bracket{\text{I}_{sd}}$: instruction sequences
     \end{itemize}
 
-\chapter{Implementation}
+    Here the stack descriptor $sd$ is defined as a pair of natural numbers $(f, d)$, where $f$ is the frame number and $d$ is the displacement. The stack descriptor is used to keep track of the current frame and the displacement of the stack. The stack descriptor is used to access the stack in the target language.
+
+    The order of the stack descriptor is defined as follows:
+    \[\bracket{f, d} \leq \bracket{f', d'} \Leftrightarrow f < f' \lor (f = f' \land d \leq d')\]
+
+    We also define addition and subtraction of stack descriptors as follows:
+    \[\bracket{f, d} \pm n = \bracket{f, d \pm n} \text{ for } n \in \mathbb{N}\]
+
+    \subsection{Grammar}
+    The grammar of the target language is defined as follows:
+    \[\begin{aligned}
+        \bracket{\text{L}_{sd}} ::={}& sd^v \\
+                        &\mid \textsf{sbrs}  \\
+        \bracket{\text{S}_{sd}} ::={}& \bracket{\text{L}_{sd}} \\
+                        &\mid \textsf{lit} \bracket{\text{integer}} \\
+        \bracket{\text{R}_{sd}} ::={}& \bracket{\text{S}_{sd}} \\
+                        &\mid \bracket{ \text{unary operator} } \bracket{ \text{S}_{sd}}\\
+                        &\mid \bracket{\text{S}_{sd}} \bracket{\text{binary operator}} \bracket{ \text{S}_{sd} } \\
+        \bracket{\text{I}_{sd}} ::={}& \textsf{stop} \\
+                        &\mid \bracket{\text{L}_{sd+\delta}} \gets \bracket{\text{R}_{sd}}[\delta] \text{ ; } \bracket{\text{I}_{sd+\delta}} \\
+                        &\mid \textsf{if } \bracket{\text{S}_{sd}} \bracket{\text{relational operator}} \bracket{\text{S}_{sd}}[\delta] \textsf{ then } \bracket{\text{I}_{sd+\delta}} \textsf{ else } \bracket{\text{I}_{sd+\delta}} \\
+                        &\mid \textsf{adjustdisp} [\delta] \text{ ; } \bracket{\text{I}_{sd+\delta}} \\
+                        &\mid \textsf{popto } sd' \text{ ; } \bracket{\text{I}_{sd'}} \text{ when } sd' \leq sd \\
+    \end{aligned}\]
+
+    Here the intended meaning of $\delta$ is the displacement of the stack descriptor, which can be either positive or negative. To make a rigorous definition, we define $\delta$ as a natural number, and treat the positive and negative displacements as two different instructions, using addition and subtraction of stack descriptors respectively. 
+
+    For negative displacements, we need to make sure that the the subtraction is valid, i.e. the displacement is less than or equal to the current stack descriptor. Here we need a rigorous definition of the subtraction of natural numbers. There are two different ways to define the subtraction: using an extra proof or using the dependent type fin.
+
+    \section{Customised Library}
+
+
+    \section{Compiler}
+
+
+
 
 \chapter{Evaluation}
+    \minitoc
+    Chapter~\chapref{chap: implementation} describes the implementation of the source language, the target language and the compiler in Agda. This chapter evaluates the implementation with a demonstrative example in Agda, and discusses the success criteria of the project.
+    \section{A demonstrative example in Agda}
+
+    \section{Success criteria}
 
 \chapter{Conclusion}
+    \minitoc
+    \section{Results}
 
-    \printbibliography
+    \section{Overview}
 
+    \section{Lessons learned}
+
+    % \section{Future work}
+
+
+\printbibliography
+
+\appendix
+
+\cleardoublepage
+\let\cleardoublepage\clearpage
+\pagestyle{empty}
+\pagenumbering{gobble}
+\includepdf[pages=-, fitpaper=true, pagecommand={}]{final_proposal.pdf}
+\AtBeginShipoutNext{\AtBeginShipoutDiscard}
 \end{document}

@@ -53,33 +53,65 @@ data ∅ : Set where
 ⟦ Γ , A ⟧ctx sd = ⟦ Γ ⟧ctx sd × ⟦ A ⟧ty sd
 
 get-var : ∀ {Γ A sd} → A ∈ Γ → ⟦ Γ ⟧ctx sd → ⟦ A ⟧ty sd
-get-var Z     (_ , a) = a
-get-var (S x) (γ , _) = get-var x γ
+get-var Zero     (_ , a) = a
+get-var (Suc x) (γ , _) = get-var x γ
 
 
--- get-num : ∀ {Γ} → (e : Γ ⊢ source.ℕ) → target.ℕ
--- get-num Zero = target.zero
--- get-num (Suc m) = target.suc (get-num m)
-
+-- Functorality
 fmap-⇒ : ∀ {P Q sd sd'} → (P ⇒ₛ Q) sd → sd ≤ₛ sd' → (P ⇒ₛ Q) sd'
 fmap-⇒ θ p p' x = θ (≤ₛ-trans p p') x
 
 fmap-Compl : ∀ {sd sd'} → Compl sd → sd ≤ₛ sd' → Compl sd'
 fmap-Compl {sd} c (<-f f<f') = popto sd (<-f f<f') c
-fmap-Compl {⟨ _ , d ⟩} {⟨ _ , d' ⟩} c (≤-d d≤d') = adjustdisp_dec (≤→Fin (-→≤ {d'} {≤→Fin d≤d'}) ) (sub I {!   !} c)
+fmap-Compl {⟨ f , d ⟩} {⟨ f , d' ⟩} c (≤-d d≤d') = 
+    adjustdisp-dec ((d' - d) d≤d') (-→≤ d≤d') 
+        (sub I (-ₛ≡ 
+            {n = (d' - d) d≤d'} 
+                (n-[n-m]≡m d≤d')) c)
 
--- fmap-× : ∀ {P Q sd sd'} → (P ×ₛ Q) sd → sd ≤ₛ sd' → (P ×ₛ Q) sd'
+fmap-L : ∀ {sd sd'} → L sd → sd ≤ₛ sd' → L sd'
+fmap-L (l-var sdᵛ sdᵛ≤ₛsd) sd≤ₛsd' = l-var sdᵛ (≤ₛ-trans sdᵛ≤ₛsd sd≤ₛsd')
+fmap-L (l-sbrs) _ = l-sbrs 
+
+fmap-S : ∀ {sd sd'} → S sd → sd ≤ₛ sd' → S sd'
+fmap-S (s-l l) sd≤ₛsd' = s-l (fmap-L l sd≤ₛsd')
+fmap-S (s-lit lit) _ = s-lit lit
 
 fmap-A : ∀ {A sd sd'} → ⟦ A ⟧ty sd → sd ≤ₛ sd' → ⟦ A ⟧ty sd'
-fmap-A {comm} c p i = {!   !}
-fmap-A {intexp} = {!   !}
-fmap-A {intacc} = {!   !}
-fmap-A {intvar} = {!   !}
+fmap-A {comm}  = fmap-⇒ {Compl} {Compl}
+fmap-A {intexp} = fmap-⇒ {Intcompl} {Compl}
+fmap-A {intacc} = fmap-⇒ {Compl} {Intcompl}
+fmap-A {intvar} ( e , a ) sd≤ₛsd' = ( fmap-A {intexp} e sd≤ₛsd' , fmap-A {intacc} a sd≤ₛsd' )
 fmap-A {A ⇒ B} = fmap-⇒ {⟦ A ⟧ty} {⟦ B ⟧ty}
 
 fmap-Γ : ∀ {Γ sd sd'} → ⟦ Γ ⟧ctx sd → sd ≤ₛ sd' → ⟦ Γ ⟧ctx sd'
 fmap-Γ {·} unit _ = unit
 fmap-Γ {Γ , A} (γ , a) p = fmap-Γ γ p , fmap-A {A} a p
+
+
+sd≤ₛsd'→sd≤ₛsd'-ₛ[d'-[suc-d]] : ∀ {sd sd'} → sd ≤ₛ sd' → (δ₁≤δ₂ : suc (SD.d sd) ≤ SD.d sd') → sd ≤ₛ ((sd' -ₛ ((SD.d sd' - (suc (SD.d sd))) δ₁≤δ₂)) (-→≤ δ₁≤δ₂))
+sd≤ₛsd'→sd≤ₛsd'-ₛ[d'-[suc-d]] {⟨ f , _ ⟩} {⟨ f' , _ ⟩} (<-f f<f') _ = <-f f<f'
+sd≤ₛsd'→sd≤ₛsd'-ₛ[d'-[suc-d]] {⟨ f , d ⟩} {⟨ f , d' ⟩} (≤-d d≤d') δ₁≤δ₂ = ≤-d (suc-d≤d'→d≤d'-[d'-[suc-d]] δ₁≤δ₂)
+
+assign : (sd : SD) → (sd' : SD) → (S ⇒ₛ Compl) sd → sd ≤ₛ sd' → R sd' → I sd'
+assign ⟨ f , d ⟩ ⟨ f' , d' ⟩ β sd≤ₛsd' r with (≤-compare {suc d} {d'})
+... | leq δ₁≤δ₂ = assign-dec ((d' - (suc d)) δ₁≤δ₂) 
+                    (-→≤ δ₁≤δ₂) (l-var ⟨ f , d ⟩ (sd≤ₛsd'→sd≤ₛsd'-ₛ[d'-[suc-d]] sd≤ₛsd' δ₁≤δ₂)) r 
+                    (β ((sd≤ₛsd'→sd≤ₛsd'-ₛ[d'-[suc-d]] sd≤ₛsd' δ₁≤δ₂)) 
+                        (s-l (l-var ⟨ f , d ⟩ ((sd≤ₛsd'→sd≤ₛsd'-ₛ[d'-[suc-d]] sd≤ₛsd' δ₁≤δ₂)))))
+
+
+... | geq δ₂≤δ₁ = assign-inc (((suc d) - d') δ₂≤δ₁) 
+                    (l-var ⟨ f , d ⟩ (≤ₛ-trans sd≤ₛsd' +ₛ→≤ₛ)) r 
+                    (β ((≤ₛ-trans sd≤ₛsd' +ₛ→≤ₛ)) 
+                        (s-l (l-var ⟨ f , d ⟩ ((≤ₛ-trans sd≤ₛsd' +ₛ→≤ₛ)))))
+
+use-temp : ∀ {sd sd'} → (S ⇒ₛ Compl) sd → sd ≤ₛ sd' → R sd' → I sd'
+use-temp β sd≤ₛsd' (r-s s) = β sd≤ₛsd' s
+use-temp {sd} {sd'} β sd≤ₛsd' (r-unary uop s) = 
+    assign sd sd' β sd≤ₛsd' (r-unary uop s)
+use-temp {sd} {sd'} β sd≤ₛsd' (r-binary s₁ bop s₂) = 
+    assign sd sd' β sd≤ₛsd' (r-binary s₁ bop s₂)
 
 
 ⟦_⟧ : ∀ {Γ A} → (e : Γ ⊢ A) → (sd : SD) → ⟦ Γ ⟧ctx sd → ⟦ A ⟧ty sd
@@ -89,6 +121,6 @@ fmap-Γ {Γ , A} (γ , a) p = fmap-Γ γ p , fmap-A {A} a p
 ⟦ Skip ⟧ _ _ _ γ = γ
 ⟦ Seq c₁ c₂ ⟧ sd γ sd' p = ⟦ c₁ ⟧ sd γ sd' (⟦ c₂ ⟧ sd γ sd' p)
 ⟦ Lit i ⟧ _ _ _ κ = κ ≤ₛ-refl (r-s (s-lit i))
-⟦ Neg e ⟧ sd γ p κ = {!   !} 
-⟦ Plus e e₁ ⟧ _ γ = {!   !} 
+⟦ Neg e ⟧ sd γ p κ = ⟦ e ⟧ sd γ p (use-temp λ p s → κ p (r-unary UNeg s))    
+⟦ Plus e₁ e₂ ⟧ sd γ p κ = ⟦ e₁ ⟧ sd γ p (use-temp (λ p' s₁ → ⟦ e₂ ⟧ sd γ (≤ₛ-trans p p') (use-temp (λ p'' s₂ →  κ (≤ₛ-trans p' p'') (r-binary (fmap-S s₁ p'') BPlus s₂)))))
 ```

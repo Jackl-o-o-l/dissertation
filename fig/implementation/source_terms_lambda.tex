@@ -1,0 +1,19 @@
+\documentclass[border=0mm]{standalone}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{ebproof}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\begin{document}
+	\begin{prooftree}
+		\hypo{Γ , A ⊢ B}
+		\infer1[\textsc{Lambda}]{Γ ⊢ A \Rightarrow B}
+	\end{prooftree}
+	\quad
+	\begin{prooftree}
+		\hypo{Γ ⊢ A \Rightarrow B}
+		\hypo{Γ ⊢ A}
+		\infer2[\textsc{App}]{Γ ⊢ B}
+	\end{prooftree}
+\end{document}
