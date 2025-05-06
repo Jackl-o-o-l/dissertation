@@ -7,13 +7,13 @@
 
 \begin{document}
 	\begin{prooftree}
-		\hypo{Γ , A ⊢ B}
-		\infer1[\textsc{Lambda}]{Γ ⊢ A \Rightarrow B}
+		\hypo{Γ , x : A ⊢ e : B}
+		\infer1[\textsc{Lambda}]{Γ ⊢ \lambda x : A. e : A \Rightarrow B}
 	\end{prooftree}
 	\quad
 	\begin{prooftree}
-		\hypo{Γ ⊢ A \Rightarrow B}
-		\hypo{Γ ⊢ A}
-		\infer2[\textsc{App}]{Γ ⊢ B}
+		\hypo{Γ ⊢ e : A \Rightarrow B}
+		\hypo{Γ ⊢ e' : A}
+		\infer2[\textsc{App}]{Γ ⊢ e\ e' : B}
 	\end{prooftree}
 \end{document}

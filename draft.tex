@@ -1,6 +1,7 @@
 \documentclass[12pt,twoside,a4paper]{report}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{mathabx}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{enumerate}
@@ -63,16 +64,29 @@
 \definecolor{mediumblue}{HTML}{0000CD}
 \definecolor{green}{HTML}{008B00}
 \definecolor{orange}{HTML}{CD6600}
+\definecolor{darkpink}{HTML}{EE1289}
 
 \newcommand{\mb}[1]{\textcolor{mediumblue}{#1}}
 \newcommand{\gn}[1]{\textcolor{green}{#1}}
 \newcommand{\og}[1]{\textcolor{orange}{#1}}
+\newcommand{\dpink}[1]{\textcolor{darkpink}{#1}}
 
 \newcommand{\bN}{\mathbb{N}}
 
 \newcommand{\yo}{\mathord{\text{\kern0.03em \scalebox{0.8}{よ}\kern0.03em}}}
 
-\newcommand{\bracket}[1]{\left\langle #1 \right\rangle}
+\newcommand{\bracket}[1]{\left\{ #1 \right\}}
+\newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+
+\newcommand{\frontmatter}{
+  \pagenumbering{roman}
+}
+
+\newcommand{\mainmatter}{
+  \cleardoublepage
+  \pagenumbering{arabic}
+  \setcounter{page}{1}
+}
 
 \begin{document}
 
@@ -138,9 +152,11 @@
     \vspace{1em}
 \end{titlepage}
 
+\frontmatter
 \tableofcontents
 \newpage
 
+\mainmatter
 \chapter{Introduction}
     \minitoc
     Programming languages act as a bridge between human thought and machine execution. They exist in two complementary realms: the human realm, where intent is expressed through abstractions like variables and functions, and the machine realm, where low-level instructions are executed on hardware. 
@@ -592,7 +608,7 @@
         \subsection{Basic datatypes and pattern matching}
         We will go through a simple example in PLFA~\cite{plfa} to illustrate the basic datatypes and pattern matching in Agda.
 
-        \[\includegraphics[width=\textwidth]{natural_plus.pdf}\]
+        \[\includegraphics[scale=1.2]{natural_plus.pdf}\]
 
         Here we define a datatype $\mb{\bN}$ for natural numebers. $\mb{\bN}$ itself has a type $\mb{\mathsf{Set}}$, which is the type of all small types. The natural number is defined as a recursive datatype with two constructors: $\gn{\mathsf{zero}}$ and $\gn{\mathsf{suc}}$, where 
         $\gn{\mathsf{zero}}$ is the base case and $\gn{\mathsf{suc}}$ is the inductive case. The $\gn{\mathsf{zero}}$ constructor has type $\mb{\bN}$, and the $\gn{\mathsf{suc}}$ constructor has type $\mb{\bN \to \bN}$.
@@ -609,12 +625,12 @@
 
         A classical example of dependent types in Agda is the type of vectors, which are lists with a length. 
 
-        \[\includegraphics[width=\textwidth]{vector.pdf}\]
+        \[\includegraphics[scale=1.2]{vector.pdf}\]
 
         Here we define a datatype $\mb{\mathsf{Vec}}$ for vectors. The type of vectors is dependent on the length of the vector. With dependent types, we can encode properties directly into types and ensure that they are satisfied at compile time.
 
         \subsection{Curry-Howard-Lambek correspondence} \label{subsec: curry-howard-lambek}
-        Curry-Howard correspondence~\cite{curry-howard} establishes an isomorphism between logic and type theory, where propositions correspond to types and proofs correspond to terms. This correspondence forms the foundation of functional programming languages that can be used to implement proofs. Building upon this, Joachim Lambek showed that cartesian closed categories provide a natural semantic setting for the simply typed lambda calculus (STLC)~\cite{lambek}. The Curry-Howard-Lambek correspondence can be summarized as follows:
+        Curry-Howard correspondence~\cite{curry-howard} establishes an isomorphism between logic and type theory, where propositions correspond to types and proofs correspond to terms. This correspondence forms the foundation of functional programming languages that can be used to implement proofs. Building upon this, Joachim Lambek showed that cartesian closed categories provide a natural semantic setting for the simply typed lambda calculus (STLC)~\cite{lambek}. The Curry-Howard-Lambek correspondence can be summarised as follows:
         \begin{table}[H]
             \centering
             \begin{tabular}{|c|c|c|}
@@ -636,19 +652,19 @@
             \label{tab: curry-howard-lambek}
         \end{table}
 
-        \subsection{Equality, congruence and substitution}
+        \subsection{Equality, congruence and substitution}\label{subsec: equality}
         Equality here refers to the propositional equality. In Agda it is defined as
-        \[\includegraphics[width=\textwidth]{equality.pdf}\]
+        \[\includegraphics[scale=1.2]{equality.pdf}\]
         With equality as a type, whenever we want to prove that two terms are equal, we need to provide a witness of the equality. For example if we want to prove $x \equiv y$, we write out a term of type $\mb{\mathsf{x = y}}$, and then give its definition, which constructs a proof of the equality. A simple proof that directly uses the definition of equality is as follows:
-        \[\includegraphics[width=\textwidth]{sym_trans.pdf}\]
+        \[\includegraphics[scale=1.2]{sym_trans.pdf}\]
         Here we are able to prove the symmetry and transitivity of equality by using the definition of equality. Those two properties are very useful for later proofs. 
 
         We can also have more complex proof with congruence and substitution, which can also be directly derived from the definition of equality as follows:
-        \[\includegraphics[width=\textwidth]{cong_subst.pdf}\]
+        \[\includegraphics[scale=1.2]{cong_subst.pdf}\]
         Congruence is a property of equality that states that if two terms are equal, then they can be substituted for each other in any context. Substitution is a property where we can get a new proof by replacing a term in a proof with another term that is equal to it. 
 
         Here is a simple example of how congruence can be used in a proof:
-        \[\includegraphics[width=\textwidth]{cong_example.pdf}\]
+        \[\includegraphics[scale=1.2]{cong_example.pdf}\]
 
         In this example, we want to prove that $\gn{\mathsf{zero}}$ is the right identity of the plus function. We do an inductive proof by pattern matching on the first argument of the plus function. 
         
@@ -666,16 +682,15 @@
             \item
                 I need a particular representation of minus operation that ensures the input is always valid. This is further explained in [to add]
         \end{itemize}
-        
-        With standard library, we can use actual numbers $1, 2, 3, \dots$ instead of calling the constructor $\gn{\mathsf{suc}}$ multiple times. This is a convenient feature for testing. Agda provides a way to link self-defined functions to the standard library with a \og{\textsf{BUILTIN}} programa. This allows me to use a convenient syntax for numbers, while still using the self-defined functions in the implementation.
-        \[\includegraphics[width=\textwidth]{natural_programma.pdf}\]
+
+        \subsubsection{Builtin pragma} \label{subsubsec: builtin_pragma}
+        With standard library, we can use actual numbers $1, 2, 3, \dots$ instead of calling the constructor $\gn{\mathsf{suc}}$ multiple times. This is a convenient feature for testing. Agda provides a way to link self-defined functions to the standard library with a \og{\textsf{BUILTIN}} pragma. This allows me to use a convenient syntax for numbers, while still using the self-defined functions in the implementation.
+        \[\includegraphics[scale=1.2]{natural_pragma.pdf}\]
         Note that in agda we can use unicode characters for terms, which makes the code more readable. For example, here we simply name the term \mb{1+1$\equiv$2}.
 
         
         \subsection{Interactive programming with holes} \label{subsec: holes}
         A feature of Agda is that it allows us to write programs with holes interatively. A hole is a placeholder for a term that we have not yet defined. By leaving holes in place of undefined terms, we can write programs that are incomplete but still type-check, and Agda's type checker will guide completion of the program: the context window displays inferred types of the holes, available variables and candidate terms with their types. Holes also supports case split and refinement, which means we can fill in a hole partially and split it into smaller holes. 
-
-        [Considering adding examples of holes and case split, see https://plfa.github.io/Naturals/]
 
         In my implementation, I used holes to write the terms in the compiler. The complex terms are incrementally filled and verified by interatively refining partial implementations, reducing post-hoc debugging and ensuring robustness.
 
@@ -696,8 +711,7 @@
 
 \chapter{Implementation} \label{chap: implementation}
     \minitoc
-    This chapter details the implementation of the compiler in Agda. Starting with a brief overview of the tools used, it then describes the directory structure and file dependencies. Then it discusses the 
-    followed by the implementation of the source language, the target language, and finally the compiler.
+    This chapter details the implementation of the compiler in Agda. Starting with a brief overview of the tools used, it then describes the directory structure and file dependencies. Then it discusses the specification of the source language, and the target language, which lead us to the problem of implementing a rigorous natural number subtraction and two different approaches. We will further see the difference between the two approaches and how they affect the implementation of the customised library and the implementation of the compiler. 
     
 
     \section{Tools used}
@@ -752,29 +766,45 @@
         \end{table}
 
     \section{Source Language}
-    A Simply Typed Lambda Calculus (STLC) is a typed lambda calculus with only one type constructor ($\to$) that builds function types. 
+    A simply typed lambda calculus (STLC) is a typed lambda calculus with only one type constructor ($\to$) that builds function types. 
     
         \subsection{Types}
         In this dissertation, the source language is an STLC with the following primitive types:
         \begin{itemize}
             \item 
-                \textbf{comm}: the commands
+                \textsf{comm}: the commands
             \item 
-                \textbf{intexp}: the integer expressions
+                \textsf{intexp}: the integer expressions
             \item 
-                \textbf{intacc}: the integer acceptors
+                \textsf{intacc}: the integer acceptors
             \item 
-                \textbf{intvar}: the integer variables
+                \textsf{intvar}: the integer variables
         \end{itemize}
         and the set $\Theta$ of types is defined as follows:
-        \[ \Theta := \textbf{comm} \mid \textbf{intexp} \mid \textbf{intacc} \mid \textbf{intvar} \mid \Theta \to \Theta \]
-
+        \[ \Theta := \textsf{comm} \mid \textsf{intexp} \mid \textsf{intacc} \mid \textsf{intvar} \mid \Theta \to \Theta \]
         which corresponds with the following agda implementation:
-        \[\includegraphics[width=\textwidth]{/source/types.pdf}\]
+        \[\includegraphics[scale=1.2]{/source/types.pdf}\]
+
+        \subsubsection{Subtypes}
+        We use the preorder $A \leq: B$ to denote the subtype relation $A$ is a subtype of $B$, as it has the following properties:
+        \begin{itemize}
+            \item 
+                reflexivity: $A \leq: A$;
+            \item 
+                transitivity: if $A \leq: B$ and $B \leq: C$, then $A \leq: C$.
+        \end{itemize}
+
+        The source language has the following subtype relations:
+        \[ \textsf{intvar} \leq: \textsf{intexp} \qquad \textsf{intvar} \leq: \textsf{intacc} \]
+        and for function types we have the contravariant subtyping:
+        \[ A' \leq: A \land B \leq: B' \Rightarrow A \to B \leq: A' \to B' \]
+        
+        it is defined in Agda as follows:
+        \[\includegraphics[scale=1.2]{/source/subtype.pdf}\]
 
         \subsection{Contexts, variables and the lookup judgement}
         We define the context as a finite list of types. When we are looking up a variable, the type of the variable is either on the top of the context or in the tail of the context. The context and the lookup judgement are defined as follows:
-        \[\includegraphics[width=\textwidth]{/source/contexts.pdf}\]
+        \[\includegraphics[scale=1.2]{/source/contexts.pdf}\]
 
 
         \subsection{Terms and the typing judgement}
@@ -782,6 +812,8 @@
         \begin{itemize}
             \item For any variable we have 
                 \[\includegraphics{source_terms_var.pdf}\]
+            \item For subtyping we have
+                \[\includegraphics{source_terms_subtype.pdf}\]
             \item For lambda abstraction we have
                 \[\includegraphics{source_terms_lambda.pdf}\]
             \item For command we have
@@ -790,54 +822,221 @@
                 \[\includegraphics{source_terms_intexp.pdf}\]
         \end{itemize}
 
-        The corresponding Agda implementation is as follows:
-        \[\includegraphics[width=\textwidth]{/source/terms.pdf}\]
+        The corresponding Agda implementation is as follows, note that the Agda implementation does not include the name of the terms, but the names are included in the latex implementation for clarity:
+        \[\includegraphics[scale=1.2]{/source/terms.pdf}\]
+
+        Here the definition of the integers is defined in the customised library, which is defined in [section ref].
+
+        \subsection{Operational Semantics}
+        The operational semantics of the source language is defined with renaming, substitution and reduction rules. However, since the compiler itself does not require the operational semantics, the implementation is included in the appendix [link to appendix]. Operational semantics can be used to verify the correctness of the compiler in the future, but it is beyond the scope of this dissertation.
 
 
     \section{Target Language}
     The target language is an assembly-style intermediate language for a stack machine. It is defined with four stack-descriptor-indexed families of non-terminals: 
     \begin{itemize}
         \item 
-            $\bracket{\text{L}_{sd}}$: lefthand sides
+            $\bracket{\textsf{L}_{sd}}$: lefthand sides
         \item 
-            $\bracket{\text{S}_{sd}}$: Simple righthand sides
+            $\bracket{\textsf{S}_{sd}}$: simple righthand sides
         \item
-            $\bracket{\text{R}_{sd}}$: righthand sides
+            $\bracket{\textsf{R}_{sd}}$: righthand sides
         \item
-            $\bracket{\text{I}_{sd}}$: instruction sequences
+            $\bracket{\textsf{I}_{sd}}$: instruction sequences
     \end{itemize}
 
-    Here the stack descriptor $sd$ is defined as a pair of natural numbers $(f, d)$, where $f$ is the frame number and $d$ is the displacement. The stack descriptor is used to keep track of the current frame and the displacement of the stack. The stack descriptor is used to access the stack in the target language.
+    \subsection{Stack descriptor}
+    The stack descriptor $sd$ is defined as a pair of natural numbers $\ang{f, d}$, where $f$ is the frame number and $d$ is the displacement. 
 
-    The order of the stack descriptor is defined as follows:
-    \[\bracket{f, d} \leq \bracket{f', d'} \Leftrightarrow f < f' \lor (f = f' \land d \leq d')\]
+    It is defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/target/stack_descriptor.pdf}\]
+    This requires the definition of natural numbers, which is defined in \secref{subsec: natural_numbers}.
 
-    We also define addition and subtraction of stack descriptors as follows:
-    \[\bracket{f, d} \pm n = \bracket{f, d \pm n} \text{ for } n \in \mathbb{N}\]
+    For a stack descriptor $sd$, we can use \dpink{SD.f} $sd$ to access the frame number and \dpink{SD.d} $sd$ to access the displacement. 
+
+    \subsubsection{Order}
+    The stack descriptor is ordered lexicographically with $\leq_s$ as follows:
+    \[\ang{f, d} \leq_s \ang{f', d'} \Leftrightarrow f < f' \lor (f = f' \land d \leq d')\]
+
+    It is defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/target/stack_descriptor_order.pdf}\]
+    This requires the definition of the order of natural numbers, which is defined in \secref{subsec: order}.
+
+    \subsubsection{Addition and subtraction of stack descriptors}
+    We define addition and subtraction of stack descriptors as follows:
+    \[\ang{f, d} \pm_s n = \ang{f, d \pm n} \text{ for } n \in \mathbb{N}\]
+    Addition of stack displacement is defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/target/stack_descriptor_add.pdf}\]
+    For subtraction, we need to make sure that the subtraction is valid, i.e. the subtracted displacement is less than or equal to the displacement of the current stack descriptor. Here we need a rigorous definition of the subtraction of natural numbers, which is defined in \secref{subsec: subtraction}
+
+    \subsubsection{Properties of order and addition}
+    We can use reflexivity and transitivity of the order $<$ and $\leq$ to prove that the order of stack descriptors $\leq_s$ is a preorder. The proof is as follows:
+    \begin{itemize}
+        \item 
+            Reflexivity: $sd \leq_s sd$ is trivially true since $f = f$ and $d \leq d$.
+        \item
+            Transitivity: if $\ang{f, d} \leq_s \ang{f', d'}$ and $\ang{f', d'} \leq_s \ang{f'', d''}$, we do the following case split:
+            \begin{itemize}
+                \item 
+                    if $f < f'$, $f' = f''$ and $d \leq d'$, then $f < f''$; 
+                \item 
+                    if $f < f'$ and $f' < f''$, then $f < f''$ by transitivity of $<$;
+                \item
+                    if $f = f'$, $d \leq d'$ and $f' < f''$, then $f < f''$;
+                \item
+                    if $f = f'$, $d \leq d'$, $f' = f''$ and $d' \leq d''$, then $f = f''$ and $d \leq d''$ by transitivity of $\leq$. \footnote{Note that the properties of $=$ is not required in as in the Agda definition of $\leq_s$, we directly define $f'$ to be $f$ instead of defining a equivalence relation, thus equivalence can be checked directly via type checking.}
+            \end{itemize}
+    \end{itemize}
+    The proof is defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/target/stack_descriptor_order_proof.pdf}\]
+
+    When a natural number is added to a stack descriptor, it is guaranteed that the new stack descriptor is not less than the old stack descriptor. This can be proved directly using the same properties of integer addition. The proof is defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/target/stack_descriptor_add_proof.pdf}\]
+
+    Proof above requires the proof of the properties of natural numbers, which is defined in [section ref].
+    
 
     \subsection{Grammar}
-    The grammar of the target language is defined as follows:
+    The grammar of the target language is defined as follows, given the current stack descriptor $sd = \ang{f, d}$, and new stack descriptor $sd' = \ang{f', d'}$:
     \[\begin{aligned}
-        \bracket{\text{L}_{sd}} ::={}& sd^v \\
-                        &\mid \textsf{sbrs}  \\
-        \bracket{\text{S}_{sd}} ::={}& \bracket{\text{L}_{sd}} \\
-                        &\mid \textsf{lit} \bracket{\text{integer}} \\
-        \bracket{\text{R}_{sd}} ::={}& \bracket{\text{S}_{sd}} \\
-                        &\mid \bracket{ \text{unary operator} } \bracket{ \text{S}_{sd}}\\
-                        &\mid \bracket{\text{S}_{sd}} \bracket{\text{binary operator}} \bracket{ \text{S}_{sd} } \\
-        \bracket{\text{I}_{sd}} ::={}& \textsf{stop} \\
-                        &\mid \bracket{\text{L}_{sd+\delta}} \gets \bracket{\text{R}_{sd}}[\delta] \text{ ; } \bracket{\text{I}_{sd+\delta}} \\
-                        &\mid \textsf{if } \bracket{\text{S}_{sd}} \bracket{\text{relational operator}} \bracket{\text{S}_{sd}}[\delta] \textsf{ then } \bracket{\text{I}_{sd+\delta}} \textsf{ else } \bracket{\text{I}_{sd+\delta}} \\
-                        &\mid \textsf{adjustdisp} [\delta] \text{ ; } \bracket{\text{I}_{sd+\delta}} \\
-                        &\mid \textsf{popto } sd' \text{ ; } \bracket{\text{I}_{sd'}} \text{ when } sd' \leq sd \\
+        \bracket{\textsf{L}_{sd}} ::={}& sd^v \quad \text{when } sd^v \leq_s sd \\
+                        &\mid \texttt{sbrs}  \\
+        \bracket{\textsf{S}_{sd}} ::={}& \bracket{\textsf{L}_{sd}} \\
+                        &\mid \texttt{lit} \bracket{\text{integer}} \\
+        \bracket{\textsf{R}_{sd}} ::={}& \bracket{\textsf{S}_{sd}} \\
+                        &\mid \bracket{ \text{unary operator} } \bracket{ \textsf{S}_{sd}}\\
+                        &\mid \bracket{\textsf{S}_{sd}} \bracket{\textsf{binary operator}} \bracket{ \textsf{S}_{sd} } \\
+        \bracket{\textsf{I}_{sd}} ::={}& \texttt{stop} \\
+                        &\left.
+                        \begin{aligned}
+                        &\mid \bracket{\textsf{L}_{sd+\delta}} \gets \bracket{\textsf{R}_{sd}}[\delta] \text{ ; } \bracket{\textsf{I}_{sd+\delta}} \\
+                        &\mid \texttt{if } \bracket{\textsf{S}_{sd}} \bracket{\text{relational operator}} \bracket{\textsf{S}_{sd}}[\delta] \\
+                        & \hphantom{\mid {}} \texttt{ then } \bracket{\textsf{I}_{sd+\delta}} \texttt{ else } \bracket{\textsf{I}_{sd+\delta}} \\
+                        &\mid \texttt{adjustdisp} [\delta] \text{ ; } \bracket{\textsf{I}_{sd+\delta}} \\
+                        \end{aligned}
+                        \quad \right\} \text{if } d + \delta \geq 0  \\
+                        &{}\mid \texttt{popto } sd' \text{ ; } \bracket{\textsf{I}_{sd'}} \quad \text{when } sd' \leq_s sd \\
     \end{aligned}\]
 
-    Here the intended meaning of $\delta$ is the displacement of the stack descriptor, which can be either positive or negative. To make a rigorous definition, we define $\delta$ as a natural number, and treat the positive and negative displacements as two different instructions, using addition and subtraction of stack descriptors respectively. 
+    \subsubsection{Operators}
+    The operators are defined as follows:
+    \[\begin{aligned}
+        \textsf{unary operator} &\in \{\texttt{UNeg}\} \\
+        \textsf{binary operator} &\in \{\texttt{BPlus}, \texttt{BMinus}, \texttt{BTimes}\} \\
+        \textsf{relational operator} &\in \{\texttt{RLeq}, \texttt{RLt}\}
+    \end{aligned}\]
 
-    For negative displacements, we need to make sure that the the subtraction is valid, i.e. the displacement is less than or equal to the current stack descriptor. Here we need a rigorous definition of the subtraction of natural numbers. There are two different ways to define the subtraction: using an extra proof or using the dependent type fin.
+    The operators are defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/target/operators.pdf}\]
+
+    \subsubsection{Lefthand sides, simple righthand sides and righthand sides}
+    The lefthand sides, simple righthand sides and righthand sides are straightforward, and they are defined as follows in Agda:
+    \[\includegraphics[scale=1.2]{/target/leftrighthand_sides.pdf}\]
+
+    \subsubsection{Instruction sequences}
+    In the instruction sequences, $\delta$ as a displacement can be either positive or negative. To make a rigorous definition, we define $\delta$ as a natural number, and treat the positive and negative displacements as two different instructions, using addition and subtraction of stack descriptors respectively. Since the definition of negative displacement involves the rigorous definition of subtraction, we will discuss the subtraction of natural numbers and correpsonding implementation in \secref{subsec: subtraction}. The definition (except for the negative displacement) in Agda is as follows:
+    \[\includegraphics[scale=1.2]{/target/instruction_inc.pdf}\]
+
 
     \section{Customised Library}
+    The customised library is a collection of types and functions centered around natural numbers, their operations and properties. 
 
+    \subsection{Natural numbers, integers and addition} \label{subsec: natural_numbers}
+    The definition of natural numbers, integers and addition is standard, and it is defined as follows:
+    \[\includegraphics[scale=1.2]{/lib/natural.pdf}\]
+    The use of \og{\textsf{BUILTIN}} is specifed in \secref{subsubsec: builtin_pragma}.
+
+    \subsection{Equality, congruence and substitution}
+    The definition of equality, congruence and substitution is similar to the one in \secref{subsec: equality}.\footnote{The definition of equality and related properties in the custom library differ slightly by using an indexed $\mb{\mathsf{Set}}$, which provides a more general formulation. See Appendex [corresponding link].}
+
+    \subsection{Order of natural numbers} \label{subsec: order}
+    The order of natural numbers we defined include $\leq$ and $<$, which are defined standardly as follows:
+    \[\includegraphics[scale=1.2]{/lib/order.pdf}\]
+
+    \subsection{Properties of order and addition}
+    \subsubsection{Transitivity and reflexivity}
+    The transitivity and reflexivity of the order $<$ and $\leq$ are defined as follows:
+    \[\includegraphics[scale=1.2]{/lib/order_proof.pdf}\]
+
+    \subsubsection{Implication of order}
+    We know that $\forall m, n \in \bN$, if $m < n$, then we have $m + 1 \leq n$ and $m \leq n$. This is defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/lib/order_implication.pdf}\]
+
+    \subsubsection{Totality of order}
+    It is useful to case split the order of natural numbers, i.e. for any $m, n \in \bN$, we have $m \leq n$ or $n \leq m$. This is defined in Agda by defining either case as an instance of the \mb{\textsf{Total}} type, and then showing that for any $m, n \in \bN$, we can construct a \mb{\textsf{Total}} type by case-split and \og{\textsf{with}}-construct. The proof is as follows:
+    \[\includegraphics[scale=1.2]{/lib/order_totality.pdf}\]
+
+
+    \subsubsection{Other properties}
+    We can show that when a number $n$ is added to a natural number $m$, the result is greater than or equal to $m$. This is defined in Agda as follows:
+    \[\includegraphics[scale=1.2]{/lib/order_add.pdf}\]
+
+
+    \subsection{Subtraction} \label{subsec: subtraction}
+    In the standard library~\cite{agda_std}, the subtraction of natural numbers is defined as follows:\footnote{The definition in the standard library directly uses symbol $\mathsf{-}$, but here for clarity we use $\mathsf{\dotdiv}$ instead.}
+    \[\includegraphics[scale=1.2]{minus.pdf}\]
+    Mathematically we have $ n \dotdiv m = \max(0, n - m)$. This definition is valid and ensures that the result is a natural number. However, there are two problems with this definition for our implementation:
+    \begin{itemize}
+        \item 
+            The definition of subtraction is not rigorous. Input $n$ should be guaranteed not to be less than $m$, and at any point in the program if there is a subtraction where $n < m$, the program should fail to type check instead of making $0$ type check with it.
+        \item
+            We lose many numerical properties of natural numbers. For example, $n \dotdiv m + m = n$ or $n \dotdiv (n \dotdiv m) = m$ are not guaranteed to hold if we allow $n < m$. Those properties are very useful for the implementation of the compiler.
+    \end{itemize}
+    We need a more rigorous definition of subtraction that ensures the result is a natural number and preserves the numerical properties. The key is to have a proof that the first argument is greater than or equal to the second argument. There are two approaches to achieve this:
+
+    \subsubsection{Explicit proof-passing approach}
+    A straightforward approach is directly include a third argument in the subtraction function, which is a proof that the first argument is greater than or equal to the second argument. The definition in Agda is as follows:
+    \[\includegraphics[scale=1.2]{/lib/proof/minus.pdf}\]
+
+    The corresponding implementation for subtraction of stack descriptors carries along the proof as follows:
+    \[\includegraphics[scale=1.2]{/target/proof/stack_descriptor_minus.pdf}\]
+
+    In the implementation of instruction sequences, we need to carry along the proof as well. The implementation in Agda is as follows:
+    \[\includegraphics[scale=1.2]{/target/proof/instruction_dec.pdf}\]
+
+    \subsubsection{\textsf{Fin}-based approach}
+    Instead of include the proof directly, we can define the type of the subtrahend as a type that depends on the minuend, where the type encodes the proof. There is a standard library in Agda on finite sets, where a type $\mb{\mathsf{Fin}}$ is defined as a type that depends on a natural number $n$, where $\mb{\mathsf{Fin}}\ n$ can be seen as the set of natural numbers less than $n$. The definition is as follows:
+    \[\includegraphics[scale=1.2]{/lib/fin/fin.pdf}\]
+
+    An intuitive explanation of the definition of $\mb{\mathsf{Fin}}$ is as follows:
+    \begin{itemize}
+        \item Base case: when $n = 0$, there is no element less than $0$, so we do not have any constructor that gives us an element of type $\mb{\mathsf{Fin}}\ 0$. 
+        \item Inductive case: 
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.35\textwidth]{fin_inductive.pdf}
+            \caption{Inductive case of $\mb{\mathsf{Fin}}$}
+            \label{fig: fin_inductive}
+        \end{figure}
+    \end{itemize}
+
+    For subtraction, we only need to change the type of the subtrahend to $\mb{\mathsf{Fin}}\ (\gn{\mathsf{suc}}\ n)$ compared to the implementation of addition. The definition in Agda is as follows:
+    \[\includegraphics[scale=1.2]{/lib/fin/minus.pdf}\]
+
+    The corresponding implementation for subtraction of stack descriptors and instruction sequences only requires a change of the type of the subtrahend as follows:
+    \[\includegraphics[scale=1.2]{/target/fin/instruction_dec.pdf}\]
+
+    \subsubsection{Comparison of the two approaches}
+    The straightforward approach explicitly carries proofs in the type system, which is more transparent but verbose. The fin approach intially appears to be more elegant, as it encapsulates bounds check within a refined type. However, this elegance is superficial: constructing a term of type $\mb{\mathsf{Fin}}\ n$ still requires the same underlying proof of boundedness, shifting complexity to auxiliary conversions. 
+    
+    To prove a property with the fin approach, we need the following auxiliary function:
+    \[\includegraphics[scale=1.2]{/lib/fin/toFin.pdf}\]
+
+    Here is a comparison of the two approaches representing the property $\mathsf{suc}\ (n - m) \equiv \mathsf{suc}\ n - m$:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/lib/proof/minus-suc.pdf}
+        \includegraphics[scale=1.2]{/lib/fin/minus-suc.pdf}
+        \caption{Comparison of explicit vs. \textsf{Fin}-based approaches}
+        \label{fig: fin_comparison}
+    \end{figure}
+    It is clear that the explicit proof-passing approach is more straightforward and easier to understand. The fin-based approach requires additional auxiliary functions and conversions, which makes the code more complex and harder to read.
+
+    Although the project completed both approaches, the following implementation of the compiler uses the explicit proof-passing approach due to its simplicity and clarity.
+
+    \subsection{More properties of natural numbers}
+
+
+    
 
     \section{Compiler}
 
@@ -860,7 +1059,6 @@
     \section{Lessons learned}
 
     % \section{Future work}
-
 
 \printbibliography
 

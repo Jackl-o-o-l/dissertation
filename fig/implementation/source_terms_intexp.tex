@@ -7,18 +7,18 @@
 
 \begin{document}
 	\begin{prooftree}
-		\hypo{\mathbb{Z}}
-		\infer1[\textsc{Lit}]{Γ ⊢ \textsf{intexp}}
+		\hypo{z : \mathbb{Z}}
+		\infer1[\textsc{Lit}]{Γ ⊢ \texttt{lit } z : \textsf{intexp}}
 	\end{prooftree}
 	\quad
 	\begin{prooftree}
-		\hypo{Γ ⊢ \textsf{intexp}}
-		\infer1[\textsc{Neg}]{Γ ⊢ \textsf{intexp}}
+		\hypo{Γ ⊢ e : \textsf{intexp}}
+		\infer1[\textsc{Neg}]{Γ ⊢ -e : \textsf{intexp}}
 	\end{prooftree}
 	\quad
 	\begin{prooftree}
-		\hypo{Γ ⊢ \textsf{intexp}}
-		\hypo{Γ ⊢ \textsf{intexp}}
-		\infer2[\textsc{Plus}]{Γ ⊢ \textsf{intexp}}
+		\hypo{Γ ⊢ e_1 : \textsf{intexp}}
+		\hypo{Γ ⊢ e_2 : \textsf{intexp}}
+		\infer2[\textsc{Plus}]{Γ ⊢ e_1 + e_2 : \textsf{intexp}}
 	\end{prooftree}
 \end{document}

@@ -8,7 +8,7 @@ open import lib
 
 -- Operator precedence and associativity
 infix 1 _≤:_
-infix 2 _⟶_ 
+-- infix 2 _⟶_ 
 infix 4 _⊢_
 infix 4 _∈_
 infixl 5 _,_
@@ -21,6 +21,15 @@ data Type : Set where
     intacc : Type
     intvar : Type
     _⇒_ : Type → Type → Type
+
+-- Subtype relation
+data _≤:_ : Type → Type → Set where
+    ≤:-refl : ∀{A} → A ≤: A
+    ≤:-trans : ∀{A A' A''} → A ≤: A' → A' ≤: A'' → A ≤: A''
+    ≤:-fn : ∀{A A' B B'} → A' ≤: A → B ≤: B' → A ⇒ B ≤: A' ⇒ B'
+
+    var-≤:-exp : intvar ≤: intexp
+    var-≤:-acc : intvar ≤: intacc
 
 -- Contexts
 data Context : Set where
@@ -36,6 +45,9 @@ data _∈_ : Type → Context → Set where
 data _⊢_ : Context → Type → Set where
     Var : ∀{Γ A} → A ∈ Γ → Γ ⊢ A
 
+    -- subtyping
+    Sub : ∀{Γ A B} → Γ ⊢ A → A ≤: B → Γ ⊢ B
+
     -- lambda function and application
     Lambda : ∀{Γ A B} → Γ , A ⊢ B → Γ ⊢ A ⇒ B
     App : ∀{Γ A B} → Γ ⊢ A ⇒ B → Γ ⊢ A → Γ ⊢ B
@@ -43,6 +55,8 @@ data _⊢_ : Context → Type → Set where
     -- command
     Skip : ∀{Γ} → Γ ⊢ comm
     Seq : ∀{Γ} → Γ ⊢ comm → Γ ⊢ comm → Γ ⊢ comm
+    NewVar : ∀{Γ} → Γ , intvar ⊢ comm → Γ ⊢ comm
+    Assign : ∀{Γ} → Γ ⊢ intacc → Γ ⊢ intexp → Γ ⊢ comm
 
     -- intexp
     Lit : ∀{Γ} → ℤ → Γ ⊢ intexp
@@ -55,56 +69,47 @@ data Value : ∀{Γ A} → Γ ⊢ A → Set where
 
     V-Lambda : ∀{Γ A B} {F : Γ , A ⊢ B} → Value (Lambda {Γ} F)
 
--- Renaming
-ext : ∀{Γ Δ} → (∀{A} → A ∈ Γ → A ∈ Δ) → (∀{A B} → B ∈ Γ , A → B ∈ Δ , A)
-ext ρ Zero = Zero
-ext ρ (Suc x) = Suc (ρ x)
+-- -- Renaming
+-- ext : ∀{Γ Δ} → (∀{A} → A ∈ Γ → A ∈ Δ) → (∀{A B} → B ∈ Γ , A → B ∈ Δ , A)
+-- ext ρ Zero = Zero
+-- ext ρ (Suc x) = Suc (ρ x)
 
-rename : ∀{Γ Δ} → (∀{A} → A ∈ Γ → A ∈ Δ) → (∀{A} → Γ ⊢ A → Δ ⊢ A)
-rename ρ (Var x) = Var (ρ x)
-rename ρ (Lambda F) = Lambda (rename (ext ρ) F)
-rename ρ (App F E) = App (rename ρ F) (rename ρ E)
-rename ρ Skip = Skip
-rename ρ (Seq c₁ c₂) = Seq (rename ρ c₁) (rename ρ c₂)
-rename ρ (Lit i) = Lit i
-rename ρ (Neg I) = Neg (rename ρ I)
-rename ρ (Plus I₁ I₂) = Plus (rename ρ I₁) (rename ρ I₂)
+-- rename : ∀{Γ Δ} → (∀{A} → A ∈ Γ → A ∈ Δ) → (∀{A} → Γ ⊢ A → Δ ⊢ A)
+-- rename ρ (Var x) = Var (ρ x)
+-- rename ρ (Lambda F) = Lambda (rename (ext ρ) F)
+-- rename ρ (App F E) = App (rename ρ F) (rename ρ E)
+-- rename ρ Skip = Skip
+-- rename ρ (Seq c₁ c₂) = Seq (rename ρ c₁) (rename ρ c₂)
+-- rename ρ (Lit i) = Lit i
+-- rename ρ (Neg I) = Neg (rename ρ I)
+-- rename ρ (Plus I₁ I₂) = Plus (rename ρ I₁) (rename ρ I₂)
 
--- Simultaneous substitution
-exts : ∀{Γ Δ} → (∀{A} → A ∈ Γ → Δ ⊢ A) → (∀{A B} → B ∈ Γ , A → Δ , A ⊢ B)
-exts σ Zero = Var Zero
-exts σ (Suc x) = rename Suc (σ x)
+-- -- Simultaneous substitution
+-- exts : ∀{Γ Δ} → (∀{A} → A ∈ Γ → Δ ⊢ A) → (∀{A B} → B ∈ Γ , A → Δ , A ⊢ B)
+-- exts σ Zero = Var Zero
+-- exts σ (Suc x) = rename Suc (σ x)
 
-subst : ∀{Γ Δ} → (∀{A} → A ∈ Γ → Δ ⊢ A) → (∀{A} → Γ ⊢ A → Δ ⊢ A)
-subst σ (Var x) = σ x
-subst σ (Lambda F) = Lambda (subst (exts σ) F)
-subst σ (App F E) = App (subst σ F) (subst σ E)
-subst σ Skip = Skip
-subst σ (Seq c₁ c₂) = Seq (subst σ c₁) (subst σ c₂)
-subst σ (Lit i) = Lit i
-subst σ (Neg I) = Neg (subst σ I)
-subst σ (Plus I₁ I₂) = Plus (subst σ I₁) (subst σ I₂)
+-- subst : ∀{Γ Δ} → (∀{A} → A ∈ Γ → Δ ⊢ A) → (∀{A} → Γ ⊢ A → Δ ⊢ A)
+-- subst σ (Var x) = σ x
+-- subst σ (Lambda F) = Lambda (subst (exts σ) F)
+-- subst σ (App F E) = App (subst σ F) (subst σ E)
+-- subst σ Skip = Skip
+-- subst σ (Seq c₁ c₂) = Seq (subst σ c₁) (subst σ c₂)
+-- subst σ (Lit i) = Lit i
+-- subst σ (Neg I) = Neg (subst σ I)
+-- subst σ (Plus I₁ I₂) = Plus (subst σ I₁) (subst σ I₂)
 
--- Single substitution
-_[_] : ∀{Γ A B} → Γ , B ⊢ A → Γ ⊢ B → Γ ⊢ A
-_[_] {Γ} {A} {B} N M = subst {Γ , B} {Γ} σ {A} N
-    where
-    σ : ∀ {A} → A ∈ Γ , B → Γ ⊢ A
-    σ Zero = M
-    σ (Suc x) = Var x
+-- -- Single substitution
+-- _[_] : ∀{Γ A B} → Γ , B ⊢ A → Γ ⊢ B → Γ ⊢ A
+-- _[_] {Γ} {A} {B} N M = subst {Γ , B} {Γ} σ {A} N
+--     where
+--     σ : ∀ {A} → A ∈ Γ , B → Γ ⊢ A
+--     σ Zero = M
+--     σ (Suc x) = Var x
 
--- Reduction
-data _⟶_ : ∀{Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
-    App-cong₁ : ∀{Γ A B} {F F′ : Γ ⊢ A ⇒ B} {E : Γ ⊢ A} → F ⟶ F′ → App F E ⟶ App F′ E
-    App-cong₂ : ∀{Γ A B} {V : Γ ⊢ A ⇒ B} {E E′ : Γ ⊢ A} → Value V → E ⟶ E′ → App V E ⟶ App V E′
-    Lambda-β : ∀{Γ A B} {F : Γ , A ⊢ B} {V : Γ ⊢ A} → Value V → App (Lambda F) V ⟶ F [ V ]
-
--- Subtype relation
-data _≤:_ : Type → Type → Set where
-    ≤:-refl : ∀{T} → T ≤: T
-    ≤:-trans : ∀{T T' T''} → T ≤: T' → T' ≤: T'' → T ≤: T''
-    ≤:-fn : ∀{T₁ T₁′ T₂ T₂′} → T₁′ ≤: T₁ → T₂ ≤: T₂′ → T₁ ⇒ T₂ ≤: T₁′ ⇒ T₂′
-
-    var-≤:-exp : intvar ≤: intexp
-    var-≤:-acc : intvar ≤: intacc
+-- -- Reduction
+-- data _⟶_ : ∀{Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
+--     App-cong₁ : ∀{Γ A B} {F F′ : Γ ⊢ A ⇒ B} {E : Γ ⊢ A} → F ⟶ F′ → App F E ⟶ App F′ E
+--     App-cong₂ : ∀{Γ A B} {V : Γ ⊢ A ⇒ B} {E E′ : Γ ⊢ A} → Value V → E ⟶ E′ → App V E ⟶ App V E′
+--     Lambda-β : ∀{Γ A B} {F : Γ , A ⊢ B} {V : Γ ⊢ A} → Value V → App (Lambda F) V ⟶ F [ V ]
 ```

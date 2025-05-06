@@ -7,12 +7,17 @@
 
 \begin{document}
 	\begin{prooftree}
-		\infer0[Skip]{Γ ⊢ \textsf{comm}}
+		\infer0[Skip]{Γ ⊢ \texttt{skip} : \textsf{comm}}
 	\end{prooftree}
 	\quad
 	\begin{prooftree}
-		\hypo{Γ ⊢ \textsf{comm}}
-		\hypo{Γ ⊢ \textsf{comm}}
-		\infer2[\textsc{Seq}]{Γ ⊢ \textsf{comm}}
+		\hypo{Γ ⊢ c_1 : \textsf{comm}}
+		\hypo{Γ ⊢ c_2 : \textsf{comm}}
+		\infer2[\textsc{Seq}]{Γ ⊢ c_1 ; c_2 : \textsf{comm}}
+	\end{prooftree}
+	\quad
+	\begin{prooftree}
+		\hypo{Γ , x : \textsf{intvar} ⊢ c : \textsf{comm}}
+		\infer1[\textsc{NewVar}]{Γ ⊢ \texttt{new } x \texttt{ in } c : \textsf{comm}}
 	\end{prooftree}
 \end{document}

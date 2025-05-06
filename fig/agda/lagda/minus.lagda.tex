@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{prev}
+\setlength\PreviewBorder{0pt}
+
+\usepackage{agda}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathabx}
+
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+
+\usepackage{newunicodechar}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{∸}{\ensuremath{\dotdiv}}
+\newunicodechar{∀}{\ensuremath{\forall}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
+\newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
+\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
+\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
+
+
+\begin{document}
+\begin{prev}
+\begin{code}
+infix 6 _∸_
+infix 4 _≡_
+
+data ℕ : Set where
+  zero : ℕ
+  suc  : ℕ → ℕ
+{-# BUILTIN NATURAL ℕ #-}
+
+_∸_ : ℕ → ℕ → ℕ
+n ∸ zero = n
+zero ∸ suc m = zero
+suc n ∸ suc m = n ∸ m
+{-# BUILTIN NATMINUS _∸_ #-}
+
+data _≡_ {A : Set} (x : A) : A → Set where
+  refl : x ≡ x
+
+0∸1≡0 : 0 ∸ 1 ≡ 0
+0∸1≡0 = refl
+\end{code}
+\end{prev}
+\end{document}

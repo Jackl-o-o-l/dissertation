@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{prev}
+\setlength\PreviewBorder{0pt}
+
+\usepackage{agda}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathabx}
+
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+
+\usepackage{newunicodechar}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{∸}{\ensuremath{\dotdiv}}
+\newunicodechar{∀}{\ensuremath{\forall}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
+\newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{⊢}{\ensuremath{\vdash}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
+\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
+\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
+\newunicodechar{ʳ}{\ensuremath{\textsuperscript{r}}}
+\newunicodechar{₁}{\ensuremath{\textsubscript{1}}}
+\newunicodechar{₂}{\ensuremath{\textsubscript{2}}}
+\newunicodechar{⟨}{\ensuremath{\langle}}
+\newunicodechar{⟩}{\ensuremath{\rangle}}
+\newunicodechar{–}{\ensuremath{-}}
+
+\begin{document}
+\begin{prev}
+\begin{code}
+module test where
+
+open import lib
+open import source
+open import target
+open import compiler
+
+compile-closed : · ⊢ comm → I ⟨ 0 , 0 ⟩
+compile-closed t = ⟦ t ⟧ ⟨ 0 , 0 ⟩ unit ≤ₛ-refl ?
+
+term1 : · ⊢ comm
+term1 = Plus (Lit (pos 1)) (Lit (pos 2))
+result = compile-closed term1
+\end{code}
+\end{prev}
+\end{document}
