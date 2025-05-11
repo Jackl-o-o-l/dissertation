@@ -1,7 +1,7 @@
 {\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.1}Tools used}{\reset@font\mtcSfont 18}{section.3.1}}
 {\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.2}Repository Overview}{\reset@font\mtcSfont 18}{section.3.2}}
 {\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.2.1}Directory structure}{\reset@font\mtcSSfont 18}{subsection.3.2.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.2.2}File dependencies and descriptions}{\reset@font\mtcSSfont 18}{subsection.3.2.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.2.2}File dependencies and descriptions}{\reset@font\mtcSSfont 19}{subsection.3.2.2}}
 {\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.3}Source Language}{\reset@font\mtcSfont 19}{section.3.3}}
 {\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.1}Types}{\reset@font\mtcSSfont 19}{subsection.3.3.1}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Subtypes}{\reset@font\mtcSSSfont 20}{section*.8}}
@@ -31,4 +31,17 @@
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode \textsf {Fin}-based approach}{\reset@font\mtcSSSfont 30}{section*.20}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Comparison of the two approaches}{\reset@font\mtcSSSfont 31}{section*.21}}
 {\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.6}More properties of natural numbers}{\reset@font\mtcSSfont 32}{subsection.3.5.6}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.6}Compiler}{\reset@font\mtcSfont 32}{section.3.6}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.6}Compiler}{\reset@font\mtcSfont 34}{section.3.6}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.1}Presheaf semantics}{\reset@font\mtcSSfont 34}{subsection.3.6.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Base category}{\reset@font\mtcSSSfont 34}{section*.22}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Semantic category}{\reset@font\mtcSSSfont 34}{section*.23}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.2}Continuations}{\reset@font\mtcSSfont 35}{subsection.3.6.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.3}Denotational semantics of types and contexts}{\reset@font\mtcSSfont 35}{subsection.3.6.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.4}Morphisms: functorial mapping}{\reset@font\mtcSSfont 36}{subsection.3.6.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.5}Denotational semantics of terms}{\reset@font\mtcSSfont 36}{subsection.3.6.5}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Variables}{\reset@font\mtcSSSfont 37}{section*.24}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Subtyping}{\reset@font\mtcSSSfont 37}{section*.25}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Lambda abstraction}{\reset@font\mtcSSSfont 37}{section*.26}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Commands}{\reset@font\mtcSSSfont 37}{section*.27}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Integer expressions}{\reset@font\mtcSSSfont 38}{section*.28}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.6}Compilation}{\reset@font\mtcSSfont 38}{subsection.3.6.6}}

@@ -34,6 +34,7 @@ _–ₛ_ : (sd : SD) → (n : ℕ) → (n≤d : n ≤ SD.d sd) → SD
         → ⟨ f , d ⟩ ≡ (⟨ f , d' ⟩ –ₛ n) n≤d'
 –ₛ≡ p rewrite p = refl
 
+
 -- Stack descriptor lexicographic ordering
 data _≤ₛ_ : SD → SD → Set where
     <-f : ∀ {f f' d d'} → f < f' → ⟨ f , d ⟩ ≤ₛ ⟨ f' , d' ⟩
@@ -50,6 +51,9 @@ data _≤ₛ_ : SD → SD → Set where
 
 +ₛ→≤ₛ : ∀{sd : SD} → ∀{n : ℕ} → sd ≤ₛ sd +ₛ n
 +ₛ→≤ₛ = ≤-d +→≤ 
+
+sub-sd≤ₛ : ∀ {sd sd' sd''} → sd' ≡ sd'' → sd ≤ₛ sd' → sd ≤ₛ sd''
+sub-sd≤ₛ sd'≡sd'' sd≤ₛsd' rewrite sd'≡sd'' = sd≤ₛsd'
 
 
 -- Operator

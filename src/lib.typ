@@ -150,15 +150,14 @@ data _<_ : ℕ → ℕ → Set where
 <-trans z<s (s<s _) = z<s
 <-trans (s<s m<n) (s<s n<p) = s<s (<-trans m<n n<p)
 
--- here tried to make p implicit, but agda fails to infer the type for proof of n-n≡0
 _–_ : (n : ℕ) → (m : ℕ) → (p : m ≤ n) → ℕ
 (n – zero) (z≤n) = n
 (suc n – suc m) (s≤s m≤n) = (n – m) m≤n
 
-
 –-irrelevant : ∀ {n m} → (p₁ p₂ : m ≤ n) → (n – m) p₁ ≡ (n – m) p₂
-–-irrelevant {n} {m} p₁ p₂ = cong (λ p → (n – m) p) (≤-irrelevant p₁ p₂)
+–-irrelevant {n} {m} p₁ p₂ rewrite ≤-irrelevant p₁ p₂ = refl
 
+-- n – m ≤ n
 –→≤ : ∀ {n m} → (m≤n : m ≤ n) → (n – m) m≤n ≤ n
 –→≤ z≤n = ≤-refl
 –→≤ (s≤s m≤n) = ≤-trans (–→≤ m≤n) n≤suc-n
@@ -167,6 +166,7 @@ n–n≡0 : ∀ {n} → (n – n) (≤-refl {n}) ≡ 0
 n–n≡0 {zero} = refl
 n–n≡0 {suc n} = n–n≡0 {n}
 
+-- suc (n – m) ­≡ suc n – m
 –-suc : ∀ {n m} → {m≤n : m ≤ n} 
             → suc ((n – m) m≤n) ≡ (suc n – m) (≤-trans m≤n n≤suc-n)
 –-suc {_} {zero} {z≤n} = refl
@@ -180,14 +180,23 @@ n–[n–m]≡m {suc m} {suc n} (s≤s m≤n) =
             (cong suc (n–[n–m]≡m {m} {n} m≤n))
 
 n+m–m≡n : ∀ {m n} → (n + m – m) (+→≤ʳ) ≡ n
-n+m–m≡n {m} {zero} = trans (–-irrelevant {m} {m} +→≤ʳ ≤-refl) (n–n≡0 {m})
-n+m–m≡n {m} {suc n} = trans (trans (–-irrelevant {suc n + m} {m} +→≤ʳ (≤-trans +→≤ʳ n≤suc-n)) (sym (–-suc {n + m} {m}))) (cong suc (n+m–m≡n {m} {n}))
+n+m–m≡n {m} {zero} = 
+    trans (–-irrelevant {m} {m} +→≤ʳ ≤-refl) (n–n≡0 {m})
+n+m–m≡n {m} {suc n} = 
+    trans 
+        (–-irrelevant {suc n + m} {m} +→≤ʳ (≤-trans +→≤ʳ n≤suc-n)) 
+        (trans (sym (–-suc {n + m} {m})) 
+                (cong suc (n+m–m≡n {m} {n})))
 
-sub-monoʳ-≤ : ∀ {p m n} → (p≤m : p ≤ m) → (m≤n : m ≤ n) → (m – p) p≤m ≤ (n – p) (≤-trans p≤m m≤n)
+-- m ≤ n → m – p ≤ n – p
+sub-monoʳ-≤ : ∀ {p m n} → (p≤m : p ≤ m) → (m≤n : m ≤ n) 
+                → (m – p) p≤m ≤ (n – p) (≤-trans p≤m m≤n)
 sub-monoʳ-≤ z≤n m≤n = m≤n
 sub-monoʳ-≤ (s≤s p≤m) (s≤s m≤n) = sub-monoʳ-≤ p≤m m≤n
 
--- suc d ≤ d' → d ≤ d' - (d' - (suc d))
-suc-d≤d'→d≤d'–[d'–[suc-d]] : ∀ {d d'} → (δ₁≤δ₂ : suc d ≤ d') → d ≤ ((d' – ((d' – (suc d)) δ₁≤δ₂)) (–→≤ δ₁≤δ₂))
-suc-d≤d'→d≤d'–[d'–[suc-d]] δ₁≤δ₂ = m≡n,p≤n→p≤m (n–[n–m]≡m δ₁≤δ₂) n≤suc-n
+-- suc d ≤ d' → d ≤ d' – (d' – (suc d))
+suc-d≤d'→d≤d'–[d'–[suc-d]] : ∀ {d d'} → (δ₁≤δ₂ : suc d ≤ d') 
+            → d ≤ ((d' – ((d' – (suc d)) δ₁≤δ₂)) (–→≤ δ₁≤δ₂))
+suc-d≤d'→d≤d'–[d'–[suc-d]] δ₁≤δ₂ = 
+            m≡n,p≤n→p≤m (n–[n–m]≡m δ₁≤δ₂) n≤suc-n
 ```

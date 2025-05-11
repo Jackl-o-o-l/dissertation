@@ -2,6 +2,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathabx}
+\usepackage{stmaryrd}
+\usepackage{upgreek}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{enumerate}
@@ -19,6 +21,9 @@
 \usepackage{float}
 \usepackage{pdfpages}
 \usepackage{atbegshi}
+\usepackage{multirow, makecell}
+\usepackage{enumitem}
+\usepackage{hhline}
 
 
 \setmainfont{Linux Libertine O}
@@ -72,11 +77,13 @@
 \newcommand{\dpink}[1]{\textcolor{darkpink}{#1}}
 
 \newcommand{\bN}{\mathbb{N}}
+\newcommand{\bZ}{\mathbb{Z}}
 
 \newcommand{\yo}{\mathord{\text{\kern0.03em \scalebox{0.8}{よ}\kern0.03em}}}
 
 \newcommand{\bracket}[1]{\left\{ #1 \right\}}
 \newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+\newcommand{\intp}[1]{\left\llbracket #1 \right\rrbracket}
 
 \newcommand{\frontmatter}{
   \pagenumbering{roman}
@@ -87,6 +94,8 @@
   \pagenumbering{arabic}
   \setcounter{page}{1}
 }
+
+\renewcommand{\arraystretch}{1.5}
 
 \begin{document}
 
@@ -133,8 +142,8 @@
         \textbf{Candidate Number:} & 2330G \\
         \textbf{Title of Project:} & Using functor categories to generate intermediate code with Agda \\
         \textbf{Examination} & Computer Science Tripos - Part II - 2025 \\
-        \textbf{Word-Count:} & [wordcount] \\
-        \textbf{Code line count:} & [linecount] \\
+        \textbf{Word-count:} & [wordcount] \footnotemark \\
+        \textbf{Code line count:} & [linecount] \footnotemark \\
         \textbf{Project Originator:} & Yulong Huang \\
         \textbf{Project Supervisor:} & Yulong Huang and Yufeng Li \\
     \end{tabular}
@@ -150,6 +159,10 @@
     \vspace{2em}
     \textbf{\Large Special Difficulties}
     \vspace{1em}
+    \begingroup
+        \footnotetext[1]{This word-count was computed by \texttt{texcount -1 -sum -merge -q dissertation.tex}.}
+        \footnotetext[2]{This code line count was computed by \texttt{find . -name "*.agda" | xargs wc -l}.}
+    \endgroup
 \end{titlepage}
 
 \frontmatter
@@ -159,15 +172,15 @@
 \mainmatter
 \chapter{Introduction}
     \minitoc
-    Programming languages act as a bridge between human thought and machine execution. They exist in two complementary realms: the human realm, where intent is expressed through abstractions like variables and functions, and the machine realm, where low-level instructions are executed on hardware. 
+    Programming languages act as a bridge between human thoughts and machine execution. They exist in two complementary realms: the human realm, where intent is expressed through abstractions like variables and functions, and the machine realm, where low-level instructions are executed on hardware. 
 
     Denotational semantics is related to the human realms. It provides a theoretical framework for defining the meaning of programming languages by interpreting them into mathematical objects. By formalising the denotational semantics of a programming language, we ensure that its abstraction align with human intuition. 
 
     Compilers are related to the machine realms. They are programs that translate high-level code into executable instructions, resolving abstractions into concrete operations like memory allocation and register management. Compilers are essential for turning human-written code into physical computation.
 
-    This project explores how the two process can be deeply connected by demonstrating how denotational semantics can directly generate a compiler. Simple Typed Lambda Calculus (STLC) is a well-studied programming language that serves as a foundation for many modern languages. It has denotational semantics in cartesian closed categories, shown by Lambek~\cite{lambek}. As a ccc, presheaf categories over store locations can be used to model STLC with stores, as shown by by Reynolds~\cite{essence} and Oles~\cite{Oles_1}~\cite{Oles_2}. Instead, Reynolds~\cite{Reynolds} presented a denotational semantics of STLC with stores in the form of a presheaf category over compiler states. By interpresting the source language into the presheaf category over stack descriptors, where objects of the category represent instruction sequences parameterised by stack layouts, the semantic model directly yields a compiler. 
+    This project explores how the two process can be deeply connected by demonstrating how denotational semantics can directly generate a compiler. Simply typed lambda calculus (STLC)~\cite{stlc} is a well-studied programming language that serves as a foundation for many modern languages. It has denotational semantics in cartesian closed categories, shown by Lambek~\cite{lambek}. As a ccc, presheaf categories over store locations can be used to model STLC with stores, as shown by by Reynolds~\cite{essence} and Oles~\cite{Oles_1}~\cite{Oles_2}. Instead, Reynolds~\cite{Reynolds} presented a denotational semantics of STLC with stores in the form of a presheaf category over compiler states. By interpresting the source language into the presheaf category over stack descriptors, where objects of the category represent instruction sequences parameterised by stack layouts, the semantic model directly yields a compiler. 
     
-    I implement this compiler for STLC with stores in a dependently typed programming language, Agda~\cite{Agda}. The compiler is a functor (structure-preserving map) from the source language's semantic domain to the target language's instruction set. The implementation is verified with Agda's type system, which ensures that the generated code is well-typed and adheres to the semantics of both the source and target languages.
+    In this dissertation, I implement this compiler for STLC with stores in a dependently typed programming language, Agda~\cite{Agda}. The compiler is a functor (structure-preserving map) from the source language's semantic domain to the target language's instruction set. The implementation is verified with Agda's type system, which ensures that the generated code is well-typed and adheres to the semantics of both the source and target languages.
 
     This work both validates and refines Reynolds' theory, offering a concrete example of how category-theoretic semantics can generate intermediate code. The project also serves as a practical demonstration of the power of dependently typed programming languages can mechanise the link between theory and practice.
 
@@ -180,9 +193,6 @@
 
         \motivation{Formal verification of the compiler}
         Reynolds' work presented detailed definitions of denotational semantics of STLC with stores, which are complicated and error-prone. The rise of verified compilers including CompCert~\cite{CompCert}, CakeML~\cite{CakeML} reflects a broader trend toward trustworthy systems, where correctness proofs replace testing for critical guarantees. I aim to provide a formalisation of the definition in a proof assistant to verify the correctness of the given denotational semantics.
-        
-        % \motivation{Trend of verified compilers}
-        % The rise of verified compilers including CompCert~\cite{CompCert}, CakeML~\cite{CakeML} reflects a broader trend toward trustworthy systems, where correctness proofs replace testing for critical guarantees. Like Lean 4~\cite{Lean4}, we leverage dependent types to internalise the verification of correctness of terms.
 
     
     \section{Language choice: Agda's advantages}
@@ -192,19 +202,17 @@
 
         Compared to other dependently typed languages, Agda is more balanced in terms of programming and proving. Its \og{\textsf{with}}-abstraction and \og{\textsf{rewrite}} construction allow for a more flexible and powerful way to define and manipulate terms. The \og{\textsf{with}}-abstraction allows us to inspect intermediate values in a term, which gives a refined view of a function's argument. The \og{\textsf{rewrite}} construction allows us to define new terms by expanding existing terms, which avoids rewriting proofs of similar structures.
 
-        Agda also provides an interactive environment for writing and verifying programs, which will be further discussed in \secref{subsec: holes}.
+        Agda also provides an interactive environment for writing and verifying programs, which will be further discussed in~\secref{subsec: holes}.
 
     \section{Contributions}
-        Addressed the three motivations presented in \secref{sec: motivation} and contributed to the following:
+        Addressed the two motivations presented in~\secref{sec: motivation} and contributed to the following:
         \begin{quote}
             \savedmotivationI
             I implemented the compiler from the source language to the target language in Agda. 
 
             \savedmotivationII
-            I formalised the terms in the source language and target language in Agda, and proved that the compiler is a functor from the source language to the target language. 
+            I formalised the terms in the source language and target language in Agda. I also refined some type definitions in the denotational semantics of the source language.
 
-            % \savedmotivationIII
-            % This implementation follows the trend of verified compilers, and provides a practical example of how to use functor categories to generate intermediate code.
         \end{quote}
 
 
@@ -222,16 +230,14 @@
     \section{Category theory} \label{sec: cat}
         Category theory provides a high-level abstraction from which we can reason about the structure of mathematical objects and their relationships. It provides us a ``bird's eye view'' of the mathematics which enable us to spot patterns that are difficult to see in the details~\cite{basic_cat}. More specifically, it provides a ``purer'' view of functions that is not derived from sets~\cite{scott-lambda}. Compared to set theory which is ``element-oriented'', category theory is ``function-oriented'' and ``morphism-oriented''. We understand structures not via elements but by how they transform into each other. 
 
-        Notation in category theory is similar to that in set theory and type theory. For example, $A, B, \dots$ are used to denote objects, sets, or types, and arrows are used to denote morphisms or functions (e.g.\ $A \to B$). There is a deeper connection between category theory and type theory, which will 
-        be discussed in \secref{subsec: curry-howard-lambek}. 
-
+        Notation in category theory is similar to that in set theory and type theory. For example, $A, B, \dots$ are used to denote objects, sets, or types, and arrows are used to denote morphisms or functions (e.g.\ $A \to B$). There is a deeper connection between category theory and type theory, which will be discussed in~\secref{subsec: curry-howard-lambek}. 
 
         The following is a brief introduction to the basic concepts of category theory, which is based on the work of Leinster~\cite{basic_cat}, 
         Riehl~\cite{cat_context}, and the lecture notes of Part II Category Theory by Andrew Pitts and Marcelo Fiore~\cite{cat_lecture_notes}.
 
         \subsection{Category}
         \begin{definition}[Category]
-            A \emph{category} $\mathcal{C}$ is specified by the following:
+            A \emph{category} $\mathcal{C}$ is specified by
             \begin{itemize}
                 \item 
                     a collection of objects $\textbf{obj}(\mathcal{C})$, whose elements are called $\mathcal{C}$-objects;
@@ -251,13 +257,13 @@
             \begin{itemize}
                 \item 
                     \textbf{(Unit Laws)}
-                    for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have:
+                    For all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have
                     \begin{equation} \label{law: unit}
                         \textbf{id}_Y \circ f = f = f \circ \textbf{id}_X
                     \end{equation}
                 \item
                     \textbf{(Associativity Law)}
-                    for all $X, Y, Z, W \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, $h \in \mathcal{C}{(Z,W)}$, we have:
+                    For all $X, Y, Z, W \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, $h \in \mathcal{C}{(Z,W)}$, we have
                     \begin{equation} \label{law: associativity}
                         h \circ (g \circ f) = (h \circ g) \circ f
                     \end{equation}
@@ -265,56 +271,62 @@
         \end{definition}
 
         \begin{example}[$\mathcal{Set}$]
-            An example of category is the category of sets, denoted as $\mathcal{Set}$, specifed by:
+            An example of category is the category of sets, denoted as $\mathcal{Set}$, specifed by the following:
             \begin{itemize}
                 \item 
-                    the objects of $\mathcal{Set}$ are a fixed universe of sets;
+                    The objects of $\mathcal{Set}$ are a fixed universe of sets;
                 \item
-                    for each $X, Y \in \textbf{obj}(\mathcal{Set})$, the morphisms from $X \to Y$ in $\mathcal{Set}$ are the functions $X \to Y$;
+                    For each $X, Y \in \textbf{obj}(\mathcal{Set})$, the morphisms from $X \to Y$ in $\mathcal{Set}$ are the functions $X \to Y$;
                 \item
-                    the identity morphism on $X$ in $\mathcal{Set}$ is the identity function on $X$;
+                    The identity morphism on $X$ in $\mathcal{Set}$ is the identity function on $X$;
                 \item
-                    the composition of morphisms in $\mathcal{Set}$ is defined as the composition of functions.
+                    The composition of morphisms in $\mathcal{Set}$ is defined as the composition of functions.
             \end{itemize}
             Associativity law and unit laws are satisfied in $\mathcal{Set}$, since the composition of functions is associative and the identity function compose with any function is the function itself.
         \end{example}
 
-        \begin{example}[$\mathcal{Poset}$]
-            Another example of category is the category of posets, denoted as $\mathcal{Poset}$, specified by:
+        \begin{definition}[Preorder]
+            A \emph{preorder} $\underline{P} = (P, \sqsubseteq)$ is a set $P$ with a binary relation $\sqsubseteq$ that is
+            \begin{itemize}
+                \item reflexive: $\forall x \in P, x \sqsubseteq x$;
+                \item transitive: $\forall x, y, z \in P, x \sqsubseteq y \land y \sqsubseteq z \implies x \sqsubseteq z$.
+            \end{itemize}
+        \end{definition}
+
+        \begin{example}[Category determined by preorder] \label{ex: category_preorder}
+            Another example of category is a category $\mathcal{C}_{\underline{P}}$ determined by any preorder $\underline{P}$, which is specified by the following:
             \begin{itemize}
                 \item 
-                    the objects of $\mathcal{Poset}$ are a fixed universe of posets, which is a set $P$ with a binary relation $\subseteq$ that is 
-                    \begin{itemize}
-                        \item reflexive: $\forall x \in P, x \subseteq x$;
-                        \item transitive: $\forall x, y, z \in P, x \subseteq y \land y \subseteq z \implies x \subseteq z$;
-                        \item antisymmetric: $\forall x, y \in P, x \subseteq y \land y \subseteq x \implies x = y$.
-                    \end{itemize}
+                    The objects of $\mathcal{C}_{\underline{P}}$ are the elements of $P$;
                 \item
-                    for each $X, Y \in \textbf{obj}(\mathcal{Poset})$, the morphisms from $X$ to $Y$ in $\mathcal{Poset}$ are the monotone (order-preserving) functions from $X$ to $Y$;
+                    $\mathcal{C}_{\underline{P}}(x,y) = \begin{cases}
+                        \{(x,y)\} & \text{if $x \sqsubseteq y$} \\
+                        \emptyset & \text{otherwise}
+                    \end{cases}$
                 \item
-                    the identity morphism on $X$ in $\mathcal{Poset}$ is the identity function on $X$;
+                    The identity morphism on $X$ in $\mathcal{C}_{\underline{P}}$ is the identity function on $X$;
                 \item
-                    the composition of morphisms in $\mathcal{Poset}$ is defined as the composition of functions.
+                    The composition of morphisms in $\mathcal{C}_{\underline{P}}$ is defined as the composition of functions.
             \end{itemize}
-            Associativity law and unit laws are satisfied in $\mathcal{Poset}$, since the set of monotone functions contains identity functions and is closed under composition.
+            Associativity law and unit laws are satisfied in $\mathcal{C}_{\underline{P}}$.
 
-            $\mathcal{Poset}$ is used later for stack descriptors in the denotational semantics of the source language.
+            $\mathcal{C}_{\underline{P}}$ is used later for stack descriptors in the denotational semantics of the source language.
         \end{example}
 
             \subsubsection{Opposite category}
             The idea of opposite category is that if we have a category $\mathcal{C}$, we can reverse the direction of all morphisms in $\mathcal{C}$ to obtain a new category $\mathcal{C}^{\textbf{op}}$.
 
             \begin{definition}[Opposite category]
-                Given a category $\mathcal{C}$, its \emph{opposite category} $\mathcal{C}^{\textbf{op}}$ is specified by:
+                Given a category $\mathcal{C}$, its \emph{opposite category} $\mathcal{C}^{\textbf{op}}$ is specified by the following:
                 \begin{itemize}
                     \item 
-                        the objects of $\mathcal{C}^{\textbf{op}}$ are the same as those of $\mathcal{C}$;
+                        The objects of $\mathcal{C}^{\textbf{op}}$ are the same as those of $\mathcal{C}$;
                     \item 
-                        for each $X, Y \in \textbf{obj}(\mathcal{C})$, the morphisms from $X$ to $Y$ in $\mathcal{C}^{\textbf{op}}$ are the morphisms from $Y$ to $X$ in $\mathcal{C}$;
+                        For each $X, Y \in \textbf{obj}(\mathcal{C})$, the morphisms from $X$ to $Y$ in $\mathcal{C}^{\textbf{op}}$ are the morphisms from $Y$ to $X$ in $\mathcal{C}$;
                     \item 
-                        the identity morphism on $X$ in $\mathcal{C}^{\textbf{op}}$ is the identity morphism on $X$ in $\mathcal{C}$;
+                        The identity morphism on $X$ in $\mathcal{C}^{\textbf{op}}$ is the identity morphism on $X$ in $\mathcal{C}$;
                     \item 
-                        the composition of morphisms in $\mathcal{C}^{\textbf{op}}$ is defined as the composition of morphisms in $\mathcal{C}$.
+                        The composition of morphisms in $\mathcal{C}^{\textbf{op}}$ is defined as the composition of morphisms in $\mathcal{C}$.
                 \end{itemize}
             \end{definition}
 
@@ -343,7 +355,7 @@
                 \end{minipage}
             \end{figure}
 
-            As examples of commutative diagrams, Figure \ref{fig: associativity_law} and Figure \ref{fig: unit_laws} are commutative diagrams for the unit laws and associativity law respectively. 
+            As examples of commutative diagrams, Figure~\ref{fig: associativity_law} and Figure~\ref{fig: unit_laws} are commutative diagrams for the unit laws and associativity law respectively. 
 
         
         \subsection{Isomorphism}
@@ -366,12 +378,12 @@
             \begin{definition}[Terminal object]
                 Given a category $\mathcal{C}$, an object $T \in \textbf{obj}(\mathcal{C})$ is called a \emph{terminal object} if for all $X \in \textbf{obj}(\mathcal{C})$, there exists a unique \textbf{C}-morphism $f : X \to T$.
             \end{definition}
-            Terminal objects are unique up to isomorphism. In other words, we have
+            Terminal objects are unique up to isomorphism. In other words, we have the following properties:
             \begin{itemize}
                 \item 
-                    if $T$ and $T'$ are both terminal objects in $\mathcal{C}$, then there exists a unique isomorphism $f : T \to T'$.
+                    If $T$ and $T'$ are both terminal objects in $\mathcal{C}$, then there exists a unique isomorphism $f : T \to T'$.
                 \item
-                    if $T$ is a terminal object in $\mathcal{C}$ and $T \cong T'$, then $T'$ is also a terminal object in $\mathcal{C}$.
+                    If $T$ is a terminal object in $\mathcal{C}$ and $T \cong T'$, then $T'$ is also a terminal object in $\mathcal{C}$.
             \end{itemize}
             \begin{example}[Terminal object in $\mathcal{Set}$]
                 $\mathcal{Set}$ has a terminal object $\{\ast\}$, which is an arbitrary singleton set containing a single element $\ast$.
@@ -394,9 +406,7 @@
                     \vcenter{\hbox{\includegraphics[width=0.4\textwidth]{binary_product.pdf}}}
                     \label{cd: binary_product}
                 \end{equation}
-                The unique morphism $u$ is written as 
-                \[ \bracket{ f, g } : Z \to X \times Y \]
-                where $f = \pi_1 \circ u$ and $g = \pi_2 \circ u$.
+                The unique morphism $u$ is written as $\ang{ f, g } : Z \to X \times Y$ where $f = \pi_1 \circ u$ and $g = \pi_2 \circ u$.
             \end{definition}
             It can be shown that the binary product is unique up to (unique) isomorphism.
 
@@ -452,7 +462,7 @@
         
         \subsection{Functor}
         \begin{definition}[Functor]
-            Given two categories $\mathcal{C}$ and $\mathcal{D}$, a \emph{functor} $F: \mathcal{C} \to \mathcal{D}$ is specified by:
+            Given two categories $\mathcal{C}$ and $\mathcal{D}$, a \emph{functor} $F: \mathcal{C} \to \mathcal{D}$ is specified by
             \begin{itemize}
                 \item 
                     a function 
@@ -471,9 +481,9 @@
             satisfying the following properties:
             \begin{itemize}
                 \item 
-                    for all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have: $ F(\textbf{id}_X) = \textbf{id}_{F(X)}$
+                    For all $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, we have: $ F(\textbf{id}_X) = \textbf{id}_{F(X)}$
                 \item
-                    for all $X, Y, Z \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, we have: $F(g \circ f) = F(g) \circ F(f)$
+                    For all $X, Y, Z \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $g \in \mathcal{C}{(Y,Z)}$, we have: $F(g \circ f) = F(g) \circ F(f)$
             \end{itemize}
         \end{definition}
 
@@ -497,41 +507,41 @@
             Given two categories $\mathcal{C}$ and $\mathcal{D}$, the \emph{functor category} $\mathcal{D}^{\mathcal{C}}$ is the category satisfying the following:
             \begin{itemize}
                 \item 
-                    the objects of $\mathcal{D}^{\mathcal{C}}$ are all functors $\mathcal{C} \to \mathcal{D}$;
+                    The objects of $\mathcal{D}^{\mathcal{C}}$ are all functors $\mathcal{C} \to \mathcal{D}$;
                 \item 
-                    given two functors $F,G: \mathcal{C} \to \mathcal{D}$, the morphisms from $F$ to $G$ in $\mathcal{D}^{\mathcal{C}}$ are all natural transformations $\theta : F \to G$;
+                    Given two functors $F,G: \mathcal{C} \to \mathcal{D}$, the morphisms from $F$ to $G$ in $\mathcal{D}^{\mathcal{C}}$ are all natural transformations $\theta : F \to G$;
                 \item
-                    composition and identity morphisms in $\mathcal{D}^{\mathcal{C}}$ are defined as follows:
+                    Composition and identity morphisms in $\mathcal{D}^{\mathcal{C}}$ are defined as follows:
                     \begin{itemize}
                         \item 
-                            the identity morphism $\textbf{id}_F$ on $F$ is defined as $\theta_X = \textbf{id}_{F(X)}$ for all $X \in \textbf{obj}(\mathcal{C})$;
+                            The identity morphism $\textbf{id}_F$ on $F$ is defined as $\theta_X = \textbf{id}_{F(X)}$ for all $X \in \textbf{obj}(\mathcal{C})$;
                         \item
-                            the composition of two natural transformations $\theta : F \to G$ and $\phi : G \to H$ is defined as $(\phi \circ \theta)_X = \phi_X \circ \theta_X$ for all $X \in \textbf{obj}(\mathcal{C})$.
+                            The composition of two natural transformations $\theta : F \to G$ and $\phi : G \to H$ is defined as $(\phi \circ \theta)_X = \phi_X \circ \theta_X$ for all $X \in \textbf{obj}(\mathcal{C})$.
                     \end{itemize}
             \end{itemize}
         \end{definition}
 
         \subsection{Presheaf category}
         \begin{definition}[Presheaf]
-            Given a category $\mathcal{C}$, a \emph{presheaf} on $\mathcal{C}$ is a functor $F: \mathcal{C}^{\textbf{op}} \to \textbf{Set}$.
+            Given a category $\mathcal{C}$, a \emph{presheaf} on $\mathcal{C}$ is a functor $F: \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$.
             A presheaf is a contravariant functor, which means that it reverses the direction of morphisms.
             In other words, a presheaf is a functor that takes objects in $\mathcal{C}$ and assigns them sets, and takes morphisms in $\mathcal{C}$ and assigns them functions between the corresponding sets.
             The presheaf $F$ is defined as follows:
             \begin{itemize}
                 \item 
-                    for each $X \in \textbf{obj}(\mathcal{C})$, $F(X)$ is a set;
+                    For each $X \in \textbf{obj}(\mathcal{C})$, $F(X)$ is a set;
                 \item
-                    for each $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $F(f)$ is a function $F(Y) \to F(X)$.
+                    For each $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $F(f)$ is a function $F(Y) \to F(X)$.
             \end{itemize}
         \end{definition}
 
         \begin{definition}[Presheaf category]
-            Given a category $\mathcal{C}$, the \emph{presheaf category} $\hat{\mathcal{C}}$ is the is the functor category $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$, which explicitly contains the following:
+            Given a category $\mathcal{C}$, the \emph{presheaf category} $\hat{\mathcal{C}}$ is the functor category $\mathcal{Set}^{\mathcal{C}^{\textbf{op}}}$, which explicitly contains the following:
             \begin{itemize}
                 \item 
-                    the objects of $\hat{\mathcal{C}}$ are all presheaves on $\mathcal{C}$;
+                    The objects of $\hat{\mathcal{C}}$ are all presheaves on $\mathcal{C}$;
                 \item
-                    given two presheaves $F,G: \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$, the morphisms from $F$ to $G$ in $\hat{\mathcal{C}}$ are all natural transformations $\theta : F \to G$.
+                    Given two presheaves $F,G: \mathcal{C}^{\textbf{op}} \to \mathcal{Set}$, the morphisms from $F$ to $G$ in $\hat{\mathcal{C}}$ are all natural transformations $\theta : F \to G$.
             \end{itemize}
         \end{definition}
 
@@ -542,13 +552,13 @@
             Given a category $\mathcal{C}$, the \emph{Yoneda functor} $\yo: \mathcal{C} \to \hat{\mathcal{C}}$ is defined as follows:
             \begin{itemize}
                 \item 
-                    for each $X \in \textbf{obj}(\mathcal{C})$, $\yo(X)$ is the functor $\mathcal{C}^{\textbf{op}} \to \mathcal{Set}$ defined as:
+                    For each $X \in \textbf{obj}(\mathcal{C})$, $\yo(X)$ is the functor $\mathcal{C}^{\textbf{op}} \to \mathcal{Set}$ defined as:
                     \begin{equation} \label{eq: yoneda_element}
                         \yo(X)(Y) = \mathcal{C}{(Y,X)}
                     \end{equation}
-                    for all $Y \in \textbf{obj}(\mathcal{C})$;
+                    For all $Y \in \textbf{obj}(\mathcal{C})$;
                 \item
-                    for each $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $\yo(f)$ is the morphism $\yo(X) \to \yo(Y)$ defined a natural transformation whose component at any given $Z \in \mathcal{C}^{\textbf{op}}$ is given by:
+                    For each $X, Y \in \textbf{obj}(\mathcal{C})$ and $f \in \mathcal{C}{(X,Y)}$, $\yo(f)$ is the morphism $\yo(X) \to \yo(Y)$ defined a natural transformation whose component at any given $Z \in \mathcal{C}^{\textbf{op}}$ is given by:
                     \begin{equation} \label{eq: yoneda_morphism}
                         \begin{aligned}
                             (\yo(f))_Z : \mathcal{C}{(Z,Y)} &\to \mathcal{C}{(Z,X)} \\
@@ -569,7 +579,7 @@
 
 
 
-        \subsection{Cartesian closed structure in presheaf categories}
+        \subsection{Cartesian closed structure in presheaf categories} \label{sec: ccc_presheaf}
         \begin{prf}[Cartesian closed structure in presheaf categories]
             Given a small category $\mathcal{C}$, the presheaf category $\hat{\mathcal{C}}$ is a Cartesian closed category.
             \begin{itemize}
@@ -627,7 +637,7 @@
 
         \[\includegraphics[scale=1.2]{vector.pdf}\]
 
-        Here we define a datatype $\mb{\mathsf{Vec}}$ for vectors. The type of vectors is dependent on the length of the vector. With dependent types, we can encode properties directly into types and ensure that they are satisfied at compile time.
+        Here we define a datatype $\mb{\mathsf{Vec}}$ for vectors. The type of vectors is dependent on the length of the vector. With dependent types, we can encode properties directly into types.
 
         \subsection{Curry-Howard-Lambek correspondence} \label{subsec: curry-howard-lambek}
         Curry-Howard correspondence~\cite{curry-howard} establishes an isomorphism between logic and type theory, where propositions correspond to types and proofs correspond to terms. This correspondence forms the foundation of functional programming languages that can be used to implement proofs. Building upon this, Joachim Lambek showed that cartesian closed categories provide a natural semantic setting for the simply typed lambda calculus (STLC)~\cite{lambek}. The Curry-Howard-Lambek correspondence can be summarised as follows:
@@ -636,13 +646,19 @@
             \begin{tabular}{|c|c|c|}
                 \hline
                 \textbf{Logic} & \textbf{Type theory} & \textbf{Category theory} \\
-                \hline
+                \hhline{|=|=|=|}
                 Proposition & Type & Object \\
+                \hline
                 Proof & Term & Morphism \\
+                \hline
                 Falsity & Empty type & Initial object \\
+                \hline
                 Truth & Unit type & Terminal object \\
+                \hline
                 Implication & Function type & Exponential \\
+                \hline
                 Conjunction & Product type & Product \\
+                \hline
                 Disjunction & Sum type & Coproduct \\
                 % Universal quantification & Dependent product type &  \\
                 % Existential quantification & Dependent sum type &  \\
@@ -674,17 +690,19 @@
 
         % \subsection{With and Rewrite}
 
-        \subsection{Standard library}
-        The Agda standard library~\cite{agda_std} is a collection of modules that provide a wide range of useful functions and types. It includes modules for basic data types, such as natural numbers, lists, and vectors. In my implementation, however, I defined most of the basic data types and functions from scratch for the following two reasons:
+        \subsection{Standard library} \label{subsec: stdlib}
+        The Agda standard library~\cite{agda_std} is a collection of modules that provide a wide range of useful functions and types. It includes modules for basic data types, such as natural numbers, lists, and vectors. In my implementation, however, I defined the basic data types and functions from scratch for the following reasons:
         \begin{itemize}
             \item
-                I wanted to have a better understanding of the basic data types and functions, so I decided to implement them from scratch.
+                \textbf{Specialised Requirements}: The standard library's definitions (e.g. subtraction as monus, `'$\dotdiv$') do not align with my project's need for a rigorously defined subtraction operation. My implementation, discussed in Section~\ref{subsec: subtraction}, ensures correctness and preserves the properties of natural numbers.
             \item
-                I need a particular representation of minus operation that ensures the input is always valid. This is further explained in [to add]
+                \textbf{Verification Clarity}: By defining the basic data types and functions from scratch, I can tailor properties (e.g. the property `$n-[n-m] \equiv m$') to my specific requirements, and avoid unnecessary complexity (e.g. `$\leq$' being also defined as a boolean predicate in the standard library). 
+            \item
+                \textbf{Minimal Dependencies}: Avoiding the standard library reduces external assumptions, making the project self-contained. 
         \end{itemize}
 
         \subsubsection{Builtin pragma} \label{subsubsec: builtin_pragma}
-        With standard library, we can use actual numbers $1, 2, 3, \dots$ instead of calling the constructor $\gn{\mathsf{suc}}$ multiple times. This is a convenient feature for testing. Agda provides a way to link self-defined functions to the standard library with a \og{\textsf{BUILTIN}} pragma. This allows me to use a convenient syntax for numbers, while still using the self-defined functions in the implementation.
+        With standard library, we can use actual numbers $1, 2, 3, \dots$ instead of calling the constructor $\gn{\mathsf{suc}}$ multiple times. This is a convenient feature for testing. Agda provides a way to link self-defined functions to the standard library with a \og{\textsf{BUILTIN}} pragma. This allows me to use a convenient syntax for numbers, while still using the self-defined functions in the implementation without any import.
         \[\includegraphics[scale=1.2]{natural_pragma.pdf}\]
         Note that in agda we can use unicode characters for terms, which makes the code more readable. For example, here we simply name the term \mb{1+1$\equiv$2}.
 
@@ -707,7 +725,7 @@
         \item
             A file compiler.agda that uses source.agda and target.agda as modules, and write functions whose input is a term in the source language and output is a term in the target language.
     \end{itemize}
-    The success criteria of the project is that the compiler can compile a term in the source language to a term in the target language, and the output term is well-typed in the target language.
+    The success criteria of the project is that the file compiler.agda type checks, as the type checking process will reduce the source term to the target term.
 
 \chapter{Implementation} \label{chap: implementation}
     \minitoc
@@ -733,11 +751,13 @@
             .3 source.agda.
             .3 target.agda.
             .3 compiler.agda.
+            .3 test.agda.
             .2 proof.
             .3 lib.agda.
             .3 source.agda.
             .3 target.agda.
             .3 compiler.agda.
+            .3 test.agda.
         }
 
         \subsection{File dependencies and descriptions}
@@ -751,14 +771,19 @@
 
         \begin{table}[H]
             \centering
-            \begin{tabular}{l l l}
+            \begin{tabular}{|l|l|l|}
                 \hline
                 \textbf{File} & \textbf{Description}\\
+                \hhline{|=|=|}
+                lib.agda & shared utilities (e.g. natural numbers and operations, equality, etc.) \\
                 \hline
-                lib.agda & Shared utilities (e.g. natural numbers and operations, equality, etc.) \\
-                source.agda & Source language syntax \\
-                target.agda & Target language (stack machine) instructions \\
-                compiler.agda & Compiler functor \\
+                source.agda & source language syntax \\
+                \hline
+                target.agda & target language (stack machine) instructions \\
+                \hline
+                compiler.agda & compiler derived from denotational semantics \\
+                \hline
+                test.agda & test cases for the compiler \\
                 \hline
             \end{tabular}
             \caption{File descriptions}
@@ -766,7 +791,7 @@
         \end{table}
 
     \section{Source Language}
-    A simply typed lambda calculus (STLC) is a typed lambda calculus with only one type constructor ($\to$) that builds function types. 
+    A simply typed lambda calculus (STLC) is a typed lambda calculus with only one type constructor ($\Rightarrow$) \footnote{Normally we use $\to$ to denote the function type, but here we use $\Rightarrow$ to be consistent with the notation in Agda, as $\to$ is a primitive in Agda.} that builds function types. 
     
         \subsection{Types}
         In this dissertation, the source language is an STLC with the following primitive types:
@@ -780,8 +805,8 @@
             \item 
                 \textsf{intvar}: the integer variables
         \end{itemize}
-        and the set $\Theta$ of types is defined as follows:
-        \[ \Theta := \textsf{comm} \mid \textsf{intexp} \mid \textsf{intacc} \mid \textsf{intvar} \mid \Theta \to \Theta \]
+        and the set $\Theta$ of types is defined as follows: 
+        \[ \Theta := \textsf{comm} \mid \textsf{intexp} \mid \textsf{intacc} \mid \textsf{intvar} \mid \Theta \Rightarrow \Theta \] 
         which corresponds with the following agda implementation:
         \[\includegraphics[scale=1.2]{/source/types.pdf}\]
 
@@ -807,28 +832,53 @@
         \[\includegraphics[scale=1.2]{/source/contexts.pdf}\]
 
 
-        \subsection{Terms and the typing judgement}
+        \subsection{Terms and the typing judgement} \label{subsec: terms}
         The terms and the typing judgement are described in the following rules:
         \begin{itemize}
             \item For any variable we have 
-                \[\includegraphics{source_terms_var.pdf}\]
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics{source_terms_var.pdf}
+                    \caption{Variable typing rule}
+                    \label{fig: rule_var}
+                \end{figure}
             \item For subtyping we have
-                \[\includegraphics{source_terms_subtype.pdf}\]
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics{source_terms_subtype.pdf}
+                    \caption{Subtyping rule}
+                    \label{fig: rule_subtype}
+                \end{figure}
             \item For lambda abstraction we have
-                \[\includegraphics{source_terms_lambda.pdf}\]
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics{source_terms_lambda.pdf}
+                    \caption{Lambda abstraction typing rules}
+                    \label{fig: rule_lambda}
+                \end{figure}
             \item For command we have
-                \[\includegraphics{source_terms_comm.pdf}\]
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics{source_terms_comm.pdf}
+                    \caption{Command typing rules}
+                    \label{fig: rule_comm}
+                \end{figure}
             \item For integer expression we have
-                \[\includegraphics{source_terms_intexp.pdf}\]
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics{source_terms_intexp.pdf}
+                    \caption{Integer expression typing rules}
+                    \label{fig: rule_intexp}
+                \end{figure}
         \end{itemize}
 
         The corresponding Agda implementation is as follows, note that the Agda implementation does not include the name of the terms, but the names are included in the latex implementation for clarity:
         \[\includegraphics[scale=1.2]{/source/terms.pdf}\]
 
-        Here the definition of the integers is defined in the customised library, which is defined in [section ref].
+        Here the definition of the integers is defined in the customised library, which is defined in~\secref{subsec: natural_numbers}.
 
         \subsection{Operational Semantics}
-        The operational semantics of the source language is defined with renaming, substitution and reduction rules. However, since the compiler itself does not require the operational semantics, the implementation is included in the appendix [link to appendix]. Operational semantics can be used to verify the correctness of the compiler in the future, but it is beyond the scope of this dissertation.
+        The operational semantics of the source language is defined with renaming, substitution and reduction rules. However, since the compiler itself does not require the operational semantics, the implementation is included in the appendix~\ref{app: operational_semantics}. Operational semantics can be used to verify the correctness of the compiler in the future, but it is beyond the scope of this dissertation.
 
 
     \section{Target Language}
@@ -849,7 +899,7 @@
 
     It is defined in Agda as follows:
     \[\includegraphics[scale=1.2]{/target/stack_descriptor.pdf}\]
-    This requires the definition of natural numbers, which is defined in \secref{subsec: natural_numbers}.
+    This requires the definition of natural numbers, which is defined in~\secref{subsec: natural_numbers}.
 
     For a stack descriptor $sd$, we can use \dpink{SD.f} $sd$ to access the frame number and \dpink{SD.d} $sd$ to access the displacement. 
 
@@ -859,14 +909,14 @@
 
     It is defined in Agda as follows:
     \[\includegraphics[scale=1.2]{/target/stack_descriptor_order.pdf}\]
-    This requires the definition of the order of natural numbers, which is defined in \secref{subsec: order}.
+    This requires the definition of the order of natural numbers, which is defined in~\secref{subsec: order}.
 
     \subsubsection{Addition and subtraction of stack descriptors}
     We define addition and subtraction of stack descriptors as follows:
     \[\ang{f, d} \pm_s n = \ang{f, d \pm n} \text{ for } n \in \mathbb{N}\]
     Addition of stack displacement is defined in Agda as follows:
     \[\includegraphics[scale=1.2]{/target/stack_descriptor_add.pdf}\]
-    For subtraction, we need to make sure that the subtraction is valid, i.e. the subtracted displacement is less than or equal to the displacement of the current stack descriptor. Here we need a rigorous definition of the subtraction of natural numbers, which is defined in \secref{subsec: subtraction}
+    For subtraction, we need to make sure that the subtraction is valid, i.e. the subtracted displacement is less than or equal to the displacement of the current stack descriptor. Here we need a rigorous definition of the subtraction of natural numbers, which is defined in~\secref{subsec: subtraction}
 
     \subsubsection{Properties of order and addition}
     We can use reflexivity and transitivity of the order $<$ and $\leq$ to prove that the order of stack descriptors $\leq_s$ is a preorder. The proof is as follows:
@@ -933,20 +983,20 @@
     \[\includegraphics[scale=1.2]{/target/leftrighthand_sides.pdf}\]
 
     \subsubsection{Instruction sequences}
-    In the instruction sequences, $\delta$ as a displacement can be either positive or negative. To make a rigorous definition, we define $\delta$ as a natural number, and treat the positive and negative displacements as two different instructions, using addition and subtraction of stack descriptors respectively. Since the definition of negative displacement involves the rigorous definition of subtraction, we will discuss the subtraction of natural numbers and correpsonding implementation in \secref{subsec: subtraction}. The definition (except for the negative displacement) in Agda is as follows:
+    In the instruction sequences, $\delta$ as a displacement can be either positive or negative. To make a rigorous definition, we define $\delta$ as a natural number, and treat the positive and negative displacements as two different instructions, using addition and subtraction of stack descriptors respectively. Since the definition of negative displacement involves the rigorous definition of subtraction, we will discuss the subtraction of natural numbers and correpsonding implementation in~\secref{subsec: subtraction}. The definition (except for the negative displacement) in Agda is as follows:
     \[\includegraphics[scale=1.2]{/target/instruction_inc.pdf}\]
 
 
     \section{Customised Library}
-    The customised library is a collection of types and functions centered around natural numbers, their operations and properties. 
+    The customised library is a collection of types and functions centered around natural numbers, their operations and properties. The reason for creating a customised library is summarised in \secref{subsec: stdlib}. 
 
     \subsection{Natural numbers, integers and addition} \label{subsec: natural_numbers}
     The definition of natural numbers, integers and addition is standard, and it is defined as follows:
     \[\includegraphics[scale=1.2]{/lib/natural.pdf}\]
-    The use of \og{\textsf{BUILTIN}} is specifed in \secref{subsubsec: builtin_pragma}.
+    The use of \og{\textsf{BUILTIN}} is specifed in~\secref{subsubsec: builtin_pragma}.
 
     \subsection{Equality, congruence and substitution}
-    The definition of equality, congruence and substitution is similar to the one in \secref{subsec: equality}.\footnote{The definition of equality and related properties in the custom library differ slightly by using an indexed $\mb{\mathsf{Set}}$, which provides a more general formulation. See Appendex [corresponding link].}
+    The definition of equality, congruence and substitution is similar to the one in~\secref{subsec: equality}.\footnote{The definition of equality and related properties in the custom library differ slightly by using an indexed $\mb{\mathsf{Set}}$, which provides a more general formulation. See Appendex [corresponding link].}
 
     \subsection{Order of natural numbers} \label{subsec: order}
     The order of natural numbers we defined include $\leq$ and $<$, which are defined standardly as follows:
@@ -1016,9 +1066,9 @@
     \[\includegraphics[scale=1.2]{/target/fin/instruction_dec.pdf}\]
 
     \subsubsection{Comparison of the two approaches}
-    The straightforward approach explicitly carries proofs in the type system, which is more transparent but verbose. The fin approach intially appears to be more elegant, as it encapsulates bounds check within a refined type. However, this elegance is superficial: constructing a term of type $\mb{\mathsf{Fin}}\ n$ still requires the same underlying proof of boundedness, shifting complexity to auxiliary conversions. 
+    The explicit approach carries proofs directly in the type system, which is more transparent but verbose. The $\textsf{Fin}$-based approach intially appears to be more elegant, as it encapsulates bounds check within a refined type. However, this elegance is superficial: constructing a term of type $\mb{\mathsf{Fin}}\ n$ still requires the same underlying proof of boundedness, shifting complexity to auxiliary conversions. 
     
-    To prove a property with the fin approach, we need the following auxiliary function:
+    To prove a property with the $\textsf{Fin}$-based approach, we need the following auxiliary function:
     \[\includegraphics[scale=1.2]{/lib/fin/toFin.pdf}\]
 
     Here is a comparison of the two approaches representing the property $\mathsf{suc}\ (n - m) \equiv \mathsf{suc}\ n - m$:
@@ -1029,26 +1079,251 @@
         \caption{Comparison of explicit vs. \textsf{Fin}-based approaches}
         \label{fig: fin_comparison}
     \end{figure}
-    It is clear that the explicit proof-passing approach is more straightforward and easier to understand. The fin-based approach requires additional auxiliary functions and conversions, which makes the code more complex and harder to read.
+    The explicit approach's verbosity pays off in readability when representing properties. the type of the term directly mirrors the mathematical statement with an explicit proof. In contrast, the $\textsf{Fin}$-based approach fractures this relationship, and reconstructing the original subtrahend requires tracing the type of the proof. This becomes cumbersome when the proofs are chained inequalities with transitivity, making the code harder to understand.
 
-    Although the project completed both approaches, the following implementation of the compiler uses the explicit proof-passing approach due to its simplicity and clarity.
+    Although the project completed both approaches, the following implementation of the compiler uses the explicit proof-passing approach due to its clarity.
 
     \subsection{More properties of natural numbers}
+    The following are some properties of natural numbers that are useful for the implementation of the compiler with corresponding proofs.
+
+    The implementation of the properties of natural numbers in Agda is as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/lib/proof/properties.pdf}
+        \caption{Properties of natural numbers related to subtraction}
+        \label{fig: properties_subtraction}
+    \end{figure}
 
 
     
 
     \section{Compiler}
+    \subsection{Presheaf semantics}
+    The denotation semantics interprets types as presheaves over a base category $\Upsigma$. 
+    \subsubsection{Base category}
+    The base category $\Upsigma$ is specified as follows:
+    \begin{itemize}
+        \item Objects are stack descriptors ($sd = \ang{f, d}$)
+        \item Morphisms are stack expansions ($\iota : sd \to sd'$ for $sd \leq_s sd'$) 
+    \end{itemize}
+    We define $\mathsf{SD}$ as the set of stack descriptors. Then the base category is the category determined by preorder $\underline{\mathsf{SD}} = \{\mathsf{SD}, \leq_s\}$ in Example~\ref{ex: category_preorder}.
+
+    \subsubsection{Semantic category}
+    Semantic category $\mathcal{K}$ is the functor category $\text{PDOM}^{\Upsigma^{\textbf{op}}}$, where $\text{PDOM}$ is the category of predomains.
+    \begin{itemize}
+        \item Objects are presheaves: $P = \Upsigma^{\textbf{op}} \to \text{PDOM}$.
+        \item Morphisms are natural transformations: $\eta : P \to Q$ for $P, Q \in \text{PDOM}^{\Upsigma^{\textbf{op}}}$.
+    \end{itemize}
+    The proof for semantic category is similar to the one in~\secref{sec: ccc_presheaf}, and the full proof is given by Oles in~\cite{Oles_1},\cite{Oles_2}.
+    \begin{itemize}
+        \item Products are given by pointwise product of presheaves: $P \times Q = \lambda sd.\ P\ sd \times Q\ sd$.
+        \item Exponentials $P \Rightarrow_s Q$ are given by the following equation:
+            \begin{equation}
+                \begin{aligned}
+                    P \Rightarrow_s Q &= \lambda sd.\ \mathcal{K}(\yo (sd) \times P, Q) \\
+                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma, F : (\yo (sd) \times P)\ sd' \to Q\ sd'\} \\
+                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma, F : (\Upsigma(sd, sd') \times P)\ sd' \to Q\ sd'\} \\
+                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma, F : sd \leq_s sd' \to P\ sd' \to Q\ sd'\}
+                \end{aligned}
+                \label{eq: presheaf_exponential}
+            \end{equation}
+    \end{itemize}
+    [need support for each step of the proof]
+
+    The definition of products and exponentials in Agda is as follows:
+    \[\includegraphics[scale=1.2]{/compiler/product_exponentials.pdf}\]
+
+    We have a functor $\intp{-} : \Theta \to \mathcal{K}$, that interprets the type constructor $\to$ as the exponential functor $\Rightarrow_s$.
+
+    \subsection{Continuations}
+    In Reynolds' model, we use \textsf{Compl} and \textsf{Intcompl} to represent command and integer continuations. Mathematically we have
+    \[\textsf{Compl } sd : \mathsf{SD} \to O \qquad \textsf{IntCompl } sd : \bZ \to (\mathsf{SD} \to O)\]
+    where $O$ is an unspecified domain of outputs.
+
+    For code generation we define the continuation to be the instruction sequence in the target language:
+    \[\textsf{Compl } sd = \textsf{I}_{sd}\]
+
+    The definition of integer continuation is more complex, it is an exponential object in the presheaf category, which is defined as follows:
+    \[\textsf{IntCompl } = R \Rightarrow_s \textsf{Compl } \]
+    where $R$ is the functor corresponding to the righthand sides in the target language, $R\ sd = \textsf{R}_{sd}$. Thus we can directly use the definition of $R$ to define the integer continuation as follows:
+    \[\includegraphics[scale=1.2]{/compiler/continuations.pdf}\]
+
+    \subsection{Denotational semantics of types and contexts}
+    Given the definition of continuations, we can define the denotational semantics of types in Agda as follows:
+    \[\includegraphics[scale=1.2]{/compiler/type_interpretation.pdf}\]
+
+    The denotational semantics of contexts is essentially a list expressed by the product of the denotational semantics of the types in the context. The denotational semantics of contexts is defined as follows, where we use $\emptyset$ to denote the denotational semantics of the empty context:
+    \[\includegraphics[scale=1.2]{/compiler/context_interpretation.pdf}\]
+
+    \subsection{Morphisms: functorial mapping}
+    \[\includegraphics[scale=1.2]{/compiler/fmap_ctx.pdf}\]
+    Similarly, this functorial mapping also holds for \textsf{L} and \textsf{S} in the target language. The functorial mapping is defined as follows:
+    \[\includegraphics[scale=1.2]{/compiler/fmap_LS.pdf}\]
+
+    \subsection{Denotational semantics of terms}
+    The denotational semantics of terms is defined as a morphism from the denotational semantics of contexts to the denotational semantics of types. Similarly, it is a family of continuous functions indexed by the stack descriptor. The denotational semantics of terms has the following type in Agda:
+    \[\includegraphics[scale=1.2]{/compiler/term_interpretation_type.pdf}\]
+
+    We need to find out the denotational semantics of the terms correpsonding to all rules in the typing judgement mentioned in~\secref{subsec: terms}. 
+
+        \subsubsection{Variables}
+        The denotational semantics of variables is defined as follows:
+        \[\includegraphics[scale=1.2]{/compiler/term_var.pdf}\]
+
+        \subsubsection{Subtyping}
+        The denotational semantics of subtyping is defined as follows:
+        \[\includegraphics[scale=1.2]{/compiler/term_subtype.pdf}\]
+
+        \subsubsection{Lambda abstraction}
+        The denotational semantics of lambda abstraction is defined as follows:
+        \[\includegraphics[scale=1.2]{/compiler/term_lambda.pdf}\]
+
+        \subsubsection{Commands}
+        The denotational semantics of commands is defined as follows:
+        \[\includegraphics[scale=1.2]{/compiler/term_comm.pdf}\]
+        The command \textsf{NewVar} is slightly more complicated, [To complete].
+
+        \subsubsection{Integer expressions}
+        The denotational semantics of integer expressions is defined as follows:
+        \[\includegraphics[scale=1.2]{/compiler/term_intexp.pdf}\]
+        The helper function \textsf{use-temp} is defined as follows:
+        \[\includegraphics[scale=1.2]{/compiler/assign_use-temp.pdf}\]
+
+    \subsection{Compilation} \label{subsec: compilation}
+    Compilation is a functor from the source language to the target language. To defrine the compilation functor, we use the denotational semantics of terms and fill in the initial stack descriptor ($\ang{0, 0}$), the empty context (\textsf{unit}), a trivial proof for stack descriptor being not less than itself (\textsf{$\leq_s$-refl}) and the continuation representing the last instruction (\textsf{stop}):
+    \[\includegraphics[scale=1.2]{/compiler/compilation.pdf}\]
 
 
 
 
 \chapter{Evaluation}
     \minitoc
-    Chapter~\chapref{chap: implementation} describes the implementation of the source language, the target language and the compiler in Agda. This chapter evaluates the implementation with a demonstrative example in Agda, and discusses the success criteria of the project.
-    \section{A demonstrative example in Agda}
+    Chapter~\chapref{chap: implementation} describes the implementation of the source language, the target language and the compiler in Agda. This chapter evaluates the implementation with integration tests and a feature checklist and then discusses the success criteria of the project.
+    \section{Tests}
+    \subsection{Test cases}
+    The correctness of the compiler is evaluated with a set of test cases. Each test is defined as follows
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/test/example.pdf}
+        \caption{Test 0 as an example of test cases}
+        \label{fig: test_case_0}
+    \end{figure}
+    where definition of the \mb{\textsf{compile-closed}} function is specified in~\secref{subsec: compilation}. The program type checks only if both of the source term and the target term are correctly defined, and the target term is the result of the compilation of the source term. 
+
+    There are special tests to check that some expressions in the source language compiles to the same expression in the target language. Such test is defined as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/test/equivalence.pdf}
+        \caption{Test 3' as an example for checking equivalent compiled results}
+        \label{fig: test_case_3'}
+    \end{figure}
+
+    The full test cases are available in the appendix [insert link]. Here is a summary of the test cases written in a more readable format:
+    \begin{enumerate}[label=\textbf{Test \arabic*.}, leftmargin=*]
+        \setcounter{enumi}{-1}
+        \item $\mathsf{skip}$
+        \item $\mathsf{x := 2}$
+        \item $\mathsf{x := (\mathnormal{\lambda} a.\ a)\ 4}$
+        \item $\mathsf{x := (\mathnormal{\lambda} a.\ (\mathnormal{\lambda} b.\ a+b)\ 2)\ 3}$
+        \item[\textbf{Test 3'.}] $\mathsf{x := 3 + 2}$
+        \item $\mathsf{x := -3;\ y := (\mathnormal{\lambda} a. x)\ 2}$
+        \item $\mathsf{x := 2;\ x := x + 1}$
+        \item[\textbf{Test 5'.}] $\mathsf{x := 2;\ skip;\ x := x + 1}$
+        \item $\mathsf{x := 2;\ x := -x + 1}$
+        \item $\mathsf{x := (\mathnormal{\lambda} a.\ -a+1)\ 2}$
+    \end{enumerate}
+    where \textbf{Test 3} and \textbf{Test 3'}, \textbf{Test 5} and \textbf{Test 5'} compile to the same target term. 
+    
+    \textbf{Test 3} and \textbf{Test 3'} are equivalent in terms of compilation because the compilation directly substitutes the value in corresponding lambda terms. 
+    
+    \textbf{Test 5} and \textbf{Test 5'} are equivalent in terms of compilation because $\mathsf{skip}$ is a no-op in the source language.
+
+    \subsection{Feature checklist}
+    Traditional unit tests are not suitable for this project, as many typing judgement rules cannot be tested in isolation. For example, testing subtyping rule (Figure~\ref{fig: rule_subtype}) or any of the integer expression typing rules (Figure~\ref{fig: rule_intexp}) inherently requires embedding them in a well-typed command (\textsc{NewVar} in Figure~\ref{fig: rule_comm}), as the compiler only accepts complete commands. 
+
+    Instead, I employed integration testing with a feature checklist, ensuring comprehensive coverage by validating all typing rules and targeting edge cases.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{| c | c | c | c |}
+            \hline
+            \textbf{Feature}  & \textbf{Typing judgement} & \textbf{Specification} & \textbf{Test cases number} \\
+            \hhline{|=|=|=|=|}
+            Variable & \textsc{Var} & - & 1, 2, 3, 3', 4, 5, 5', 6, 7 \\ \cline{3-4}
+            \hline
+            \multirow{2}{*}{Subtyping} 
+                & \multirow{2}{*}{\textsc{Sub}} 
+                    & \textsf{intvar} $\leq:$ \textsf{intacc} & 1, 2, 3, 3', 4, 5, 5', 6, 7  \\ \cline{3-4}
+                &   & \textsf{intvar} $\leq:$ \textsf{intexp} & 4, 5, 5', 6 \\
+            \hline
+            \multirowcell{4}{Lambda\\abstraction} 
+                & \multirow{3}{*}{\textsc{Lambda}} 
+                    & - & 2, 3, 4, 7 \\ \cline{3-4}
+                &   & Multiple variables\hyperlink{note1}{$^{\ast}$} & 3  \\ \cline{3-4}
+                &   & Free variables\hyperlink{note1}{$^{\ast}$} & 4 \\ \cline{2-4}
+                & \textsc{App} & - & 2, 3, 4, 7  \\
+            \hline
+            \multirow{7}{*}{Command} 
+                & \textsc{Skip} & - & 0, 5' \\ \cline{2-4}
+                & \multirow{2}{*}{\textsc{Seq}} 
+                    & - & 4, 5, 5', 6 \\ \cline{3-4}
+                &   & Multiple sequencing & 5' \\ \cline{2-4}
+                & \multirow{2}{*}{\textsc{NewVar}} 
+                    & - & 1, 2, 3, 3', 4, 5, 5', 6, 7 \\ \cline{3-4}
+                &   & Multiple variables\hyperlink{note1}{$^{\ast}$} & 4 \\ \cline{2-4}
+                & \multirow{2}{*}{\textsc{Assign}} 
+                    & -  & 1, 2, 3, 3', 4, 5, 5', 6, 7  \\ \cline{3-4}
+                &   & Self-referential assignments & 5, 5', 6 \\
+            \hline
+            \multirowcell{5}{Integer\\expression} 
+                & \multirow{2}{*}{\textsc{Lit}}  
+                    & Natural number  & 1, 3, 3', 4, 5, 6, 7 \\ \cline{3-4}
+                &   & Negative number & 2, 4 \\ \cline{2-4}
+                & \textsc{Neg} & - & 5, 5', 6, 7  \\ \cline{2-4}
+                & \textsc{Plus} & - & 3, 3', 6, 7  \\ \cline{2-4}
+                & -             & Multiple expressions\hyperlink{note2}{$^{\dagger}$} & 6, 7 \\
+            \hline
+        \end{tabular}
+
+        \caption{Feature checklist}
+        \label{tab: feature_checklist}
+    \end{table}
+
+    Here are some notes on the feature checklist:
+
+    \hypertarget{note1}{$^{\ast}$} These tests ensure that the translation of context as a whole is correct.
+
+    \hypertarget{note2}{$^{\dagger}$} This type of test is necessary because the target language does not support doing multiple operations in a single simple instructions. This is specified in [Implementation section]. As a result, special tests are required to check that the compiler correctly translates multiple integer operations into a continuation of simple instructions defined in the target language. 
+
+    \vspace{2.5em}
+
+    The feature checklist includes all the typing rules in the source language, including edge cases including multiple variables, free variables and self-referential assignments. Aditionally, I account for target-language-specific constraints, ensuring multiple operations are translated into simple instructions with continuation. The tests cover all the cases in the feature checklist, ensuring that the compiler is correct and complete.
 
     \section{Success criteria}
+    The project has met the success criteria as follows:
+    \begin{itemize}
+        \item
+            A formalisation of the source language has been given in Agda, which includes the syntax, typing rules and operational semantics. 
+
+        \item
+            A formalisation of the target language has been given in Agda, which includes all instructions from the instruction set. Rigorous definitions of the operation of the stack descriptors are given, ensuring correctness and preserving the mathematical properties of the stack descriptors.
+        
+        \item
+            A formalisation of the compiler has been given in Agda, which includes the denotational semantics of the source language and a term for compilation.
+
+        \item 
+            Integration tests have been given in Agda, which cover all the case in the feature checklist. The tests ensure that the compiler is correct and complete.
+    \end{itemize}
+
+    The following are the extension criteria that are met:
+    \begin{itemize}
+        \item 
+            A customised library have been developed, which includes rigorous definitions of subtraction of natural numbers and corresponding properties. Two approaches to rigorous definition of subtraction has been implemented and compared.
+        \item
+            Operational semantics of the source language has been defined with renaming, substitution and reduction rules.
+        \item
+            usetmp [to be completed]
+
+    \end{itemize}
 
 \chapter{Conclusion}
     \minitoc
@@ -1057,12 +1332,48 @@
     \section{Overview}
 
     \section{Lessons learned}
+    \begin{itemize}
+        \item 
+        challenging in both theory and implementation
 
-    % \section{Future work}
+        \item
+        struggle with different approaches
+        \item
+        struggle with inserting agda code into latex
+        \begin{itemize}
+            \item 
+                problem with unicode characters
+            \item 
+                alternative solution does not colour well due to dependent types
+        \end{itemize}
+    \end{itemize}
 
+    \section{Future work}
+    \begin{itemize}
+        \item subroutine and iteration
+        \item correctness of the compiler
+        \item exploring a reasonable equational theory that can be stated directly on the instruction sequences, under which the semantics actually becomes a true functor category model (i.e. naturality holds).
+    \end{itemize}
 \printbibliography
 
 \appendix
+
+\chapter{Operational Semantics of the source language} \label{app: operational_semantics}
+    \minitoc
+    The operational semantics of the source language is defined with renaming, substitution and reduction rules. The implementation is as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/source/operational_semantics_1.pdf}
+        \caption{Operational semantics of the source language (Part 1)}
+        \label{fig: operational_semantics_1}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/source/operational_semantics_2.pdf}
+        \caption{Operational semantics of the source language (Part 2)}
+        \label{fig: operational_semantics_2}
+    \end{figure}
+
 
 \cleardoublepage
 \let\cleardoublepage\clearpage

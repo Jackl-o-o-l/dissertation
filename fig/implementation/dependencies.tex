@@ -17,14 +17,19 @@
 		\node (lib) {lib.agda};
 		\node[below left=of lib] (source) {source.agda};
 		\node[below right=of lib] (target) {target.agda};
-		\node[below left=of target] (compiler) {compiler.agda};
+		\node[below =of lib] (compiler) {compiler.agda};
+		\node[below =of compiler] (test) {test.agda};
 		
 		% Arrows
-		\draw[arrow] (lib) -- (source);
-		\draw[arrow] (lib) -- (target);
-		\draw[arrow] (source) -- (compiler);
-		\draw[arrow] (target) -- (compiler);
-		\draw[arrow] (lib) -- (compiler);
+		\draw[arrow] (source) -- (lib);
+		\draw[arrow] (target) -- (lib);
+		\draw[arrow] (compiler) -- (source);
+		\draw[arrow] (compiler) -- (target);
+		\draw[arrow] (compiler) -- (lib);
+		\draw[arrow] (test) -- (source);
+		\draw[arrow] (test) -- (target);
+		\draw[arrow] (test) -- (compiler);
+
 		
 	\end{tikzpicture}
 \end{document}
