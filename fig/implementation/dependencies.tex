@@ -14,11 +14,11 @@
 	]
 	
 		% Nodes
-		\node (lib) {lib.agda};
-		\node[below left=of lib] (source) {source.agda};
-		\node[below right=of lib] (target) {target.agda};
-		\node[below =of lib] (compiler) {compiler.agda};
-		\node[below =of compiler] (test) {test.agda};
+		\node (lib) {\texttt{lib.agda}};
+		\node[below left=of lib] (source) {\texttt{source.agda}};
+		\node[below right=of lib] (target) {\texttt{target.agda}};
+		\node[below =of lib] (compiler) {\texttt{compiler.agda}};
+		\node[below =of compiler] (test) {\texttt{test.agda}};
 		
 		% Arrows
 		\draw[arrow] (source) -- (lib);
