@@ -78,7 +78,7 @@
 
 \newcommand{\yo}{\mathord{\text{\kern0.03em \scalebox{0.8}{よ}\kern0.03em}}}
 
-\newcommand{\bracket}[1]{\left\{ #1 \right\}}
+\newcommand{\bracket}[1]{\mathord{<} #1 \mathord{>}}
 \newcommand{\ang}[1]{\left\langle #1 \right\rangle}
 \newcommand{\intp}[1]{\left\llbracket #1 \right\rrbracket}
 
@@ -231,7 +231,7 @@
         Riehl~\autocite{cat_context}, and the lecture notes of Part II Category Theory by Andrew Pitts and Marcelo Fiore~\autocite{cat_lecture_notes}.
 
         \subsection{Category}
-        \begin{definition}[Category]
+        \begin{definition}[Category] \label{def: category}
             A \emph{category} $\mathcal{C}$ is specified by
             \begin{itemize}
                 \item 
@@ -311,7 +311,7 @@
             \subsubsection{Opposite category}
             The idea of opposite category is that if we have a category $\mathcal{C}$, we can reverse the direction of all morphisms in $\mathcal{C}$ to obtain a new category $\mathcal{C}^{\textbf{op}}$.
 
-            \begin{definition}[Opposite category]
+            \begin{definition}[Opposite category] \label{def: opposite}
                 Given a category $\mathcal{C}$, its \emph{opposite category} $\mathcal{C}^{\textbf{op}}$ is specified by the following:
                 \begin{itemize}
                     \item 
@@ -456,18 +456,18 @@
 
         
         \subsection{Functor}
-        \begin{definition}[Functor]
+        \begin{definition}[Functor] \label{def: functor}
             Given two categories $\mathcal{C}$ and $\mathcal{D}$, a \emph{functor} $F: \mathcal{C} \to \mathcal{D}$ is specified by
             \begin{itemize}
                 \item 
-                    a function 
+                    a function referred to as object mapping
                     \[\begin{aligned}
                         \textbf{obj}(\mathcal{C}) &\to \textbf{obj}(\mathcal{D}) \\
                         X &\mapsto F(X)
                     \end{aligned}\]
 
                 \item 
-                    for each $X, Y \in \textbf{obj}(\mathcal{C})$, a function 
+                    for each $X, Y \in \textbf{obj}(\mathcal{C})$, a function referred to as functorial mapping
                     \[\begin{aligned}
                         \mathcal{C}{(X,Y)} &\to \mathcal{D}{(F(X),F(Y))} \\
                         f &\mapsto F(f)
@@ -543,7 +543,7 @@
 
 
         \subsection{Yoneda lemma}
-        \begin{definition}[Yoneda functor]
+        \begin{definition}[Yoneda functor] \label{def: yoneda}
             Given a category $\mathcal{C}$, the \emph{Yoneda functor} $\yo: \mathcal{C} \to \hat{\mathcal{C}}$ is defined as follows:
             \begin{itemize}
                 \item 
@@ -715,7 +715,7 @@
 
 \chapter{Implementation} \label{chap: implementation}
     \minitoc
-    This chapter details the implementation of the compiler in Agda. Starting with a brief overview of the tools used, it then describes the directory structure and file dependencies. Then it discusses the specification of the source language, and the target language, which lead us to the problem of implementing a rigorous natural number subtraction and two different approaches. We will further see the difference between the two approaches and how they affect the implementation of the customised library and the implementation of the compiler. 
+    This chapter details the implementation of the compiler in Agda. Starting with a brief overview of the tools used, it then describes the directory structure and file dependencies. Then it discusses the specification of the source language, and the target language, which lead us to the problem of implementing a rigorous natural number subtraction and two different approaches. It further reveals the difference between the two approaches and how they affect the implementation of the customised library. Finally a detailed implementation of the compiler is presented.
     
 
     \section{Tools used}
@@ -864,8 +864,6 @@
         The corresponding Agda implementation is as follows, note that the Agda implementation only does not include the name of the terms, as a term can be specified by how it is constructed (i.e. the name of the typing rules and the corresponding types)
         \[\includegraphics[scale=1.2]{/source/terms.pdf}\]
 
-        Here the definition of the integers $\bZ$ is in the customised library. Please refer to~\secref{sec: lib} for more details.
-
         \subsection{Operational Semantics}
         The operational semantics of the source language is defined with renaming, substitution and reduction rules. However, since the compiler itself does not require the operational semantics, the implementation is included in Appendix~\ref{app: operational_semantics}. Operational semantics can be used to verify the correctness of the compiler in the future, but it is beyond the scope of this project.
 
@@ -882,19 +880,19 @@
         \item
             $\bracket{\textsf{I}_{sd}}$: instruction sequences
     \end{itemize}
+    The intent of the indexing here is any instructions with the form $\bracket{\textsf{I}_{sd}}$ is an instruction sequence that can be executed when the current stack descriptor is $sd$. 
 
     \subsection{Stack descriptor}
     The stack descriptor $sd$ is defined as a pair of natural numbers $\ang{f, d}$, where $f$ is the frame number and $d$ is the displacement. 
 
     It is defined in Agda as follows:
     \[\includegraphics[scale=1.2]{/target/stack_descriptor.pdf}\]
-    Here definition of natural numbers is in the customised library. Please refer to~\secref{sec: lib} for more details.
 
     For a stack descriptor $sd$, we can use \dpink{SD.f} $sd$ to access the frame number and \dpink{SD.d} $sd$ to access the displacement. 
 
     \subsubsection{Order}
-    The stack descriptor is ordered lexicographically with $\leq_s$ as follows:
-    \[\ang{f, d} \leq_s \ang{f', d'} \Leftrightarrow f < f' \lor (f = f' \land d \leq d')\]
+    The stack descriptor is ordered lexicographically with $\leq_\mathsf{s}$ as follows:
+    \[\ang{f, d} \leq_\mathsf{s} \ang{f', d'} \Leftrightarrow f < f' \lor (f = f' \land d \leq d')\]
 
     It is defined in Agda as follows:
     \[\includegraphics[scale=1.2]{/target/stack_descriptor_order.pdf}\]
@@ -905,17 +903,17 @@
     \[\ang{f, d} \pm_s n = \ang{f, d \pm n} \text{ for } n \in \mathbb{N}\]
     Addition of stack displacement is defined in Agda as follows:
     \[\includegraphics[scale=1.2]{/target/stack_descriptor_add.pdf}\]
-    For subtraction, we need to make sure that the subtraction is valid, i.e. the subtracted displacement is less than or equal to the displacement of the current stack descriptor. This leads us to the problem of defining the subtraction of natural numbers, which is explained in detail in~\secref{subsec: subtraction}
+    For subtraction, we need to make sure that the subtraction is valid, i.e. the subtracted displacement adjustment is less than or equal to the displacement of the current stack descriptor. This leads us to the problem of defining the subtraction of natural numbers, which is explained in detail in~\secref{subsec: subtraction}
 
     \subsubsection{Properties of order and addition}
-    We can use reflexivity and transitivity of the order $<$ and $\leq$ to prove that the order of stack descriptors $\leq_s$ is a preorder. The proof is as follows:
+    We can use reflexivity and transitivity of the order $<$ and $\leq$ to prove that the order of stack descriptors $\leq_\mathsf{s}$ is a preorder. The proof is as follows:
     \begin{proof}
-        We need to show that $\leq_s$ is reflexive and transitive. 
+        We need to show that $\leq_\mathsf{s}$ is reflexive and transitive. 
         \begin{itemize}
             \item 
-                Reflexivity: $sd \leq_s sd$ is trivially true since $f = f$ and $d \leq d$.
+                Reflexivity: $sd \leq_\mathsf{s} sd$ is trivially true since $f = f$ and $d \leq d$.
             \item
-                Transitivity: if $\ang{f, d} \leq_s \ang{f', d'}$ and $\ang{f', d'} \leq_s \ang{f'', d''}$, we do the following case split:
+                Transitivity: if $\ang{f, d} \leq_\mathsf{s} \ang{f', d'}$ and $\ang{f', d'} \leq_\mathsf{s} \ang{f'', d''}$, we do the following case split:
                 \begin{itemize}
                     \item 
                         If $f < f'$, $f' = f''$ and $d \leq d'$, then $f < f''$; 
@@ -924,7 +922,7 @@
                     \item
                         If $f = f'$, $d \leq d'$ and $f' < f''$, then $f < f''$;
                     \item
-                        If $f = f'$, $d \leq d'$, $f' = f''$ and $d' \leq d''$, then $f = f''$ and $d \leq d''$ by transitivity of $\leq$. \footnote{Note that the properties of $=$ is not required in as in the Agda definition of $\leq_s$, we directly define $f'$ to be $f$ instead of defining a equivalence relation, thus equivalence can be checked directly via type checking.}
+                        If $f = f'$, $d \leq d'$, $f' = f''$ and $d' \leq d''$, then $f = f''$ and $d \leq d''$ by transitivity of $\leq$. \footnote{Note that the properties of $=$ is not required in as in the Agda definition of $\leq_\mathsf{s}$, we directly define $f'$ to be $f$ instead of defining a equivalence relation, thus equivalence can be checked directly via type checking.}
                 \end{itemize}
         \end{itemize}
     \end{proof}
@@ -934,31 +932,52 @@
 
     When a natural number is added to a stack descriptor, it is guaranteed that the new stack descriptor is not less than the old stack descriptor. This can be proved directly using the same properties of integer addition. The proof is defined in Agda as follows:
     \[\includegraphics[scale=1.2]{/target/stack_descriptor_add_proof.pdf}\]
-
-    Proof above requires the proof of the properties of natural numbers, which is defined in~\secref{subsec: natural_numbers}.
     
+    Proofs here are based on the properties of natural numbers specified in the customised library. Please refer to~\secref{sec: lib} for more details.
 
     \subsection{Grammar}
     The grammar of the target language is defined as follows, given the current stack descriptor $sd = \ang{f, d}$, and new stack descriptor $sd'$ and $sd^v$:
-    \[\begin{aligned}
-        \bracket{\textsf{L}_{sd}} ::={}& sd^v \quad \text{when } sd^v \leq_s sd \\
-                        &\mid \texttt{sbrs}  \\
-        \bracket{\textsf{S}_{sd}} ::={}& \bracket{\textsf{L}_{sd}} \\
-                        &\mid \texttt{lit} \bracket{\text{integer}} \\
-        \bracket{\textsf{R}_{sd}} ::={}& \bracket{\textsf{S}_{sd}} \\
-                        &\mid \bracket{ \text{unary operator} } \bracket{ \textsf{S}_{sd}}\\
-                        &\mid \bracket{\textsf{S}_{sd}} \bracket{\textsf{binary operator}} \bracket{ \textsf{S}_{sd} } \\
-        \bracket{\textsf{I}_{sd}} ::={}& \texttt{stop} \\
-                        &\left.
-                        \begin{aligned}
-                        &|{\ } \bracket{\textsf{L}_{sd+\delta}} \gets \bracket{\textsf{R}_{sd}}[\delta] \text{ ; } \bracket{\textsf{I}_{sd+\delta}} \\
-                        &|{\ } \texttt{if } \bracket{\textsf{S}_{sd}} \bracket{\text{relational operator}} \bracket{\textsf{S}_{sd}}[\delta] \\
-                        & \hphantom{\mid {}} \texttt{ then } \bracket{\textsf{I}_{sd+\delta}} \texttt{ else } \bracket{\textsf{I}_{sd+\delta}} \\
-                        &|{\ } \texttt{adjustdisp} [\delta] \text{ ; } \bracket{\textsf{I}_{sd+\delta}} \\
-                        \end{aligned}
-                        \quad \right\} \text{if } d + \delta \geq 0  \\
-                        &{}\mid{} \texttt{popto } sd' \text{ ; } \bracket{\textsf{I}_{sd'}} \quad \text{when } sd' \leq_s sd \\
-    \end{aligned}\]
+    \begin{figure}[H]
+        \centering
+        \[\begin{aligned}
+            \bracket{\textsf{L}_{sd}} ::={}& sd^v \quad \text{when } sd^v \leq_\mathsf{s} sd \\
+                            &\mid \texttt{sbrs}  \\
+            \bracket{\textsf{S}_{sd}} ::={}& \bracket{\textsf{L}_{sd}} \\
+                            &\mid \texttt{lit } \bracket{\text{integer}} \\
+            \bracket{\textsf{R}_{sd}} ::={}& \bracket{\textsf{S}_{sd}} \\
+                            &\mid \bracket{ \text{unary operator} } \bracket{ \textsf{S}_{sd}}\\
+                            &\mid \bracket{\textsf{S}_{sd}} \bracket{\textsf{binary operator}} \bracket{ \textsf{S}_{sd} } \\
+            \bracket{\textsf{I}_{sd}} ::={}& \texttt{stop} \\
+                            &\left.
+                            \begin{aligned}
+                            &|{\ } \bracket{\textsf{L}_{sd+\delta}} := \bracket{\textsf{R}_{sd}}[\delta] \text{ ; } \bracket{\textsf{I}_{sd+\delta}} \\
+                            &|{\ } \texttt{if } \bracket{\textsf{S}_{sd}} \bracket{\text{relational operator}} \bracket{\textsf{S}_{sd}}[\delta] \\
+                            & \hphantom{\mid {}} \texttt{ then } \bracket{\textsf{I}_{sd+\delta}} \texttt{ else } \bracket{\textsf{I}_{sd+\delta}} \\
+                            &|{\ } \texttt{adjustdisp} [\delta] \text{ ; } \bracket{\textsf{I}_{sd+\delta}} \\
+                            \end{aligned}
+                            \quad \right\} \text{if } d + \delta \geq 0  \\
+                            &{}\mid{} \texttt{popto } sd' \text{ ; } \bracket{\textsf{I}_{sd'}} \quad \text{when } sd' \leq_\mathsf{s} sd \\
+        \end{aligned}\]
+        \caption{Target language grammar}
+        \label{fig: target_grammar}
+    \end{figure}
+    Some explanations of the grammar are as follows:
+    \begin{itemize}
+        \item 
+            $\texttt{sbrs}$: a register used to communicate the result of function procedures implemented by closed subroutines.
+        \item 
+            $\texttt{lit}$: a literal integer.
+        \item 
+            $\texttt{stop}$: stop the execution of the program.
+        \item 
+            $\delta$: a displacement adjustments, which can be any integer that satisfies the condition mentioned above.
+        \item 
+            $\texttt{adjustdisp}$: adjust the displacement of specified stack descriptor.
+        \item 
+            $\texttt{popto}$: pop to the specified stack descriptor, which is used to reduce the number of frames.
+    \end{itemize}
+    Note that the design of right-hand sides ensures that the right operand of the assignment contains at most one operator, which means that any instruction that involves multiple operators must be divided into multiple instructions. This feature of the target language significantly complicates the compilation of integer expressions, which we will analysis in detail in~\secref{subsubsec: compiler_intexp}.
+
 
     \subsubsection{Operators}
     The operators are defined as follows:
@@ -976,7 +995,7 @@
     \[\includegraphics[scale=1.2]{/target/leftrighthand_sides.pdf}\]
 
     \subsubsection{Instruction sequences}
-    In the instruction sequences, $\delta$ as a displacement can be either positive or negative. To make a rigorous definition, we define $\delta$ as a natural number, and treat the positive and negative displacements as two different instructions, using addition and subtraction of stack descriptors respectively. Since the definition of negative displacement involves the rigorous definition of subtraction, we will discuss the subtraction of natural numbers and corresponding implementation in~\secref{subsec: subtraction}. The definition (except for the negative displacement) in Agda is as follows:
+    In the instruction sequences, $\delta$ as a displacement adjustment can be positive, zero or negative. To make a rigorous definition, we define $\delta$ as a natural number, and treat the positive and negative displacements as two different instructions, using addition and subtraction of stack descriptors respectively. Since the definition of negative displacement involves the rigorous definition of subtraction, we will discuss the subtraction of natural numbers and corresponding implementation in~\secref{subsec: subtraction}. The definition (except for the negative displacement) in Agda is as follows:
     \[\includegraphics[scale=1.2]{/target/instruction_inc.pdf}\]
 
 
@@ -992,14 +1011,14 @@
     \end{itemize}
 
     \subsection{Definition from standard library}
-    The following is a list of definitions (or their variants) from the standard library that are used in the customised library:
+    The following is a list of definitions (or their variants) from the standard library and PLFA~\cite{plfa} that are used in the customised library:
     \begin{itemize}
         \item 
-            Natural numbers, integers and addition.
+            Natural numbers ($\mb{\bN}$), integers ($\mb{\bZ}$) and addition ($\mb{+}$).
         \item
-            Equality, congruence and substitution.
+            Equality ($\mb{\equiv}$), congruence ($\mb{\mathsf{cong}}$), substitution ($\mb{\mathsf{sub}}$) and transitivity of equality ($\mb{\mathsf{trans}}$).
         \item
-            Order of natural numbers, including $\leq$ and $<$.
+            Order of natural numbers, including $\mb{\leq}$ and $\mb{<}$.
         \item
             Some properties of order and addition.
     \end{itemize}
@@ -1011,28 +1030,38 @@
             \hline
             \textbf{Agda term} & \textbf{Mathematical meaning} \\
             \hhline{|=|=|}
-            $\mb{\mathsf{\mathord{\leq}\text{-}refl}}$ & $\forall n \in \bN, n \leq n$ \\
+            $\mb{+\text{-}\mathsf{identity^r}}$ & $\forall n \in \bN.\ n + 0 = n$ \\
             \hline
-            $\mb{\mathsf{\mathord{\leq}\text{-}trans}}$ & $\forall m, n, p \in \bN, m \leq n \land n \leq p \Rightarrow m \leq p$ \\
+            $\mb{+\text{-}\mathsf{suc^r}}$ & $\forall m, n \in \bN.\ m + \textsf{suc } n = \textsf{suc } (m + n)$ \\
             \hline
-            $\mb{\mathsf{\mathord{<}\text{-}trans}}$ & $\forall m, n, p \in \bN, m < n \land n < p \Rightarrow m < p$ \\
+            $\mb{+\text{-}\mathsf{comm}}$ & $\forall m, n \in \bN.\ m + n \equiv n + m$ \\
             \hline
-            $\mb{\mathsf{\mathord{<}\mathord{\to}s\mathord{\leq}}}$ & $\forall m, n \in \bN, m < n \Rightarrow \textsf{suc } m \leq n$ \\
+            $\mb{\mathsf{\mathord{\leq}\text{-}irrelevant}}$ & For all $m, n \in \bN$, we consider all proofs of $m \leq n$ to be equal. \\
             \hline
-            $\mb{\mathsf{< \to \leq}}$ & $\forall m, n \in \bN, m < n \Rightarrow m \leq n$ \\
+            $\mb{\mathsf{\mathord{\leq}\text{-}refl}}$ & $\forall n \in \bN.\ n \leq n$ \\
             \hline
-            $\mb{\mathsf{\mathord{\leq}\text{-}irrelevance}}$ & $\forall m, n \in \bN$, we consider all proofs of $m \leq n$ to be equal \\
+            $\mb{\mathsf{\mathord{\leq}\text{-}trans}}$ & $\forall m, n, p \in \bN.\ m \leq n \land n \leq p \Rightarrow m \leq p$ \\
             \hline
-            $\mb{\mathsf{\mathord{+}\mathord{\to}\mathord{\leq}}}$ & $\forall m, n \in \bN, m \leq m + n$ \\
+            $\mb{\mathsf{n\mathord{\leq}suc\text{-}n}}$ & $\forall n \in \bN.\ n \leq \textsf{suc } n$ \\
             \hline
-            $\mb{\mathsf{\mathord{+}\mathord{\to}\mathord{\leq}^r}}$ & $\forall m, n \in \bN, m \leq n + m$ \\
+            $\mb{\mathsf{m\mathord{\equiv}n,p\mathord{\leq}n\mathord{\to}p\mathord{\leq}m}}$ & $\forall p, m, n \in \bN.\ m \equiv n \land p \leq n \Rightarrow p \leq m$ \\
+            \hline
+            $\mb{\mathsf{\mathord{+}\mathord{\to}\mathord{\leq}}}$ & $\forall m, n \in \bN.\ m \leq m + n$ \\
+            \hline
+            $\mb{\mathsf{\mathord{+}\mathord{\to}\mathord{\leq}^r}}$ & $\forall m, n \in \bN.\ m \leq n + m$ \\
+            \hline
+            $\mb{\mathsf{\mathord{<}\text{-}trans}}$ & $\forall m, n, p \in \bN.\ m < n \land n < p \Rightarrow m < p$ \\
+            \hline
+            $\mb{\mathsf{\mathord{<}\mathord{\to}s\mathord{\leq}}}$ & $\forall m, n \in \bN.\ m < n \Rightarrow \textsf{suc } m \leq n$ \\
+            \hline
+            $\mb{\mathsf{< \to \leq}}$ & $\forall m, n \in \bN.\ m < n \Rightarrow m \leq n$ \\
             \hline
         \end{tabular}
         \caption{Properties of order and addition}
         \label{tab: properties}
     \end{table}
 
-    The detailed definitions are included in Appendix~[ref needed].
+    The detailed definitions are included in Appendix~[TBD].
 
     % \subsection{Natural numbers, integers and addition} \label{subsec: natural_numbers}
     % The definition of natural numbers, integers and addition is standard, and it is defined as follows:
@@ -1055,7 +1084,7 @@
     % We know that $\forall m, n \in \bN$, if $m < n$, then we have $m + 1 \leq n$ and $m \leq n$. This is defined in Agda as follows:
     % \[\includegraphics[scale=1.2]{/lib/order_implication.pdf}\]
 
-    \subsubsection{Totality of order}
+    \subsubsection{Totality of order} \label{subsubsec: order_totality}
     It is useful to case split the order of natural numbers, i.e. for any $m, n \in \bN$, we have $m \leq n$ or $n \leq m$. This is defined in Agda by defining either case as an instance of the \mb{\textsf{Total}} type, and then showing that for any $m, n \in \bN$, we can construct a \mb{\textsf{Total}} type by case-split and \og{\textsf{with}}-construct. The proof is as follows:
     \[\includegraphics[scale=1.2]{/lib/order_totality.pdf}\]
 
@@ -1088,16 +1117,16 @@
     \[\includegraphics[scale=1.2]{/target/proof/instruction_dec.pdf}\]
 
     \subsubsection{\textsf{Fin}-based approach}
-    Instead of include the proof directly, we can define the type of the subtrahend as a type that depends on the minuend, where the type encodes the proof. There is a standard library in Agda on finite sets, where a type $\mb{\mathsf{Fin}}$ is defined as a type that depends on a natural number $n$, where $\mb{\mathsf{Fin}}\ n$ can be seen as the set of natural numbers less than $n$. The definition is as follows:
+    Instead of include the proof directly, we can define the type of the subtrahend to be dependent on the minuend, where the dependence encodes the proof. There is a standard library in Agda on finite sets, where a type $\mb{\mathsf{Fin}}$ is defined as a type that depends on a natural number $n$, where $\mb{\mathsf{Fin}}\ n$ can be seen as the set of natural numbers less than $n$. The definition is as follows:
     \[\includegraphics[scale=1.2]{/lib/fin/fin.pdf}\]
 
     An intuitive explanation of the definition of $\mb{\mathsf{Fin}}$ is as follows:
     \begin{itemize}
-        \item Base case: when $n = 0$, there is no element less than $0$, so we do not have any constructor that gives us an element of type $\mb{\mathsf{Fin}}\ 0$. 
+        \item Base case: when $n = 0$, we do not have any constructor that gives us an element of type $\mb{\mathsf{Fin}}\ 0$, corresponding to the empty set. 
         \item Inductive case: 
         \begin{figure}[H]
             \centering
-            \includegraphics[width=0.35\textwidth]{fin_inductive.pdf}
+            \includegraphics[width=0.5\textwidth]{fin_inductive.pdf}
             \caption{Inductive case of $\mb{\mathsf{Fin}}$}
             \label{fig: fin_inductive}
         \end{figure}
@@ -1110,7 +1139,7 @@
     \[\includegraphics[scale=1.2]{/target/fin/instruction_dec.pdf}\]
 
     \subsubsection{Comparison of the two approaches}
-    The explicit approach carries proofs directly in the type system, which is more transparent but verbose. The $\textsf{Fin}$-based approach intially appears to be more elegant, as it encapsulates bounds check within a refined type. However, this elegance is superficial: constructing a term of type $\mb{\mathsf{Fin}}\ n$ still requires the same underlying proof of boundedness, shifting complexity to auxiliary conversions. 
+    The explicit approach carries proofs directly in the type system, which is more transparent but verbose. The $\textsf{Fin}$-based approach initially appears to be more elegant, as it encapsulates bounds check within a refined type. However, this elegance is superficial: constructing a term of type $\mb{\mathsf{Fin}}\ n$ still requires the same underlying proof of boundedness, shifting complexity to auxiliary conversions. 
     
     To prove a property with the $\textsf{Fin}$-based approach, we need the following auxiliary function:
     \[\includegraphics[scale=1.2]{/lib/fin/toFin.pdf}\]
@@ -1127,16 +1156,52 @@
 
     Although the project completed both approaches, the following implementation of the compiler uses the explicit proof-passing approach due to its clarity.
 
-    \subsection{More properties of natural numbers}
-    The following are some properties of natural numbers that are useful for the implementation of the compiler with corresponding proofs.
-
-    The implementation of the properties of natural numbers in Agda is as follows:
-    \begin{figure}[H]
+    \subsection{More properties of natural numbers} \label{subsec: more_properties}
+    Given the definition of subtraction, the additional properties of natural numbers are summarised in the table below:
+    \begin{table}[H]
         \centering
-        \includegraphics[scale=1.2]{/lib/proof/properties.pdf}
+        \begin{tabular}{|l|l|}
+            \hline
+            \textbf{Agda term} & \textbf{Mathematical meaning} \\
+            \hhline{|=|=|}
+            $\mb{\mathsf{-\text{-}irrelevant}}$ & \makecell{For all $m, n \in \bN$, we consider all terms of $n-m$ \\ with different proofs of $m \leq n$ to be equal.} \\
+            \hline
+            $\mb{\mathsf{\mathord{-}\mathord{\to}\mathord{\leq}}}$ & $\forall m, n \in \bN.\ m \leq n \Rightarrow m - n \leq m$ \\
+            \hline
+            $\mb{\mathsf{n\mathord{-}n\mathord{\equiv}0}}$ & $\forall n \in \bN.\ n - n \equiv 0$ \\
+            \hline
+            $\mb{\mathsf{\mathord{-}\text{-}suc}}$ & $\forall m, n \in \bN.\ \mathsf{suc}\ (n - m) \equiv \mathsf{suc}\ n - m$ \\
+            \hline
+            $\mb{\mathsf{n\mathord{-}[n\mathord{-}m]\mathord{\equiv}m}}$ & $\forall m, n \in \bN.\ m \leq n \Rightarrow n - (n - m) \equiv m$ \\
+            \hline
+            $\mb{\mathsf{n\mathord{+}m\mathord{-}m\mathord{\equiv}n}}$ & $\forall m, n \in \bN.\ n + m - m \equiv n$ \\
+            \hline
+            $\mb{\mathsf{suc\text{-}d\mathord{\leq}d'\mathord{\to}d'\mathord{-}[d'\mathord{-}[suc\text{-}d]]}}$ & $\forall d, d' \in \bN.\ \textsf{suc } d \leq d' \Rightarrow d \leq d' - (d' - \textsf{suc } d)$ \\
+            \hline
+        \end{tabular}
         \caption{Properties of natural numbers related to subtraction}
-        \label{fig: properties_subtraction}
-    \end{figure}
+        \label{tab: properties_subtraction}
+    \end{table}
+
+    The equations in the table above are used later in the implementation of the compiler to prove that for instructions with displacement, the given displacement is valid. Here is the mathematical proof of the property $\mb{\mathsf{n\mathord{-}[n\mathord{-}m]\mathord{\equiv}m}}$:
+    \begin{proof}
+        We need to show that $n - (n - m) \equiv m$ for all $m, n \in \bN$ such that $m \leq n$. We do the following case split:
+        \begin{itemize}
+            \item 
+                If $m = 0$, then the term reduces to $n - n \equiv 0$, which is a term we have already proved.
+            \item
+                Otherwise it is guaranteed that $m = \mathsf{suc}\ m'$ for some $m' \in \bN$, and $n = \mathsf{suc}\ n'$ for some $n' \in \bN$, because $m \leq n$. The term reduces to $\mathsf{suc}\ n' - (n' - m') \equiv \mathsf{suc}\ m'$. With congruence, we can reduce the term to $n' - (n' - m') \equiv m'$, which is the inductive hypothesis.
+        \end{itemize}
+    \end{proof}
+    The full implementation of the properties is included in Appendix~[TBD]. 
+
+    % The implementation of the properties of natural numbers in Agda is as follows:
+    % \begin{figure}[H]
+    %     \centering
+    %     \includegraphics[scale=1.2]{/lib/proof/properties.pdf}
+    %     \caption{Properties of natural numbers related to subtraction}
+    %     \label{fig: properties_subtraction}
+    % \end{figure}
 
 
     
@@ -1147,15 +1212,15 @@
     \subsubsection{Base category}
     The base category $\Upsigma$ is specified as follows:
     \begin{itemize}
-        \item Objects are stack descriptors ($sd = \ang{f, d}$)
-        \item Morphisms are stack expansions ($\iota : sd \to sd'$ for $sd \leq_s sd'$) 
+        \item Objects are stack descriptors ($sd = \ang{f, d}$);
+        \item Morphisms are stack expansions ($\iota : sd \to sd'$ for $sd \leq_\mathsf{s} sd'$).
     \end{itemize}
-    We define $\mathsf{SD}$ as the set of stack descriptors. Then the base category is the category determined by preorder $\underline{\mathsf{SD}} = \{\mathsf{SD}, \leq_s\}$ in Example~\ref{ex: category_preorder}.
+    We define $\mathsf{SD}$ as the set of stack descriptors. Then the base category is the category determined by preorder $\underline{\mathsf{SD}} = \{\mathsf{SD}, \leq_\mathsf{s}\}$ in Example~\ref{ex: category_preorder}.
 
     \subsubsection{Semantic category}
     Semantic category $\mathcal{K}$ is the functor category $\text{PDOM}^{\Upsigma^{\textbf{op}}}$, where $\text{PDOM}$ is the category of predomains and continuous functions.
     \begin{itemize}
-        \item Objects are presheaves: $P = \Upsigma^{\textbf{op}} \to \text{PDOM}$.
+        \item Objects are presheaves: $P = \Upsigma^{\textbf{op}} \to \text{PDOM}$;
         \item Morphisms are natural transformations: $\eta : P \to Q$ for $P, Q \in \text{PDOM}^{\Upsigma^{\textbf{op}}}$.
     \end{itemize}
     The proof for semantic category is similar to the one in~\secref{sec: ccc_presheaf}, and the full proof is given by Oles in~\autocite{Oles_1, Oles_2}.
@@ -1165,44 +1230,85 @@
             \begin{equation}
                 \begin{aligned}
                     P \Rightarrow_s Q &= \lambda sd.\ \mathcal{K}(\yo (sd) \times P, Q) \\
-                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma, F : (\yo (sd) \times P)\ sd' \to Q\ sd'\} \\
+                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma^{\textbf{op}}, F : (\yo (sd) \times P)\ sd' \to Q\ sd'\} \\
+                    &\makebox[0.8\linewidth][r]{\text{by definition of morphisms in Definition~\ref{def: category}}}\\
+                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma^{\textbf{op}}, F : (\Upsigma^{\textbf{op}}(sd', sd) \times P)\ sd' \to Q\ sd'\} \\
+                    &\makebox[0.8\linewidth][r]{\text{by definition of $\yo$ in Definition~\ref{def: yoneda}}}\\
                     &\cong \lambda sd.\{F \mid sd' \in \Upsigma, F : (\Upsigma(sd, sd') \times P)\ sd' \to Q\ sd'\} \\
-                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma, F : sd \leq_s sd' \to P\ sd' \to Q\ sd'\}
+                    &\makebox[0.8\linewidth][r]{\text{by definition of opposite category in Definition~\ref{def: opposite}}}\\
+                    &\cong \lambda sd.\{F \mid sd' \in \Upsigma, F : sd \leq_\mathsf{s} sd' \to P\ sd' \to Q\ sd'\} \\
+                    &\makebox[0.8\linewidth][r]{\text{by definition of $\Upsigma$ above}}\\
                 \end{aligned}
                 \label{eq: presheaf_exponential}
             \end{equation}
     \end{itemize}
-    [need support for each step of the proof]
-
+    
     The definition of products and exponentials in Agda is as follows:
     \[\includegraphics[scale=1.2]{/compiler/product_exponentials.pdf}\]
 
-    We have a functor $\intp{-} : \Theta \to \mathcal{K}$, that interprets the type constructor $\to$ as the exponential functor $\Rightarrow_s$.
+    The definition of exponentials captures the essence of stack-respecting computations in the compiler. 
+    \begin{itemize}
+        \item $sd \leq_\mathsf{s} sd'$ means the new stack descriptor $sd'$ is larger than the old stack descriptor $sd$, representing the dynamic expansion of the stack during execution.
+
+        \item $P$ and $Q$ are denotational semantics of types. 
+    \end{itemize}
+    The exponential $P \Rightarrow_\textsf{s} Q$ is a function that given a proof of stack growth, transforming a $P$-value at $sd'$ into a $Q$-value at $sd'$, and the $\forall{sd'}$ quantifier guarantees it works no matter how the stack grows. It is designed in this way so that a functor $\intp{-} : \Theta \to \mathcal{K}$ exists that interprets the type constructor $\Rightarrow$ as the exponential functor $\Rightarrow_s$.
 
     \subsection{Continuations}
-    In Reynolds' model, we use $\mathsf{Compl}$ and $\mathsf{Intcompl}$ to represent command and integer continuations. Mathematically we have
-    \[\mathsf{Compl } sd : \mathsf{SD} \to O \qquad \mathsf{Intcompl } sd : \bZ \to (\mathsf{SD} \to O)\]
+    In Reynolds' model, we construct $\mathsf{Compl}$ and $\mathsf{Intcompl}$\footnote{In the work of Reynolds, $\mathsf{compl}$ and $\mathsf{intcompl}$ are introduced as new types in the source language, and the definitions here are the denotational semantics of those types, respectively. Since these two introduced types are only used for the denotational semantics, I think directly defining them as denotational semantics constructs is natural and sufficient.} as tools in the denotational semantics to represent command continuations and integer continuations, respectively. We can think of integer continuations as a function that takes an integer and returns a command continuation. Mathematically we have
+    \[\mathsf{Compl}\ sd : \mathsf{SD} \to O \qquad \mathsf{Intcompl}\ sd : \bZ \to (\mathsf{SD} \to O)\]
     where $O$ is an unspecified domain of outputs.
 
     For code generation we define the continuation to be the instruction sequence in the target language:
-    \[\mathsf{Compl } sd = \textsf{I}_{sd}\]
+    \[\mathsf{Compl}\ sd = \textsf{I}_{sd}\]
 
-    The definition of integer continuation is more complex, it is an exponential object in the presheaf category, which is defined as follows:
-    \[\mathsf{Intcompl } = R \Rightarrow_s \mathsf{Compl } \]
-    where $R$ is the functor corresponding to the right-hand sides in the target language, $R\ sd = \textsf{R}_{sd}$. Thus we can directly use the definition of $R$ to define the integer continuation as follows:
+    The definition of integer continuation is an exponential object in the presheaf category, which is defined as follows:
+    \[\mathsf{Intcompl} = R \Rightarrow_s \mathsf{Compl} \]
+    where $R$ is the functor corresponding to the right-hand sides in the target language, $R\ sd = \textsf{R}_{sd}$. This works because the right-hand sides are all integer expressions we can use according to the grammar of the target language.
+    
+    Thus we can directly use the definition of $R$ in the target language to define the integer continuation as follows:
     \[\includegraphics[scale=1.2]{/compiler/continuations.pdf}\]
 
-    \subsection{Denotational semantics of types and contexts}
-    Given the definition of continuations, we can define the denotational semantics of types in Agda as follows:
+    \subsection{Denotational semantics of types and contexts} \label{subsec: type_interpretation}
+    With the idea of continuation, the denotational semantics of types can be defined as follows:
+    \begin{itemize}
+        \item Command passes on command continuations;
+        \item Integer expressions takes an integer continuation and returns a command continuation;
+        \item Integer acceptors take a command continuation and returns an integer continuation;
+        \item Integer variables can be used both as an integer expression and an integer acceptor, so it has the denotational semantics of both, defined as a product of the two.
+    \end{itemize}
+    
+    The denotational semantics of types in Agda as follows:
     \[\includegraphics[scale=1.2]{/compiler/type_interpretation.pdf}\]
 
-    The denotational semantics of contexts is essentially a list expressed by the product of the denotational semantics of the types in the context. The denotational semantics of contexts is defined as follows, where we use $\emptyset$ to denote the denotational semantics of the empty context:
+    The denotational semantics of contexts is essentially a list expressed by the product of the denotational semantics of the types in the context. The denotational semantics of contexts is defined as follows, where we use $\mb{\varnothing}$ to denote the denotational semantics of the empty context:
     \[\includegraphics[scale=1.2]{/compiler/context_interpretation.pdf}\]
 
-    \subsection{Morphisms: functorial mapping}
+    \subsection{Functorial mapping}
+    The denotational semantics of terms is defined as a functor, defined in~\secref{def: functor}. Before we define its object mapping, we need to define the functorial mapping, which acts on the morphisms of the base category $\Upsigma$. 
+
+    Since the morphisms of the base category $\Upsigma$ are stack expansions, the functorial mapping essentially lifts a semantic object indexed by a stack descriptor $sd$ to a semantic object indexed by a larger stack descriptor $sd'$. This ensures the denotational semantics of terms remains valid when the stack grows.
+
+    \subsubsection{Functorial mapping for exponentials, products, contexts and types}
+    Functorial mapping for exponentials is simple, as the original exponential can transforms a $P$-value at any $sd'$ greater than $sd''$ into a $Q$-value at $sd'$. To construct a new exponential, we simply take a new $P$-value at $ad''$ which is greater than $sd'$, and use the original exponential to transform it into a $Q$-value at $sd'$, as $sd''$ is guaranteed to be greater than $sd$ due to the transitivity of order of the stack descriptors. 
+
+    Functorial mapping for products is defined pointwise.
+
+    Thus, functorial mapping of types can be defined simply use the definition of functorial mapping of products and exponentials, as denotational semantics of types is defined as either product or exponential. As a list of types, the functorial mapping of contexts is simply a map of the functorial mapping of types in the list. The definition of functorial mapping in Agda is as follows:
     \[\includegraphics[scale=1.2]{/compiler/fmap_ctx.pdf}\]
-    Similarly, this functorial mapping also holds for \textsf{L} and \textsf{S} in the target language. The functorial mapping is defined as follows:
+
+    \subsubsection{Functoral mapping for left-hand sides and simple right-hand sides}
+    Similarly, we can use transitivity of order to define the functorial mapping of the denotational semantics of left-hand sides, as the definition of left-hand sides requires a proof. Since simple right-hand sides are defined from left-hand sides and literals
     \[\includegraphics[scale=1.2]{/compiler/fmap_LS.pdf}\]
+
+    \subsubsection[Functorial mapping for instruction sequences]{Functorial mapping for instruction sequences\footnote{In the work of Reynolds, the functorial mapping of instruction sequences is presented as the functorial mapping of $\mathsf{Compl}$. The two definitions are equivalent as we define $\mathsf{Compl}\ sd = \textsf{I}_{sd}$. However, I think it is more natural to present it as the functorial mapping of instruction sequences, as the definition consists of instruction sequences.}}
+    The functorial mapping of the denotational semantics of instruction sequences is defined as follows, assuming the stack descriptor $sd' = \ang{f',d'}$ is greater than $sd = \ang{f,d}$:
+    \begin{itemize}
+        \item When $f < f'$, we use the $\mathsf{popto}$ instruction that directly pops the stack to $sd$;
+        \item When $f' = f$ and $d < d'$, we use $\mathsf{adjustdisp}$ to decrease the displacement by $d'-d$.
+    \end{itemize}
+    In the Agda implementation, we also need to show that after the the adjustment, the stack descriptor is now $sd$. This requires the term $\mb{\mathsf{n\mathord{-}[n\mathord{-}m]\mathord{\equiv}m}}$ proved in~\secref{subsec: more_properties}. The functorial mapping of the denotational semantics of instruction sequences is defined as follows:
+    \[\includegraphics[scale=1.2]{/compiler/fmap_instruction.pdf}\]
 
     \subsection{Denotational semantics of terms}
     The denotational semantics of terms is defined as a morphism from the denotational semantics of contexts to the denotational semantics of types. Similarly, it is a family of continuous functions indexed by the stack descriptor. The denotational semantics of terms has the following type in Agda:
@@ -1211,30 +1317,74 @@
     We need to find out the denotational semantics of the terms corresponding to all rules in the typing judgement mentioned in~\secref{subsec: terms}. 
 
         \subsubsection{Variables}
-        The denotational semantics of variables is defined as follows:
+        We define an auxiliary function that simply gets the variable from the list of variables (the context), and the denotational semantics of variables is given by applying this function:
         \[\includegraphics[scale=1.2]{/compiler/term_var.pdf}\]
 
         \subsubsection{Subtyping}
-        The denotational semantics of subtyping is defined as follows:
+        The idea of subtyping is to use a term of type $A$ as a term of type $A'$, where $A$ is a subtype of $A'$. We define an auxiliary function that takes in the subtype relation $A\leq:A'$ and the denotational semantics of $A$, and returns the denotational semantics of $A'$. 
+        \begin{itemize}
+            \item For integer variables as subtypes of integer expressions and integer acceptors, since we defined the denotational semantics of integer variable as product of the denotational semantics of integer expression and integer acceptor in~\secref{subsec: type_interpretation}, I can simply use the projection to get the denotational semantics of either side.
+            \item For reflexivity, we simply use the identity function.
+            \item For transitivity, we use the composition of the two functions.
+            \item For contravariant function subtyping, we use a contravariant function.
+        \end{itemize}
+        The denotational semantics of subtyping is given by applying the auxiliary function:
         \[\includegraphics[scale=1.2]{/compiler/term_subtype.pdf}\]
 
         \subsubsection{Lambda abstraction}
+        \begin{itemize}
+            \item For lambda, we need to extend the context $\gamma$ with the extra variable in the lambda term. This is done by using the functorial mapping of the denotational semantics of contexts.
+            \item For application, we simply apply the denotational semantics of the lambda term to the denotational semantics of the argument, where the proof is simply the reflexivity of the order of stack descriptors.
+        \end{itemize}
         The denotational semantics of lambda abstraction is defined as follows:
         \[\includegraphics[scale=1.2]{/compiler/term_lambda.pdf}\]
 
         \subsubsection{Commands}
+        \begin{itemize}
+            \item For skip, we simply return the continuation $\kappa$ without changing it.
+            \item For sequence, we need to prefix the continuation with the denotational semantics of the second command, and then prefix it with the denotational semantics of the first command, as the continuation $\kappa$ is to be performed after both commands.
+            \item For assignment, the definition is similar to sequence, as we need to prefix the continuation with the denotational semantics of the integer accepter and then prefix it with the denotational semantics of the integer expression.
+        \end{itemize}
         The denotational semantics of commands is defined as follows:
         \[\includegraphics[scale=1.2]{/compiler/term_comm.pdf}\]
-        The command \textsf{NewVar} is slightly more complicated, [To complete].
 
-        \subsubsection{Integer expressions}
-        The denotational semantics of integer expressions is defined as follows:
+        The denotational semantics of new variable is more complicated. We first place a new variable in the stack with the current stack descriptor $sd'$ by assigning literal $0$ with the current stack descriptor $sd'$ and set the displacement adjustment to $1$, which corresponds to the place taken by this new variable. Then we do the command in \textsf{NewVar}, deallocate the new variable and do the rest of the commands in the continuation by applying the denotational semantics of the command in \textsf{NewVar} to an $\mathsf{adjustdisp}$ instruction that adjusts the displacement by $-1$, followed by the continuation $\kappa$. Here the new stack descriptor used is $sd' +_s 1$. The new environment (denotational semantics of context) $\gamma'$ is the old environment $\gamma$ with the denotational semantics of the new variable added.
+
+        The denotational semantics of the new variable is a product of the denotational semantics of an integer expression and the denotational semantics of an integer acceptor by definition in~\secref{subsec: type_interpretation}.
+        \begin{itemize}
+            \item The expression component fills the a given integer continuation $\beta$ with the stack descriptor for the new variable;
+            \item The acceptor component prefixes the continuation $\kappa$ with an assignment of the new variable.
+        \end{itemize}
+
+        Please see Appendix~[TBD] for the full implementation of the function \textsf{NewVar}.
+
+        \subsubsection{Integer expressions} \label{subsubsec: compiler_intexp}
+        \begin{itemize}
+            \item For integer literals, we simply fill in the integer literal (as an $\mathsf{R}$ term) to the integer continuation $\beta$.
+            \item For plus and negation, we wish to fill the negation of the given expression or the sum of the two given expressions to the integer continuation $\beta$. However, this is only possible when the given expression(s) are simple left-hand sides, as the grammar of the target language in Figure~\ref{fig: target_grammar} restricts right-hand sides to contain at most one operator. To solve this problem, we introduce an auxiliary function \textsf{use-temp}.
+        \end{itemize}
+        The auxiliary function \textsf{use-temp} checks if the given expression is a simple left-hand side,
+        \begin{itemize}
+            \item If it is, we simply fill the expression to the integer continuation $\beta$\footnote{The type of $\beta$ here is actually a bit different to integer continuation we defined, as it only accepts simple right-hand sides instead of right-hand sides. Reynolds gave a wrong definition of the type of this term. I have corrected it in my Agda implementation.}.
+            \item If it is not, we need to use a temporary variable to store the result of the expression, and then fill the temporary variable to the integer continuation $\beta$.
+        \end{itemize}
+        However, regarding the stack descriptor, according to Reynolds' model, we assume
+        \begin{itemize}
+            \item $sd$ is the stack descriptor passed along the environment $\gamma$, describing any program variables that may be accessed during the evaluation of the whole expression (plus/negation on the given expression).
+            \item $sd'$ is the current stack descriptor before the evaluation of the whole expression, which is guaranteed to be not less than $sd$. $sd'$ is also the position of the temporary variable in the stack.
+            \item $sd''$ is the current stack descriptor after the evaluation on the given expression and just before the assignment of the temporary variable. $sd''$ is guaranteed to be not less than $sd'$.
+            \item $sd''' = sd' +_s 1$ is the stack descriptor after the assignment of the temporary variable, as it is just large enough to hold the temporary variable.
+        \end{itemize}
+        In Reynolds' model, we simply adjust the stack descriptor from $sd''$ to $sd'''$ by the adjustment $\delta$ in the assignment instruction. However, in the Agda implementation, we need to know whether the adjustment is positive or negative, using \textsf{assign-inc} and \textsf{assign-dec} respectively. We also need to show that the adjustment is valid for each case. This is done by using the totality of order of natural numbers mentioned in~\secref{subsubsec: order_totality} and case split. Please refer to Appendix~[TBD] for the full implementation of the function \textsf{use-temp}.
+        % The auxiliary function \textsf{use-temp} is defined as follows:
+        % \[\includegraphics[scale=1.2]{/compiler/assign_use-temp.pdf}\]
+
+        Given the definition of \textsf{use-temp}, the denotational semantics of plus and negation is simply wrapping $\beta$ with a lambda function using \textsf{use-temp} to get the temporary variable, and directly fill the plus/negation of the variable to the integer continuation $\beta$. Note that in the denotational semantics of plus, we need to use the functorial mapping of simple right-hand sides for the first argument, as the stack may grow during the evaluation of the second argument. The denotational semantics of integer expressions is defined as follows:
         \[\includegraphics[scale=1.2]{/compiler/term_intexp.pdf}\]
-        The helper function \textsf{use-temp} is defined as follows:
-        \[\includegraphics[scale=1.2]{/compiler/assign_use-temp.pdf}\]
+        
 
     \subsection{Compilation} \label{subsec: compilation}
-    Compilation is a functor from the source language to the target language. To define the compilation functor, we use the denotational semantics of terms and fill in the initial stack descriptor ($\ang{0, 0}$), the empty context (\textsf{unit}), a trivial proof for stack descriptor being not less than itself ($\mathsf{\leq_s-refl}$) and the continuation representing the last instruction (\textsf{stop}):
+    Compilation is a functor from the source language to the target language. To define the compilation functor, we use the denotational semantics of terms and fill in the initial stack descriptor ($\ang{0, 0}$), the empty context (\textsf{unit}), a trivial proof for stack descriptor being not less than itself ($\mathsf{\mathord{\leq_s}\text{-}refl}$) and the continuation representing the last instruction (\textsf{stop}):
     \[\includegraphics[scale=1.2]{/compiler/compilation.pdf}\]
 
 
@@ -1336,7 +1486,7 @@
 
     \hypertarget{note1}{$^{\ast}$} These tests ensure that the translation of context as a whole is correct.
 
-    \hypertarget{note2}{$^{\dagger}$} This type of test is necessary because the target language does not support doing multiple operations in a single simple instructions. This is specified in [Implementation section]. As a result, special tests are required to check that the compiler correctly translates multiple integer operations into a continuation of simple instructions defined in the target language. 
+    \hypertarget{note2}{$^{\dagger}$} This type of test is necessary because the target language does not support doing multiple integer operations in a single instruction, as specified in Figure~\ref{fig: target_grammar}. As a result, special tests are required to check that the compiler correctly translates integer expressions with multiple operations into a continuation of single operations defined in the target language. 
 
     \vspace{2.5em}
 
@@ -1368,7 +1518,7 @@
         \item
             Operational semantics of the source language has been defined with renaming, substitution and reduction rules.
         \item
-            usetmp [to be completed]
+            Complicated functions defined for translating expressions with multiple operations in the source language to a continuation of simple instructions in the target language. 
 
     \end{itemize}
 

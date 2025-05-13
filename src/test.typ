@@ -140,7 +140,7 @@ test-4 : result-4 ≡
 test-4 = refl
 
 
--- term-5 : x := 2; x := x + 1
+-- term-5 : x := 2; x := -x
 term-5 : · ⊢ comm
 term-5 = 
     NewVar 
@@ -150,9 +150,7 @@ term-5 =
                 (Lit (pos 2))) 
             (Assign 
                 (Sub (Var Zero) var-≤:-acc)
-                (Plus 
-                    (Sub (Var Zero) var-≤:-exp) 
-                    (Lit (pos 1)))))
+                (Neg (Sub (Var Zero) var-≤:-exp))))
 result-5 = compile-closed term-5
 
 test-5 : result-5 ≡ 
@@ -164,14 +162,11 @@ test-5 : result-5 ≡
         (r-s (s-lit (pos 2)))
         (assign-dec 0 z≤n 
             (l-var ⟨ 0 , 0 ⟩ (≤-d z≤n))
-            (r-binary 
-                (s-l (l-var ⟨ 0 , 0 ⟩ (≤-d z≤n))) 
-                BPlus 
-                (s-lit (pos 1)))
+            (r-unary UNeg (s-l (l-var ⟨ 0 , 0 ⟩ (≤-d z≤n)))) 
             (adjustdisp-dec 1 (s≤s z≤n) stop)))
 test-5 = refl
 
--- term-5' : x := 2; skip; x := x + 1
+-- term-5' : x := 2; skip; x := -x
 term-5' : · ⊢ comm
 term-5' = 
     NewVar 
@@ -183,9 +178,7 @@ term-5' =
                 Skip)
             (Assign 
                 (Sub (Var Zero) var-≤:-acc)
-                (Plus 
-                    (Sub (Var Zero) var-≤:-exp) 
-                    (Lit (pos 1)))))
+                (Neg (Sub (Var Zero) var-≤:-exp))))
 result-5' = compile-closed term-5'
 
 test-5' : result-5' ≡ result-5

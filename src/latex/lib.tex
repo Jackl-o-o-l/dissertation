@@ -20,8 +20,15 @@
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
 \newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+\newunicodechar{β}{\ensuremath{\beta}}
 \newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{κ}{\ensuremath{\kappa}}
 \newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{π}{\ensuremath{\pi}}
+\newunicodechar{ρ}{\ensuremath{\rho}}
+\newunicodechar{σ}{\ensuremath{\sigma}}
+\newunicodechar{θ}{\ensuremath{\theta}}
 \newunicodechar{∈}{\ensuremath{\in}}
 \newunicodechar{⊢}{\ensuremath{\vdash}}
 \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
@@ -34,6 +41,7 @@
 \newunicodechar{⟨}{\ensuremath{\langle}}
 \newunicodechar{⟩}{\ensuremath{\rangle}}
 \newunicodechar{–}{\ensuremath{-}}
+\newunicodechar{∅}{\ensuremath{\emptyset}}
 
 \begin{document}
 \begin{prev}
@@ -1109,8 +1117,6 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaComment{--\ All\ proofs\ of\ the\ same\ type\ are\ equal}\<%
-\\
 \>[0]\AgdaFunction{–-irrelevant}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
@@ -1139,20 +1145,12 @@
 \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaBound{p₁}\AgdaSpace{}%
 \AgdaBound{p₂}\AgdaSpace{}%
-\AgdaSymbol{=}\<%
-\\
-\>[0][@{}l@{\AgdaIndent{0}}]%
-\>[4]\AgdaFunction{cong}\AgdaSpace{}%
-\AgdaSymbol{(λ}\AgdaSpace{}%
-\AgdaBound{p}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
-\AgdaBound{m}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaBound{p}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaFunction{≤-irrelevant}\AgdaSpace{}%
+\AgdaKeyword{rewrite}\AgdaSpace{}%
+\AgdaFunction{≤-irrelevant}\AgdaSpace{}%
 \AgdaBound{p₁}\AgdaSpace{}%
-\AgdaBound{p₂}\AgdaSymbol{)}\<%
+\AgdaBound{p₂}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaInductiveConstructor{refl}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
@@ -1225,7 +1223,7 @@
 \>[0]\AgdaFunction{–-suc}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}%
-\>[834I]\AgdaSymbol{\{}\AgdaBound{n}\AgdaSpace{}%
+\>[829I]\AgdaSymbol{\{}\AgdaBound{n}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{m≤n}\AgdaSpace{}%
@@ -1234,7 +1232,7 @@
 \AgdaOperator{\AgdaDatatype{≤}}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{\}}\<%
 \\
-\>[834I][@{}l@{\AgdaIndent{0}}]%
+\>[829I][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaSymbol{((}\AgdaBound{n}\AgdaSpace{}%
@@ -1275,7 +1273,7 @@
 \>[0]\AgdaFunction{n–[n–m]≡m}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}%
-\>[873I]\AgdaSymbol{\{}\AgdaBound{m}\AgdaSpace{}%
+\>[868I]\AgdaSymbol{\{}\AgdaBound{m}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{m≤n}\AgdaSpace{}%
@@ -1284,7 +1282,7 @@
 \AgdaOperator{\AgdaDatatype{≤}}\AgdaSpace{}%
 \AgdaBound{n}\AgdaSymbol{)}\<%
 \\
-\>[873I][@{}l@{\AgdaIndent{0}}]%
+\>[868I][@{}l@{\AgdaIndent{0}}]%
 \>[16]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
@@ -1316,7 +1314,7 @@
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaFunction{trans}%
-\>[904I]\AgdaSymbol{(}\AgdaFunction{sym}\AgdaSpace{}%
+\>[899I]\AgdaSymbol{(}\AgdaFunction{sym}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{–-suc}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{\{(}\AgdaBound{n}\AgdaSpace{}%
@@ -1324,7 +1322,7 @@
 \AgdaBound{m}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaBound{m≤n}\AgdaSymbol{\}))}\<%
 \\
-\>[904I][@{}l@{\AgdaIndent{0}}]%
+\>[899I][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{(}\AgdaFunction{cong}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{n–[n–m]≡m}\AgdaSpace{}%
@@ -1387,14 +1385,14 @@
 \\
 %
 \>[8]\AgdaSymbol{(}\AgdaFunction{trans}%
-\>[952I]\AgdaSymbol{(}\AgdaFunction{sym}\AgdaSpace{}%
+\>[947I]\AgdaSymbol{(}\AgdaFunction{sym}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{–-suc}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{n}\AgdaSpace{}%
 \AgdaOperator{\AgdaPrimitive{+}}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}))}\<%
 \\
-\>[952I][@{}l@{\AgdaIndent{0}}]%
+\>[947I][@{}l@{\AgdaIndent{0}}]%
 \>[16]\AgdaSymbol{(}\AgdaFunction{cong}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{n+m–m≡n}\AgdaSpace{}%
@@ -1403,56 +1401,15 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaComment{--\ m\ ≤\ n\ →\ m\ –\ p\ ≤\ n\ –\ p}\<%
+\>[0]\AgdaComment{--\ --\ m\ ≤\ n\ →\ m\ –\ p\ ≤\ n\ –\ p}\<%
 \\
-\>[0]\AgdaFunction{sub-monoʳ-≤}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaSymbol{∀}%
-\>[964I]\AgdaSymbol{\{}\AgdaBound{p}\AgdaSpace{}%
-\AgdaBound{m}\AgdaSpace{}%
-\AgdaBound{n}\AgdaSymbol{\}}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{p≤m}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaBound{p}\AgdaSpace{}%
-\AgdaOperator{\AgdaDatatype{≤}}\AgdaSpace{}%
-\AgdaBound{m}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{m≤n}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaBound{m}\AgdaSpace{}%
-\AgdaOperator{\AgdaDatatype{≤}}\AgdaSpace{}%
-\AgdaBound{n}\AgdaSymbol{)}\<%
+\>[0]\AgdaComment{--\ –-monoʳ-≤\ :\ ∀\ \{p\ m\ n\}\ →\ (p≤m\ :\ p\ ≤\ m)\ →\ (m≤n\ :\ m\ ≤\ n)\ }\<%
 \\
-\>[.][@{}l@{}]\<[964I]%
-\>[16]\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{m}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
-\AgdaBound{p}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaBound{p≤m}\AgdaSpace{}%
-\AgdaOperator{\AgdaDatatype{≤}}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{n}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
-\AgdaBound{p}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaFunction{≤-trans}\AgdaSpace{}%
-\AgdaBound{p≤m}\AgdaSpace{}%
-\AgdaBound{m≤n}\AgdaSymbol{)}\<%
+\>[0]\AgdaComment{--\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ →\ (m\ –\ p)\ p≤m\ ≤\ (n\ –\ p)\ (≤-trans\ p≤m\ m≤n)}\<%
 \\
-\>[0]\AgdaFunction{sub-monoʳ-≤}\AgdaSpace{}%
-\AgdaInductiveConstructor{z≤n}\AgdaSpace{}%
-\AgdaBound{m≤n}\AgdaSpace{}%
-\AgdaSymbol{=}\AgdaSpace{}%
-\AgdaBound{m≤n}\<%
+\>[0]\AgdaComment{--\ –-monoʳ-≤\ z≤n\ m≤n\ =\ m≤n}\<%
 \\
-\>[0]\AgdaFunction{sub-monoʳ-≤}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaInductiveConstructor{s≤s}\AgdaSpace{}%
-\AgdaBound{p≤m}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaInductiveConstructor{s≤s}\AgdaSpace{}%
-\AgdaBound{m≤n}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{=}\AgdaSpace{}%
-\AgdaFunction{sub-monoʳ-≤}\AgdaSpace{}%
-\AgdaBound{p≤m}\AgdaSpace{}%
-\AgdaBound{m≤n}\<%
+\>[0]\AgdaComment{--\ –-monoʳ-≤\ (s≤s\ p≤m)\ (s≤s\ m≤n)\ =\ –-monoʳ-≤\ p≤m\ m≤n}\<%
 \\
 %
 \\[\AgdaEmptyExtraSkip]%

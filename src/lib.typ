@@ -188,11 +188,11 @@ n+m–m≡n {m} {suc n} =
         (trans (sym (–-suc {n + m} {m})) 
                 (cong suc (n+m–m≡n {m} {n})))
 
--- m ≤ n → m – p ≤ n – p
-sub-monoʳ-≤ : ∀ {p m n} → (p≤m : p ≤ m) → (m≤n : m ≤ n) 
-                → (m – p) p≤m ≤ (n – p) (≤-trans p≤m m≤n)
-sub-monoʳ-≤ z≤n m≤n = m≤n
-sub-monoʳ-≤ (s≤s p≤m) (s≤s m≤n) = sub-monoʳ-≤ p≤m m≤n
+-- -- m ≤ n → m – p ≤ n – p
+-- –-monoʳ-≤ : ∀ {p m n} → (p≤m : p ≤ m) → (m≤n : m ≤ n) 
+--                 → (m – p) p≤m ≤ (n – p) (≤-trans p≤m m≤n)
+-- –-monoʳ-≤ z≤n m≤n = m≤n
+-- –-monoʳ-≤ (s≤s p≤m) (s≤s m≤n) = –-monoʳ-≤ p≤m m≤n
 
 -- suc d ≤ d' → d ≤ d' – (d' – (suc d))
 suc-d≤d'→d≤d'–[d'–[suc-d]] : ∀ {d d'} → (δ₁≤δ₂ : suc d ≤ d') 
