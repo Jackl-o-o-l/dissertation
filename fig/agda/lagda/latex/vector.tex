@@ -3,31 +3,35 @@
 \usepackage[active,tightpage]{preview}
 \PreviewEnvironment{prev}
 \setlength\PreviewBorder{0pt}
+\renewcommand{\PreviewBbAdjust}{-\PreviewBorder 10pt \PreviewBorder \PreviewBorder}
 
 \usepackage{agda}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathabx}
 \usepackage{graphicx}
-
+\usepackage{fontspec}
 \usepackage{unicode-math}
-\setmathfont{XITS Math}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+% \usepackage{unicode-math}
+% \setmathfont{XITS Math}
 
 \usepackage{newunicodechar}
-\newunicodechar{≤}{\ensuremath{\leq}}
-\newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{∸}{\ensuremath{\dotdiv}}
-\newunicodechar{∀}{\ensuremath{\forall}}
-\newunicodechar{→}{\ensuremath{\rightarrow}}
+% \newunicodechar{≤}{\ensuremath{\leq}}
+% \newunicodechar{≡}{\ensuremath{\equiv}}
+% \newunicodechar{∸}{\ensuremath{\dotdiv}}
+% \newunicodechar{∀}{\ensuremath{\forall}}
+% \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
-\newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
-\newunicodechar{δ}{\ensuremath{\delta}}
-\newunicodechar{∈}{\ensuremath{\in}}
-\newunicodechar{⊢}{\ensuremath{\vdash}}
-\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
-\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
-\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
-\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
+% \newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+% \newunicodechar{δ}{\ensuremath{\delta}}
+% \newunicodechar{∈}{\ensuremath{\in}}
+% \newunicodechar{⊢}{\ensuremath{\vdash}}
+% \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+% \newunicodechar{⟶}{\ensuremath{\longrightarrow}}
+% \newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
+% \newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
 \newcommand{\shortcolon}{\scalebox{1}[0.8]{:}}
 \newunicodechar{∷}{\ensuremath{\mathbin{\shortcolon\shortcolon}}}
 

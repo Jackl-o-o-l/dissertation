@@ -1,0 +1,14 @@
+\documentclass[border=0mm]{standalone}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{ebproof}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\begin{document}
+	\begin{prooftree}
+		\hypo{A′ ≤: A}
+		\hypo{B ≤: B′}
+		\infer2[\textsc{Function}]{A \Rightarrow B ≤: A′ \Rightarrow B′}
+	\end{prooftree}
+\end{document}

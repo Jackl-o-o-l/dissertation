@@ -1,66 +1,6 @@
-@misc{stlc,
-  title         = {Notes on Simply Typed Lambda Calculus},
-  author        = {Ralph Loader},
-  year          = {1996},
-  url           = {https://www.lfcs.inf.ed.ac.uk/reports/98/ECS-LFCS-98-381/}
-}
-
-@inbook{essence,
-  author    = {Reynolds, John C.},
-  title     = {The essence of ALGOL},
-  year      = {1997},
-  isbn      = {0817638806},
-  publisher = {Birkhauser Boston Inc.},
-  address   = {USA},
-  booktitle = {ALGOL-like Languages, Volume 1},
-  pages     = {67–88},
-  numpages  = {22}
-}
-
-
-@phdthesis{Oles_1,
-  author    = {Oles, Frank Joseph},
-  title     = {A category-theoretic approach to the semantics of programming languages},
-  year      = {1982},
-  publisher = {Syracuse University},
-  address   = {USA},
-  abstract  = {Here we create a framework for handling the semantics of fully typed programming languages with imperative features, higher-order ALGOL-like procedures, block structure, and implicit conversions. Our approach involves the introduction of a new family of programming languages, the coercive typed (lamda)-calculi, denoted by L in the body of the dissertation. By appropriately choosing the linguistic constants (i.e. generators) of L, we can view phrases of variants of ALGOL as syntactically sugared phrases of L.This dissertation breaks into three parts. In the first part, consisting of the first chapter, we supply basic definitions and motivate the idea that functor categories arise naturally in the explanation of block structure and stack discipline. The second part, consisting of the next three chapters, is dedicated to the general theory of the semantics of the coercive typed (lamda)-calculus; the interplay between posets, algebras, and Cartesian closed categories is particularly intense here. The remaining four chapters make up the final part, in which we apply the general theory to give both direct and continuation semantics for desugared variants of ALGOL. To do so, it is necessary to show certain functor categories are Cartesian closed and to describe a category (SIGMA) of store shapes. An interesting novelty in the presentation of continuation semantics is the view that commands form a procedural, rather than a primitive, phrase type.},
-  note      = {AAI8301650}
-}
-
-@article{Oles_2,
-  title        = {Type Algebras, Functor Categories, and Block Structure},
-  volume       = {12},
-  url          = {https://tidsskrift.dk/daimipb/article/view/7430},
-  doi          = {10.7146/dpb.v12i156.7430},
-  abstractnote = {In this paper we outline a category-theoretic approach to the semantics of ALGOL-like languages in which particular attention is paid to the use of functor categories as a mechanism to reflect stack discipline.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Also, we explore the idea that implicit conversions can be modelled by making the phrase types of a language into a poset, and we show how any poset freely generates a type algebra.},
-  number       = {156},
-  journal      = {DAIMI Report Series},
-  author       = {Oles, Frank J.},
-  year         = {1983},
-  month        = {Jan.}
-}
-
-@inproceedings{Reynolds,
-  author    = {Reynolds, John C.},
-  title     = {Using functor categories to generate intermediate code},
-  year      = {1995},
-  isbn      = {0897916921},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  url       = {https://doi.org/10.1145/199448.199452},
-  doi       = {10.1145/199448.199452},
-  abstract  = {In the early 80's Oles and Reynolds devised a semantic model of Algol-like languages using a category of functors from a category of store shapes to the category of predomains. Here we will show how a variant of this idea can be used to define the translation of an Algol-like language to intermediate code in a uniform way that avoids unnecessary temporary variables, provides control-flow translation of boolean expressions, permits online expansion of procedures, and minimizes the storage overhead of calls of closed procedures. The basic idea is to replace continuations by instruction sequences and store shapes by descriptions of the structure of the run-time stack.},
-  booktitle = {Proceedings of the 22nd ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
-  pages     = {25–36},
-  numpages  = {12},
-  location  = {San Francisco, California, USA},
-  series    = {POPL '95}
-}
-
 @inproceedings{Agda,
   author    = {Norell, Ulf},
-  title     = {Dependently typed programming in Agda},
+  title     = {Dependently typed programming in {Agda}},
   year      = {2009},
   isbn      = {9781605584201},
   publisher = {Association for Computing Machinery},
@@ -74,6 +14,87 @@
   keywords  = {dependent types, programming},
   location  = {Savannah, GA, USA},
   series    = {TLDI '09}
+}
+
+@misc{agda_mode,
+  title  = {agda-mode},
+  author = {Ting-Gian LUA},
+  url    = {https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode},
+  note   = {Accessed: 2025-04-15}
+}
+
+
+@misc{agda_std,
+  author  = {{The Agda Community}},
+  title   = {Agda Standard Library},
+  year    = {2024},
+  version = {2.1.1},
+  url     = {https://github.com/agda/agda-stdlib},
+  note    = {Release date: 2024-09-07}
+}
+
+@misc{basic_cat,
+  title         = {Basic Category Theory},
+  author        = {Tom Leinster},
+  year          = {2016},
+  eprint        = {1612.09375},
+  archiveprefix = {arXiv},
+  primaryclass  = {math.CT},
+  url           = {https://arxiv.org/abs/1612.09375}
+}
+
+@inproceedings{CakeML,
+  author    = {Kumar, Ramana and Myreen, Magnus O. and Norrish, Michael and Owens, Scott},
+  title     = {Cake{ML}: a verified implementation of {ML}},
+  year      = {2014},
+  isbn      = {9781450325448},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/2535838.2535841},
+  doi       = {10.1145/2535838.2535841},
+  abstract  = {We have developed and mechanically verified an ML system called CakeML, which supports a substantial subset of Standard ML. CakeML is implemented as an interactive read-eval-print loop (REPL) in x86-64 machine code. Our correctness theorem ensures that this REPL implementation prints only those results permitted by the semantics of CakeML. Our verification effort touches on a breadth of topics including lexing, parsing, type checking, incremental and dynamic compilation, garbage collection, arbitrary-precision arithmetic, and compiler bootstrapping.Our contributions are twofold. The first is simply in building a system that is end-to-end verified, demonstrating that each piece of such a verification effort can in practice be composed with the others, and ensuring that none of the pieces rely on any over-simplifying assumptions. The second is developing novel approaches to some of the more challenging aspects of the verification. In particular, our formally verified compiler can bootstrap itself: we apply the verified compiler to itself to produce a verified machine-code implementation of the compiler. Additionally, our compiler proof handles diverging input programs with a lightweight approach based on logical timeout exceptions. The entire development was carried out in the HOL4 theorem prover.},
+  booktitle = {Proceedings of the 41st ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
+  pages     = {179–191},
+  numpages  = {13},
+  keywords  = {ML, compiler bootstrapping, compiler verification, machine code verification, read-eval-print loop, verified garbage collection., verified parsing, verified type checking},
+  location  = {San Diego, California, USA},
+  series    = {POPL '14}
+}
+
+@inproceedings{Cat_Agda,
+  author    = {Hu, Jason Z. S. and Carette, Jacques},
+  title     = {Formalizing category theory in {A}gda},
+  year      = {2021},
+  isbn      = {9781450382991},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3437992.3439922},
+  doi       = {10.1145/3437992.3439922},
+  abstract  = {The generality and pervasiveness of category theory in modern mathematics makes it a frequent and useful target of formalization. It is however quite challenging to formalize, for a variety of reasons. Agda currently (i.e. in 2020) does not have a standard, working formalization of category theory. We document our work on solving this dilemma. The formalization revealed a number of potential design choices, and we present, motivate and explain the ones we picked. In particular, we find that alternative definitions or alternative proofs from those found in standard textbooks can be advantageous, as well as "fit" Agda's type theory more smoothly. Some definitions regarded as equivalent in standard textbooks turn out to make different "universe level" assumptions, with some being more polymorphic than others. We also pay close attention to engineering issues so that the library integrates well with Agda's own standard library, as well as being compatible with as many of supported type theories in Agda as possible.},
+  booktitle = {Proceedings of the 10th ACM SIGPLAN International Conference on Certified Programs and Proofs},
+  pages     = {327–342},
+  numpages  = {16},
+  keywords  = {formal mathematics, category theory, Agda},
+  location  = {Virtual, Denmark},
+  series    = {CPP 2021}
+}
+
+@book{cat_context,
+  author    = {Emily Riehl},
+  title     = {Category Theory in Context},
+  year      = {2016},
+  publisher = {Dover Publications},
+  address   = {Mineola, NY},
+  url       = {https://math.jhu.edu/~eriehl/context.pdf}
+}
+
+@misc{cat_lecture_notes,
+  author      = {Andrew Pitts and Marcelo Fiore},
+  title       = {Category Theory Lecture Notes},
+  year        = {2025},
+  url         = {https://www.cl.cam.ac.uk/teaching/2425/CAT/CATLectureNotes.pdf},
+  note        = {Lecture notes, University of Cambridge},
+  institution = {Computer Laboratory, University of Cambridge}
 }
 
 @article{CompCert,
@@ -95,121 +116,6 @@
   numpages   = {9}
 }
 
-@inproceedings{CakeML,
-  author    = {Kumar, Ramana and Myreen, Magnus O. and Norrish, Michael and Owens, Scott},
-  title     = {CakeML: a verified implementation of ML},
-  year      = {2014},
-  isbn      = {9781450325448},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  url       = {https://doi.org/10.1145/2535838.2535841},
-  doi       = {10.1145/2535838.2535841},
-  abstract  = {We have developed and mechanically verified an ML system called CakeML, which supports a substantial subset of Standard ML. CakeML is implemented as an interactive read-eval-print loop (REPL) in x86-64 machine code. Our correctness theorem ensures that this REPL implementation prints only those results permitted by the semantics of CakeML. Our verification effort touches on a breadth of topics including lexing, parsing, type checking, incremental and dynamic compilation, garbage collection, arbitrary-precision arithmetic, and compiler bootstrapping.Our contributions are twofold. The first is simply in building a system that is end-to-end verified, demonstrating that each piece of such a verification effort can in practice be composed with the others, and ensuring that none of the pieces rely on any over-simplifying assumptions. The second is developing novel approaches to some of the more challenging aspects of the verification. In particular, our formally verified compiler can bootstrap itself: we apply the verified compiler to itself to produce a verified machine-code implementation of the compiler. Additionally, our compiler proof handles diverging input programs with a lightweight approach based on logical timeout exceptions. The entire development was carried out in the HOL4 theorem prover.},
-  booktitle = {Proceedings of the 41st ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
-  pages     = {179–191},
-  numpages  = {13},
-  keywords  = {ML, compiler bootstrapping, compiler verification, machine code verification, read-eval-print loop, verified garbage collection., verified parsing, verified type checking},
-  location  = {San Diego, California, USA},
-  series    = {POPL '14}
-}
-
-@inproceedings{Lean4,
-  author    = {Moura, Leonardo de
-               and Ullrich, Sebastian},
-  editor    = {Platzer, Andr{\'e}
-               and Sutcliffe, Geoff},
-  title     = {The Lean 4 Theorem Prover and Programming Language},
-  booktitle = {Automated Deduction -- CADE 28},
-  year      = {2021},
-  publisher = {Springer International Publishing},
-  address   = {Cham},
-  pages     = {625--635},
-  abstract  = {Lean 4 is a reimplementation of the Lean interactive theorem prover (ITP) in Lean itself. It addresses many shortcomings of the previous versions and contains many new features. Lean 4 is fully extensible: users can modify and extend the parser, elaborator, tactics, decision procedures, pretty printer, and code generator. The new system has a hygienic macro system custom-built for ITPs. It contains a new typeclass resolution procedure based on tabled resolution, addressing significant performance problems reported by the growing user base. Lean 4 is also an efficient functional programming language based on a novel programming paradigm called functional but in-place. Efficient code generation is crucial for Lean users because many write custom proof automation procedures in Lean itself.},
-  isbn      = {978-3-030-79876-5}
-}
-
-@misc{Dybjer,
-  title         = {Categories with Families: Unityped, Simply Typed, and Dependently Typed},
-  author        = {Simon Castellan and Pierre Clairambault and Peter Dybjer},
-  year          = {2020},
-  eprint        = {1904.00827},
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.LO},
-  url           = {https://arxiv.org/abs/1904.00827}
-}
-
-@incollection{Jacobs,
-  title     = {Chapter 10 First order dependent type theory},
-  editor    = {Bart Jacobs},
-  series    = {Studies in Logic and the Foundations of Mathematics},
-  publisher = {Elsevier},
-  volume    = {141},
-  pages     = {581-644},
-  year      = {1998},
-  booktitle = {Categorical logic and type theory},
-  issn      = {0049-237X},
-  doi       = {https://doi.org/10.1016/S0049-237X(98)80040-2},
-  url       = {https://www.sciencedirect.com/science/article/pii/S0049237X98800402},
-  abstract  = {Publisher Summary
-               This chapter discusses calculi with dependent types and describes them categorically. The chapter reviews a variation on simple-type theory (STT), that is, the dependent-type theory (DTT). Dependent types are widely used in mathematical practice, such as in algebra as a set (or type) of n * m matrices, with entries from the reals. There are two kinds of extensions of DTT: the logical extensions—leading to dependently typed predicate logic to reason about terms and types in DTT, and type-theoretic extensions—combining type dependency and polymorphism (forming the basis of proof tools like LEGO or COQ). One can define strong coproducts in DTT, analogous to strong sum and equality. The difference between weak and strong coproducts + lies in their elimination rules. In the weak case, there is a direct extension of the rule used in STT. The strong coproducts are more natural in DTT than the weak ones. The chapter discusses many examples of CCompCs.}
-}
-
-@inproceedings{Cat_Agda,
-  author    = {Hu, Jason Z. S. and Carette, Jacques},
-  title     = {Formalizing category theory in Agda},
-  year      = {2021},
-  isbn      = {9781450382991},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  url       = {https://doi.org/10.1145/3437992.3439922},
-  doi       = {10.1145/3437992.3439922},
-  abstract  = {The generality and pervasiveness of category theory in modern mathematics makes it a frequent and useful target of formalization. It is however quite challenging to formalize, for a variety of reasons. Agda currently (i.e. in 2020) does not have a standard, working formalization of category theory. We document our work on solving this dilemma. The formalization revealed a number of potential design choices, and we present, motivate and explain the ones we picked. In particular, we find that alternative definitions or alternative proofs from those found in standard textbooks can be advantageous, as well as "fit" Agda's type theory more smoothly. Some definitions regarded as equivalent in standard textbooks turn out to make different "universe level" assumptions, with some being more polymorphic than others. We also pay close attention to engineering issues so that the library integrates well with Agda's own standard library, as well as being compatible with as many of supported type theories in Agda as possible.},
-  booktitle = {Proceedings of the 10th ACM SIGPLAN International Conference on Certified Programs and Proofs},
-  pages     = {327–342},
-  numpages  = {16},
-  keywords  = {formal mathematics, category theory, Agda},
-  location  = {Virtual, Denmark},
-  series    = {CPP 2021}
-}
-
-@misc{basic_cat,
-  title         = {Basic Category Theory},
-  author        = {Tom Leinster},
-  year          = {2016},
-  eprint        = {1612.09375},
-  archiveprefix = {arXiv},
-  primaryclass  = {math.CT},
-  url           = {https://arxiv.org/abs/1612.09375}
-}
-
-@book{cat_context,
-  author    = {Emily Riehl},
-  title     = {Category Theory in Context},
-  year      = {2016},
-  publisher = {Dover Publications},
-  address   = {Mineola, NY},
-  url       = {https://math.jhu.edu/~eriehl/context.pdf}
-}
-
-@misc{cat_lecture_notes,
-  author      = {Andrew Pitts and Marcelo Fiore},
-  title       = {Category Theory Lecture Notes},
-  year        = {2025},
-  url         = {https://www.cl.cam.ac.uk/teaching/2425/CAT/CATLectureNotes.pdf},
-  note        = {Lecture notes, University of Cambridge},
-  institution = {Computer Laboratory, University of Cambridge}
-}
-
-@incollection{scott-lambda,
-  author    = {Dana S. Scott},
-  title     = {Relating Theories of the $\lambda$-Calculus},
-  booktitle = {Relating Theories of the Lambda-Calculus: Dedicated to Professor H.~B. Curry on the Occasion of His 80th Birthday},
-  publisher = {Springer},
-  year      = {1974},
-  pages     = {406},
-  address   = {Oxford}
-}
-
 @inproceedings{curry-howard,
   author    = {Griffin, Timothy G.},
   title     = {A formulae-as-type notion of control},
@@ -227,9 +133,81 @@
   series    = {POPL '90}
 }
 
+@incollection{de_bruijn,
+  title     = {Lambda Calculus Notation with Nameless Dummies, a Tool for Automatic Formula Manipulation, with Application to the Church-Rosser Theorem**Reprinted from: Indagationes Math, 34, 5, p. 381-392, by courtesy of the Koninklijke Nederlandse Akademie van Wetenschappen, Amsterdam.},
+  editor    = {R.P. Nederpelt and J.H. Geuvers and R.C. {de Vrijer}},
+  series    = {Studies in Logic and the Foundations of Mathematics},
+  publisher = {Elsevier},
+  volume    = {133},
+  pages     = {375-388},
+  year      = {1994},
+  booktitle = {Selected Papers on Automath},
+  issn      = {0049-237X},
+  doi       = {https://doi.org/10.1016/S0049-237X(08)70216-7},
+  url       = {https://www.sciencedirect.com/science/article/pii/S0049237X08702167},
+  author    = {N.G. {de Bruijn}},
+  abstract  = {In ordinary lambda calculus the occurrences of a bound variable are made recognizable by the use of one and the same (otherwise irrelevant) name at all occurrences. This convention is known to cause considerable trouble in cases of substitution. In the present paper a different notational system is developed, where occurrences of variables are indicated by integers giving the “distance” to the binding λ instead of a name attached to that λ. The system is claimed to be efficient for automatic formula manipulation as well as for metalingual discussion. As an example the most essential part of a proof of the Church-Rosser theorem is presented in this namefree calculus.}
+}
+
+@misc{Dybjer,
+  title         = {{Categories with Families: Unityped, Simply Typed, and Dependently Typed}},
+  author        = {Simon Castellan and Pierre Clairambault and Peter Dybjer},
+  year          = {2020},
+  eprint        = {1904.00827},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.LO},
+  url           = {https://arxiv.org/abs/1904.00827}
+}
+
+@misc{emacs,
+  title = {{GNU Emacs}},
+  url   = {https://www.gnu.org/software/emacs/},
+  note  = {Accessed: 2025-04-15}
+}
+
+@inbook{essence,
+  author    = {Reynolds, John C.},
+  title     = {The essence of {ALGOL}},
+  year      = {1997},
+  isbn      = {0817638806},
+  publisher = {Birkhauser Boston Inc.},
+  address   = {USA},
+  booktitle = {ALGOL-like Languages, Volume 1},
+  pages     = {67–88},
+  numpages  = {22}
+}
+
+@misc{git,
+  title = {Git},
+  url   = {https://git-scm.com/},
+  note  = {Accessed: 2025-04-15}
+}
+
+@misc{github,
+  title = {{GitHub}},
+  url   = {https://github.com/},
+  note  = {Accessed: 2025-04-15}
+}
+
+@incollection{Jacobs,
+  title     = {Chapter 10 {F}irst order dependent type theory},
+  editor    = {Bart Jacobs},
+  series    = {Studies in Logic and the Foundations of Mathematics},
+  publisher = {Elsevier},
+  volume    = {141},
+  pages     = {581-644},
+  year      = {1998},
+  booktitle = {Categorical logic and type theory},
+  issn      = {0049-237X},
+  doi       = {https://doi.org/10.1016/S0049-237X(98)80040-2},
+  url       = {https://www.sciencedirect.com/science/article/pii/S0049237X98800402},
+  abstract  = {Publisher Summary
+               This chapter discusses calculi with dependent types and describes them categorically. The chapter reviews a variation on simple-type theory (STT), that is, the dependent-type theory (DTT). Dependent types are widely used in mathematical practice, such as in algebra as a set (or type) of n * m matrices, with entries from the reals. There are two kinds of extensions of DTT: the logical extensions—leading to dependently typed predicate logic to reason about terms and types in DTT, and type-theoretic extensions—combining type dependency and polymorphism (forming the basis of proof tools like LEGO or COQ). One can define strong coproducts in DTT, analogous to strong sum and equality. The difference between weak and strong coproducts + lies in their elimination rules. In the weak case, there is a direct extension of the rule used in STT. The strong coproducts are more natural in DTT than the weak ones. The chapter discusses many examples of CCompCs.}
+}
+
 @inproceedings{lambek,
   author    = {Lambek, Joachim},
-  title     = {Cartesian Closed Categories and Typed Lambda- calculi},
+  title     = {Cartesian closed categories and typed $\lambda$-calculi},
   year      = {1985},
   isbn      = {3540171843},
   publisher = {Springer-Verlag},
@@ -237,6 +215,44 @@
   booktitle = {Proceedings of the Thirteenth Spring School of the LITP on Combinators and Functional Programming Languages},
   pages     = {136–175},
   numpages  = {40}
+}
+
+@inproceedings{Lean4,
+  author    = {Moura, Leonardo de
+               and Ullrich, Sebastian},
+  editor    = {Platzer, Andr{\'e}
+               and Sutcliffe, Geoff},
+  title     = {The {L}ean 4 Theorem Prover and Programming Language},
+  booktitle = {Automated Deduction -- CADE 28},
+  year      = {2021},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {625--635},
+  abstract  = {Lean 4 is a reimplementation of the Lean interactive theorem prover (ITP) in Lean itself. It addresses many shortcomings of the previous versions and contains many new features. Lean 4 is fully extensible: users can modify and extend the parser, elaborator, tactics, decision procedures, pretty printer, and code generator. The new system has a hygienic macro system custom-built for ITPs. It contains a new typeclass resolution procedure based on tabled resolution, addressing significant performance problems reported by the growing user base. Lean 4 is also an efficient functional programming language based on a novel programming paradigm called functional but in-place. Efficient code generation is crucial for Lean users because many write custom proof automation procedures in Lean itself.},
+  isbn      = {978-3-030-79876-5}
+}
+
+@phdthesis{Oles_1,
+  author    = {Oles, Frank Joseph},
+  title     = {A category-theoretic approach to the semantics of programming languages},
+  year      = {1982},
+  publisher = {Syracuse University},
+  address   = {USA},
+  abstract  = {Here we create a framework for handling the semantics of fully typed programming languages with imperative features, higher-order ALGOL-like procedures, block structure, and implicit conversions. Our approach involves the introduction of a new family of programming languages, the coercive typed (lamda)-calculi, denoted by L in the body of the dissertation. By appropriately choosing the linguistic constants (i.e. generators) of L, we can view phrases of variants of ALGOL as syntactically sugared phrases of L.This dissertation breaks into three parts. In the first part, consisting of the first chapter, we supply basic definitions and motivate the idea that functor categories arise naturally in the explanation of block structure and stack discipline. The second part, consisting of the next three chapters, is dedicated to the general theory of the semantics of the coercive typed (lamda)-calculus; the interplay between posets, algebras, and Cartesian closed categories is particularly intense here. The remaining four chapters make up the final part, in which we apply the general theory to give both direct and continuation semantics for desugared variants of ALGOL. To do so, it is necessary to show certain functor categories are Cartesian closed and to describe a category (SIGMA) of store shapes. An interesting novelty in the presentation of continuation semantics is the view that commands form a procedural, rather than a primitive, phrase type.},
+  note      = {AAI8301650}
+}
+
+@article{Oles_2,
+  title        = {{Type Algebras, Functor Categories, and Block Structure}},
+  volume       = {12},
+  url          = {https://tidsskrift.dk/daimipb/article/view/7430},
+  doi          = {10.7146/dpb.v12i156.7430},
+  abstractnote = {In this paper we outline a category-theoretic approach to the semantics of ALGOL-like languages in which particular attention is paid to the use of functor categories as a mechanism to reflect stack discipline.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt;Also, we explore the idea that implicit conversions can be modelled by making the phrase types of a language into a poset, and we show how any poset freely generates a type algebra.},
+  number       = {156},
+  journal      = {DAIMI Report Series},
+  author       = {Oles, Frank J.},
+  year         = {1983},
+  month        = {Jan.}
 }
 
 @book{plfa,
@@ -247,48 +263,48 @@
   url    = {https://plfa.inf.ed.ac.uk/20.08/}
 }
 
-@misc{git,
-  title = {Git},
-  url   = {https://git-scm.com/},
-  note  = {Accessed: 2025-04-15}
+@inproceedings{Reynolds,
+  author    = {Reynolds, John C.},
+  title     = {Using functor categories to generate intermediate code},
+  year      = {1995},
+  isbn      = {0897916921},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/199448.199452},
+  doi       = {10.1145/199448.199452},
+  abstract  = {In the early 80's Oles and Reynolds devised a semantic model of Algol-like languages using a category of functors from a category of store shapes to the category of predomains. Here we will show how a variant of this idea can be used to define the translation of an Algol-like language to intermediate code in a uniform way that avoids unnecessary temporary variables, provides control-flow translation of boolean expressions, permits online expansion of procedures, and minimizes the storage overhead of calls of closed procedures. The basic idea is to replace continuations by instruction sequences and store shapes by descriptions of the structure of the run-time stack.},
+  booktitle = {Proceedings of the 22nd ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
+  pages     = {25–36},
+  numpages  = {12},
+  location  = {San Francisco, California, USA},
+  series    = {POPL '95}
 }
 
-@misc{github,
-  title = {GitHub},
-  url   = {https://github.com/},
-  note  = {Accessed: 2025-04-15}
+@incollection{scott-lambda,
+  author    = {Dana S. Scott},
+  title     = {Relating Theories of the $\lambda$-Calculus},
+  booktitle = {Relating Theories of the Lambda-Calculus: Dedicated to Professor H.~B. Curry on the Occasion of His 80th Birthday},
+  publisher = {Springer},
+  year      = {1974},
+  pages     = {406},
+  address   = {Oxford}
 }
 
-@misc{agda_std,
-  author  = {{The Agda Community}},
-  title   = {Agda Standard Library},
-  year    = {2024},
-  version = {2.1.1},
-  url     = {https://github.com/agda/agda-stdlib},
-  note    = {Release date: 2024-09-07}
-}
-
-@misc{emacs,
-  title = {GNU Emacs},
-  url   = {https://www.gnu.org/software/emacs/},
-  note  = {Accessed: 2025-04-15}
+@misc{stlc,
+  title  = {Notes on {Simply Typed Lambda Calculus}},
+  author = {Ralph Loader},
+  year   = {1996},
+  url    = {https://www.lfcs.inf.ed.ac.uk/reports/98/ECS-LFCS-98-381/}
 }
 
 @misc{vscode,
-  title = {Visual Studio Code},
+  title = {{Visual Studio Code}},
   url   = {https://code.visualstudio.com/},
   note  = {Accessed: 2025-04-15}
 }
 
-@misc{agda_mode,
-  title  = {agda-mode},
-  author = {Ting-Gian LUA},
-  url    = {https://marketplace.visualstudio.com/items?itemName=banacorn.agda-mode},
-  note   = {Accessed: 2025-04-15}
-}
-
 @misc{wsl_ubuntu,
-  title = {Windows Subsystem for Linux (WSL)},
+  title = {{Windows Subsystem for Linux (WSL)}},
   url   = {https://ubuntu.com/desktop/wsl},
   note  = {Accessed: 2025-04-15}
 }

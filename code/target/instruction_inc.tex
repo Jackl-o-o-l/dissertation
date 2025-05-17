@@ -3,32 +3,21 @@
 \usepackage[active,tightpage]{preview}
 \PreviewEnvironment{prev}
 \setlength\PreviewBorder{0pt}
+\renewcommand{\PreviewBbAdjust}{-\PreviewBorder 10pt \PreviewBorder \PreviewBorder}
 
 \usepackage{agda}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathabx}
-
+\usepackage{fontspec}
 \usepackage{unicode-math}
-\setmathfont{XITS Math}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
 
 \usepackage{newunicodechar}
-\newunicodechar{≤}{\ensuremath{\leq}}
-\newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{∸}{\ensuremath{\dotdiv}}
-\newunicodechar{∀}{\ensuremath{\forall}}
 \newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
 \newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
-\newunicodechar{δ}{\ensuremath{\delta}}
-\newunicodechar{∈}{\ensuremath{\in}}
-\newunicodechar{⊢}{\ensuremath{\vdash}}
-\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
-\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
-\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
-\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
-\newunicodechar{⟨}{\ensuremath{\langle}}
-\newunicodechar{⟩}{\ensuremath{\rangle}}
 
 \begin{document}
 \begin{prev}
@@ -72,36 +61,36 @@
 \AgdaBound{sd}\<%
 \\
 %
-\>[4]\AgdaInductiveConstructor{if-then-else-inc}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{δ}\AgdaSpace{}%
-\AgdaSymbol{:}%
-\>[399I]\AgdaDatatype{ℕ}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{S}\AgdaSpace{}%
-\AgdaBound{sd}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{RelOp}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{S}\AgdaSpace{}%
-\AgdaBound{sd}\<%
-\\
-\>[.][@{}l@{}]\<[399I]%
-\>[28]\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{I}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{sd}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{+ₛ}}\AgdaSpace{}%
-\AgdaBound{δ}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{I}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{sd}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{+ₛ}}\AgdaSpace{}%
-\AgdaBound{δ}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{I}\AgdaSpace{}%
-\AgdaBound{sd}\<%
-\\
-%
+% \>[4]\AgdaInductiveConstructor{if-then-else-inc}\AgdaSpace{}%
+% \AgdaSymbol{:}\AgdaSpace{}%
+% \AgdaSymbol{(}\AgdaBound{δ}\AgdaSpace{}%
+% \AgdaSymbol{:}%
+% \>[399I]\AgdaDatatype{ℕ}\AgdaSymbol{)}\AgdaSpace{}%
+% \AgdaSymbol{→}\AgdaSpace{}%
+% \AgdaDatatype{S}\AgdaSpace{}%
+% \AgdaBound{sd}\AgdaSpace{}%
+% \AgdaSymbol{→}\AgdaSpace{}%
+% \AgdaDatatype{RelOp}\AgdaSpace{}%
+% \AgdaSymbol{→}\AgdaSpace{}%
+% \AgdaDatatype{S}\AgdaSpace{}%
+% \AgdaBound{sd}\<%
+% \\
+% \>[.][@{}l@{}]\<[399I]%
+% \>[28]\AgdaSymbol{→}\AgdaSpace{}%
+% \AgdaDatatype{I}\AgdaSpace{}%
+% \AgdaSymbol{(}\AgdaBound{sd}\AgdaSpace{}%
+% \AgdaOperator{\AgdaFunction{+ₛ}}\AgdaSpace{}%
+% \AgdaBound{δ}\AgdaSymbol{)}\AgdaSpace{}%
+% \AgdaSymbol{→}\AgdaSpace{}%
+% \AgdaDatatype{I}\AgdaSpace{}%
+% \AgdaSymbol{(}\AgdaBound{sd}\AgdaSpace{}%
+% \AgdaOperator{\AgdaFunction{+ₛ}}\AgdaSpace{}%
+% \AgdaBound{δ}\AgdaSymbol{)}\AgdaSpace{}%
+% \AgdaSymbol{→}\AgdaSpace{}%
+% \AgdaDatatype{I}\AgdaSpace{}%
+% \AgdaBound{sd}\<%
+% \\
+% %
 \>[4]\AgdaInductiveConstructor{adjustdisp-inc}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{δ}\AgdaSpace{}%
@@ -119,16 +108,16 @@
 %
 \>[4]\AgdaInductiveConstructor{popto}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{sd'}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{sd′}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaRecord{SD}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaBound{sd'}\AgdaSpace{}%
+\AgdaBound{sd′}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{≤ₛ}}\AgdaSpace{}%
 \AgdaBound{sd}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaDatatype{I}\AgdaSpace{}%
-\AgdaBound{sd'}\AgdaSpace{}%
+\AgdaBound{sd′}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaDatatype{I}\AgdaSpace{}%
 \AgdaBound{sd}\<%

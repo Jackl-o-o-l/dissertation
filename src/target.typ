@@ -13,9 +13,7 @@ open import lib
 -- Stack descriptor: (frames, displacement)
 record SD : Set where
     constructor ⟨_,_⟩
-    field
-        f : ℕ
-        d : ℕ
+    field f d : ℕ
 
 -- Stack descriptor operations    
 _+ₛ_ : SD → ℕ → SD
@@ -30,44 +28,40 @@ _+ₛ_ : SD → ℕ → SD
 _–ₛ_ : (sd : SD) → (n : ℕ) → (n≤d : n ≤ SD.d sd) → SD
 (⟨ f , d ⟩ –ₛ n) n≤d = ⟨ f , (d – n) n≤d ⟩
 
-–ₛ≡ : ∀ {f d d' n} → {n≤d' : n ≤ d'} → (d' – n) n≤d' ≡ d 
-        → ⟨ f , d ⟩ ≡ (⟨ f , d' ⟩ –ₛ n) n≤d'
+–ₛ≡ : ∀ {f d d′ n} → {n≤d′ : n ≤ d′} → (d′ – n) n≤d′ ≡ d 
+        → ⟨ f , d ⟩ ≡ (⟨ f , d′ ⟩ –ₛ n) n≤d′
 –ₛ≡ p rewrite p = refl
 
 
 -- Stack descriptor lexicographic ordering
 data _≤ₛ_ : SD → SD → Set where
-    <-f : ∀ {f f' d d'} → f < f' → ⟨ f , d ⟩ ≤ₛ ⟨ f' , d' ⟩
-    ≤-d : ∀ {f d d'} → d ≤ d' → ⟨ f , d ⟩ ≤ₛ ⟨ f , d' ⟩
+    <-f : ∀ {f f′ d d′} → f < f′ → ⟨ f , d ⟩ ≤ₛ ⟨ f′ , d′ ⟩
+    ≤-d : ∀ {f d d′} → d ≤ d′ → ⟨ f , d ⟩ ≤ₛ ⟨ f , d′ ⟩
 
 ≤ₛ-refl : ∀{sd : SD} → sd ≤ₛ sd
 ≤ₛ-refl {⟨ f , d ⟩} = ≤-d ≤-refl
 
-≤ₛ-trans : ∀{sd sd' sd'' : SD} → sd ≤ₛ sd' → sd' ≤ₛ sd'' → sd ≤ₛ sd''
-≤ₛ-trans (<-f f<f') (≤-d _) =  <-f f<f'
-≤ₛ-trans (<-f f<f') (<-f f'<f'') = <-f (<-trans f<f' f'<f'')
-≤ₛ-trans (≤-d _) (<-f f'<f'') = <-f f'<f''
-≤ₛ-trans (≤-d d≤d') (≤-d d'≤d'') = ≤-d (≤-trans d≤d' d'≤d'')
+≤ₛ-trans : ∀{sd sd′ sd″ : SD} → sd ≤ₛ sd′ → sd′ ≤ₛ sd″ → sd ≤ₛ sd″
+≤ₛ-trans (<-f f<f′) (≤-d _) =  <-f f<f′
+≤ₛ-trans (<-f f<f′) (<-f f′<f″) = <-f (<-trans f<f′ f′<f″)
+≤ₛ-trans (≤-d _) (<-f f′<f″) = <-f f′<f″
+≤ₛ-trans (≤-d d≤d′) (≤-d d′≤d″) = ≤-d (≤-trans d≤d′ d′≤d″)
 
 +ₛ→≤ₛ : ∀{sd : SD} → ∀{n : ℕ} → sd ≤ₛ sd +ₛ n
 +ₛ→≤ₛ = ≤-d +→≤ 
 
-sub-sd≤ₛ : ∀ {sd sd' sd''} → sd' ≡ sd'' → sd ≤ₛ sd' → sd ≤ₛ sd''
-sub-sd≤ₛ sd'≡sd'' sd≤ₛsd' rewrite sd'≡sd'' = sd≤ₛsd'
-
+sub-sd≤ₛ : ∀ {sd sd′ sd″} → sd′ ≡ sd″ → sd ≤ₛ sd′ → sd ≤ₛ sd″
+sub-sd≤ₛ sd′≡sd″ sd≤ₛsd′ rewrite sd′≡sd″ = sd≤ₛsd′
 
 -- Operator
 data UnaryOp : Set where 
     UNeg : UnaryOp
 
 data BinaryOp : Set where
-    BPlus : BinaryOp
-    BMinus : BinaryOp
-    BTimes : BinaryOp
+    BPlus BMinus BTimes : BinaryOp
 
 data RelOp : Set where
-    RLeq : RelOp
-    RLt : RelOp
+    RLeq RLt : RelOp
 
 -- Nonterminals
 -- Lefthand sides
@@ -101,10 +95,10 @@ data I (sd : SD) : Set where
     adjustdisp-inc : (δ : ℕ) → I (sd +ₛ δ) → I sd
     adjustdisp-dec : (δ : ℕ) → (δ≤d : δ ≤ SD.d sd) 
                         → I ((sd –ₛ δ) δ≤d) → I sd
-    popto : (sd' : SD) → sd' ≤ₛ sd → I sd' → I sd 
+    popto : (sd′ : SD) → sd′ ≤ₛ sd → I sd′ → I sd 
 
 
-I-sub : ∀ {f d d' n} → {n≤d' : n ≤ d'} → (d' – n) n≤d' ≡ d 
-            → I (⟨ f , d ⟩) → I ((⟨ f , d' ⟩ –ₛ n) n≤d')
-I-sub {n = n} d'–n≡d c = sub I (–ₛ≡ {n = n} d'–n≡d) c 
+I-sub : ∀ {f d d′ n} → {n≤d′ : n ≤ d′} → (d′ – n) n≤d′ ≡ d 
+            → I (⟨ f , d ⟩) → I ((⟨ f , d′ ⟩ –ₛ n) n≤d′)
+I-sub {n = n} d′–n≡d c = sub I (–ₛ≡ {n = n} d′–n≡d) c
 ```

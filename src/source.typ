@@ -16,17 +16,14 @@ infixr 7 _⇒_
 
 -- Types
 data Type : Set where
-    comm : Type
-    intexp : Type
-    intacc : Type
-    intvar : Type
+    comm intexp intacc intvar : Type
     _⇒_ : Type → Type → Type
 
 -- Subtype relation
 data _≤:_ : Type → Type → Set where
     ≤:-refl : ∀{A} → A ≤: A
-    ≤:-trans : ∀{A A' A''} → A ≤: A' → A' ≤: A'' → A ≤: A''
-    ≤:-fn : ∀{A A' B B'} → A' ≤: A → B ≤: B' → A ⇒ B ≤: A' ⇒ B'
+    ≤:-trans : ∀{A A′ A″} → A ≤: A′ → A′ ≤: A″ → A ≤: A″
+    ≤:-fn : ∀{A A′ B B′} → A′ ≤: A → B ≤: B′ → A ⇒ B ≤: A′ ⇒ B′
 
     var-≤:-exp : intvar ≤: intexp
     var-≤:-acc : intvar ≤: intacc
@@ -120,10 +117,10 @@ _[_] {Γ} {A} {B} N M = subst {Γ , B} {Γ} σ {A} N
 
 -- Reduction
 data _⟶_ : ∀{Γ A} → (Γ ⊢ A) → (Γ ⊢ A) → Set where
-    App-cong₁ : ∀{Γ A B} {F F' : Γ ⊢ A ⇒ B} {E : Γ ⊢ A} 
-                    → F ⟶ F' → App F E ⟶ App F' E
-    App-cong₂ : ∀{Γ A B} {V : Γ ⊢ A ⇒ B} {E E' : Γ ⊢ A} 
-                    → Value V → E ⟶ E' → App V E ⟶ App V E'
+    App-cong₁ : ∀{Γ A B} {F F′ : Γ ⊢ A ⇒ B} {E : Γ ⊢ A} 
+                    → F ⟶ F′ → App F E ⟶ App F′ E
+    App-cong₂ : ∀{Γ A B} {V : Γ ⊢ A ⇒ B} {E E′ : Γ ⊢ A} 
+                    → Value V → E ⟶ E′ → App V E ⟶ App V E′
     Lambda-β : ∀{Γ A B} {F : Γ , A ⊢ B} {V : Γ ⊢ A}
                     → Value V → App (Lambda F) V ⟶ F [ V ]
 ```

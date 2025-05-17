@@ -37,7 +37,7 @@
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Notes on Simply Typed Lambda Calculus}
+      \field{title}{Notes on {Simply Typed Lambda Calculus}}
       \field{year}{1996}
       \verb{urlraw}
       \verb https://www.lfcs.inf.ed.ac.uk/reports/98/ECS-LFCS-98-381/
@@ -72,7 +72,7 @@
       \field{labeltitlesource}{title}
       \field{booktitle}{Proceedings of the Thirteenth Spring School of the LITP on Combinators and Functional Programming Languages}
       \field{isbn}{3540171843}
-      \field{title}{Cartesian Closed Categories and Typed Lambda- calculi}
+      \field{title}{Cartesian closed categories and typed $\lambda$-calculi}
       \field{year}{1985}
       \field{pages}{136\bibrangedash 175}
       \range{pages}{40}
@@ -104,7 +104,7 @@
       \field{labeltitlesource}{title}
       \field{booktitle}{ALGOL-like Languages, Volume 1}
       \field{isbn}{0817638806}
-      \field{title}{The essence of ALGOL}
+      \field{title}{The essence of {ALGOL}}
       \field{year}{1997}
       \field{pages}{67\bibrangedash 88}
       \range{pages}{22}
@@ -162,7 +162,7 @@
       \field{journaltitle}{DAIMI Report Series}
       \field{month}{1}
       \field{number}{156}
-      \field{title}{Type Algebras, Functor Categories, and Block Structure}
+      \field{title}{{Type Algebras, Functor Categories, and Block Structure}}
       \field{volume}{12}
       \field{year}{1983}
       \verb{doi}
@@ -246,7 +246,7 @@
       \field{booktitle}{Proceedings of the 4th International Workshop on Types in Language Design and Implementation}
       \field{isbn}{9781605584201}
       \field{series}{TLDI '09}
-      \field{title}{Dependently typed programming in Agda}
+      \field{title}{Dependently typed programming in {Agda}}
       \field{year}{2009}
       \field{pages}{1\bibrangedash 2}
       \range{pages}{2}
@@ -348,7 +348,7 @@
       \field{booktitle}{Proceedings of the 41st ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages}
       \field{isbn}{9781450325448}
       \field{series}{POPL '14}
-      \field{title}{CakeML: a verified implementation of ML}
+      \field{title}{Cake{ML}: a verified implementation of {ML}}
       \field{year}{2014}
       \field{pages}{179\bibrangedash 191}
       \range{pages}{13}
@@ -393,7 +393,7 @@
       \field{labeltitlesource}{title}
       \field{eprintclass}{cs.LO}
       \field{eprinttype}{arXiv}
-      \field{title}{Categories with Families: Unityped, Simply Typed, and Dependently Typed}
+      \field{title}{{Categories with Families: Unityped, Simply Typed, and Dependently Typed}}
       \field{year}{2020}
       \verb{eprint}
       \verb 1904.00827
@@ -430,7 +430,7 @@
       \field{booktitle}{Categorical logic and type theory}
       \field{issn}{0049-237X}
       \field{series}{Studies in Logic and the Foundations of Mathematics}
-      \field{title}{Chapter 10 First order dependent type theory}
+      \field{title}{Chapter 10 {F}irst order dependent type theory}
       \field{volume}{141}
       \field{year}{1998}
       \field{pages}{581\bibrangedash 644}
@@ -478,7 +478,7 @@
       \field{booktitle}{Proceedings of the 10th ACM SIGPLAN International Conference on Certified Programs and Proofs}
       \field{isbn}{9781450382991}
       \field{series}{CPP 2021}
-      \field{title}{Formalizing category theory in Agda}
+      \field{title}{Formalizing category theory in {A}gda}
       \field{year}{2021}
       \field{pages}{327\bibrangedash 342}
       \range{pages}{16}
@@ -749,7 +749,7 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
-      \field{title}{GitHub}
+      \field{title}{{GitHub}}
       \verb{urlraw}
       \verb https://github.com/
       \endverb
@@ -762,7 +762,7 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
-      \field{title}{GNU Emacs}
+      \field{title}{{GNU Emacs}}
       \verb{urlraw}
       \verb https://www.gnu.org/software/emacs/
       \endverb
@@ -775,7 +775,7 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
-      \field{title}{Visual Studio Code}
+      \field{title}{{Visual Studio Code}}
       \verb{urlraw}
       \verb https://code.visualstudio.com/
       \endverb
@@ -815,12 +815,72 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2025-04-15}
-      \field{title}{Windows Subsystem for Linux (WSL)}
+      \field{title}{{Windows Subsystem for Linux (WSL)}}
       \verb{urlraw}
       \verb https://ubuntu.com/desktop/wsl
       \endverb
       \verb{url}
       \verb https://ubuntu.com/desktop/wsl
+      \endverb
+    \endentry
+    \entry{de_bruijn}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=c8c9db118200be613ddf80714b8c71d8}{%
+           family={{de Bruijn}},
+           familyi={d\bibinitperiod},
+           given={N.G.},
+           giveni={N\bibinitperiod}}}%
+      }
+      \name{editor}{3}{}{%
+        {{hash=b32018e39958840e1a3e59fde182c36d}{%
+           family={Nederpelt},
+           familyi={N\bibinitperiod},
+           given={R.P.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e7189aab3a10045f103fc960c3d9b52c}{%
+           family={Geuvers},
+           familyi={G\bibinitperiod},
+           given={J.H.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=43deadf537908d65a5915424b3388ab8}{%
+           family={{de Vrijer}},
+           familyi={d\bibinitperiod},
+           given={R.C.},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{c8c9db118200be613ddf80714b8c71d8}
+      \strng{fullhash}{c8c9db118200be613ddf80714b8c71d8}
+      \strng{bibnamehash}{c8c9db118200be613ddf80714b8c71d8}
+      \strng{authorbibnamehash}{c8c9db118200be613ddf80714b8c71d8}
+      \strng{authornamehash}{c8c9db118200be613ddf80714b8c71d8}
+      \strng{authorfullhash}{c8c9db118200be613ddf80714b8c71d8}
+      \strng{editorbibnamehash}{67825d0b16272abe18b42921ad3ea19c}
+      \strng{editornamehash}{eb0daca143512ff14f19cb84cc103a03}
+      \strng{editorfullhash}{67825d0b16272abe18b42921ad3ea19c}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In ordinary lambda calculus the occurrences of a bound variable are made recognizable by the use of one and the same (otherwise irrelevant) name at all occurrences. This convention is known to cause considerable trouble in cases of substitution. In the present paper a different notational system is developed, where occurrences of variables are indicated by integers giving the “distance” to the binding λ instead of a name attached to that λ. The system is claimed to be efficient for automatic formula manipulation as well as for metalingual discussion. As an example the most essential part of a proof of the Church-Rosser theorem is presented in this namefree calculus.}
+      \field{booktitle}{Selected Papers on Automath}
+      \field{issn}{0049-237X}
+      \field{series}{Studies in Logic and the Foundations of Mathematics}
+      \field{title}{Lambda Calculus Notation with Nameless Dummies, a Tool for Automatic Formula Manipulation, with Application to the Church-Rosser Theorem**Reprinted from: Indagationes Math, 34, 5, p. 381-392, by courtesy of the Koninklijke Nederlandse Akademie van Wetenschappen, Amsterdam.}
+      \field{volume}{133}
+      \field{year}{1994}
+      \field{pages}{375\bibrangedash 388}
+      \range{pages}{14}
+      \verb{doi}
+      \verb https://doi.org/10.1016/S0049-237X(08)70216-7
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0049237X08702167
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0049237X08702167
       \endverb
     \endentry
   \enddatalist

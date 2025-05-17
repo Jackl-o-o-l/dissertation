@@ -25,6 +25,6 @@ cong f refl = refl
 subst : ∀ {A : Set} {x y : A} (P : A → Set) → x ≡ y → P x → P y
 subst P refl px = px
 
-+-identity : ∀ (n : ℕ) → n + zero ≡ n
-+-identity zero = refl
-+-identity (suc n) = cong suc (+-identity n)
++-identityʳ : ∀ (n : ℕ) → n + zero ≡ n
++-identityʳ zero = refl
++-identityʳ (suc n) = cong suc (+-identityʳ n)

@@ -1,0 +1,19 @@
+\documentclass[border=0mm]{standalone}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{ebproof}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+\begin{document}
+	\begin{prooftree}
+		\hypo{\vphantom{A′ ≤: A″}}
+		\infer1[\textsc{Reflexivity}]{A ≤: A\vphantom{A ≤: A″}}
+	\end{prooftree}
+	\quad
+	\begin{prooftree}
+		\hypo{A ≤: A′}
+		\hypo{A′ ≤: A″}
+		\infer2[\textsc{Transitivity}]{A ≤: A″}
+	\end{prooftree}
+\end{document}

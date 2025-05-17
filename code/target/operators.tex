@@ -3,32 +3,16 @@
 \usepackage[active,tightpage]{preview}
 \PreviewEnvironment{prev}
 \setlength\PreviewBorder{0pt}
+\renewcommand{\PreviewBbAdjust}{-\PreviewBorder 10pt \PreviewBorder \PreviewBorder}
 
 \usepackage{agda}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathabx}
-
+\usepackage{fontspec}
 \usepackage{unicode-math}
-\setmathfont{XITS Math}
-
-\usepackage{newunicodechar}
-\newunicodechar{≤}{\ensuremath{\leq}}
-\newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{∸}{\ensuremath{\dotdiv}}
-\newunicodechar{∀}{\ensuremath{\forall}}
-\newunicodechar{→}{\ensuremath{\rightarrow}}
-\newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
-\newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
-\newunicodechar{δ}{\ensuremath{\delta}}
-\newunicodechar{∈}{\ensuremath{\in}}
-\newunicodechar{⊢}{\ensuremath{\vdash}}
-\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
-\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
-\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
-\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
-\newunicodechar{⟨}{\ensuremath{\langle}}
-\newunicodechar{⟩}{\ensuremath{\rangle}}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
 
 \begin{document}
 \begin{prev}
@@ -54,36 +38,24 @@
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaInductiveConstructor{BPlus}\AgdaSpace{}%
+\AgdaInductiveConstructor{BMinus}\AgdaSpace{}%
+\AgdaInductiveConstructor{BTimes}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaDatatype{BinaryOp}\<%
-\\
-%
-\>[4]\AgdaInductiveConstructor{BMinus}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaDatatype{BinaryOp}\<%
-\\
-%
-\>[4]\AgdaInductiveConstructor{BTimes}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaDatatype{BinaryOp}\<%
-\\
-%
-\\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaKeyword{data}\AgdaSpace{}%
-\AgdaDatatype{RelOp}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaPrimitive{Set}\AgdaSpace{}%
-\AgdaKeyword{where}\<%
-\\
-\>[0][@{}l@{\AgdaIndent{0}}]%
-\>[4]\AgdaInductiveConstructor{RLeq}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaDatatype{RelOp}\<%
-\\
-%
-\>[4]\AgdaInductiveConstructor{RLt}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaDatatype{RelOp}\<%
+% \\
+% %
+% \\[\AgdaEmptyExtraSkip]%
+% \>[0]\AgdaKeyword{data}\AgdaSpace{}%
+% \AgdaDatatype{RelOp}\AgdaSpace{}%
+% \AgdaSymbol{:}\AgdaSpace{}%
+% \AgdaPrimitive{Set}\AgdaSpace{}%
+% \AgdaKeyword{where}\<%
+% \\
+% \>[0][@{}l@{\AgdaIndent{0}}]%
+% \>[4]\AgdaInductiveConstructor{RLeq}\AgdaSpace{}%
+% \AgdaInductiveConstructor{RLt}\AgdaSpace{}%
+% \AgdaSymbol{:}\AgdaSpace{}%
+% \AgdaDatatype{RelOp}\<%
 \end{code}
 \end{prev}
 \end{document}

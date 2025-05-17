@@ -3,30 +3,25 @@
 \usepackage[active,tightpage]{preview}
 \PreviewEnvironment{prev}
 \setlength\PreviewBorder{0pt}
+\renewcommand{\PreviewBbAdjust}{-\PreviewBorder 10pt \PreviewBorder \PreviewBorder}
 
 \usepackage{agda}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathabx}
-
+\usepackage{fontspec}
 \usepackage{unicode-math}
-\setmathfont{XITS Math}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
 
 \usepackage{newunicodechar}
-\newunicodechar{≤}{\ensuremath{\leq}}
-\newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{∸}{\ensuremath{\dotdiv}}
-\newunicodechar{∀}{\ensuremath{\forall}}
-\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{→}{\ensuremath{\to}}
 \newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
 \newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
-\newunicodechar{δ}{\ensuremath{\delta}}
-\newunicodechar{∈}{\ensuremath{\in}}
-\newunicodechar{⊢}{\ensuremath{\vdash}}
+
+% \newunicodechar{∈}{\ensuremath{\in}}
+% \newunicodechar{⊢}{\ensuremath{\vdash}}
 \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
-\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
-\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
-\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
 
 \begin{document}
 \begin{prev}
@@ -44,7 +39,7 @@
     \>[0][@{}l@{\AgdaIndent{0}}]%
     \>[4]\AgdaInductiveConstructor{Var}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSpace{}%
     \AgdaBound{A}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaBound{A}\AgdaSpace{}%
@@ -63,7 +58,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Sub}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSpace{}%
     \AgdaBound{A}\AgdaSpace{}%
     \AgdaBound{B}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
@@ -87,7 +82,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Lambda}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSpace{}%
     \AgdaBound{A}\AgdaSpace{}%
     \AgdaBound{B}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
@@ -106,7 +101,7 @@
     %
     \>[4]\AgdaInductiveConstructor{App}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSpace{}%
     \AgdaBound{A}\AgdaSpace{}%
     \AgdaBound{B}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
@@ -132,7 +127,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Skip}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaBound{Γ}\AgdaSpace{}%
     \AgdaOperator{\AgdaDatatype{⊢}}\AgdaSpace{}%
@@ -141,7 +136,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Seq}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaBound{Γ}\AgdaSpace{}%
     \AgdaOperator{\AgdaDatatype{⊢}}\AgdaSpace{}%
@@ -158,7 +153,7 @@
     %
     \>[4]\AgdaInductiveConstructor{NewVar}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaBound{Γ}\AgdaSpace{}%
     \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
@@ -173,7 +168,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Assign}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaBound{Γ}\AgdaSpace{}%
     \AgdaOperator{\AgdaDatatype{⊢}}\AgdaSpace{}%
@@ -195,7 +190,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Lit}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaDatatype{ℤ}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
@@ -206,7 +201,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Neg}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaBound{Γ}\AgdaSpace{}%
     \AgdaOperator{\AgdaDatatype{⊢}}\AgdaSpace{}%
@@ -219,7 +214,7 @@
     %
     \>[4]\AgdaInductiveConstructor{Plus}\AgdaSpace{}%
     \AgdaSymbol{:}\AgdaSpace{}%
-    \AgdaSymbol{∀\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+    \AgdaSymbol{∀ \{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
     \AgdaSymbol{→}\AgdaSpace{}%
     \AgdaBound{Γ}\AgdaSpace{}%
     \AgdaOperator{\AgdaDatatype{⊢}}\AgdaSpace{}%
