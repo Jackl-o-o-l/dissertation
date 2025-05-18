@@ -1,0 +1,21 @@
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.1}Starting Point}{\reset@font\mtcSfont 3}{section.2.1}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.2}Category theory}{\reset@font\mtcSfont 3}{section.2.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.1}Category}{\reset@font\mtcSSfont 3}{subsection.2.2.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Commutative diagrams}{\reset@font\mtcSSSfont 5}{section*.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.2}Isomorphism}{\reset@font\mtcSSfont 6}{subsection.2.2.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.3}Cartesian closed category}{\reset@font\mtcSSfont 6}{subsection.2.2.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.4}Functor}{\reset@font\mtcSSfont 8}{subsection.2.2.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.5}Natural transformation}{\reset@font\mtcSSfont 8}{subsection.2.2.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.6}Functor category}{\reset@font\mtcSSfont 9}{subsection.2.2.6}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.7}Presheaf category}{\reset@font\mtcSSfont 9}{subsection.2.2.7}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.8}Yoneda lemma}{\reset@font\mtcSSfont 9}{subsection.2.2.8}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.9}Cartesian closed structure in presheaf categories}{\reset@font\mtcSSfont 10}{subsection.2.2.9}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.2.10}Curry-Howard-Lambek correspondence}{\reset@font\mtcSSfont 10}{subsection.2.2.10}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.3}Agda}{\reset@font\mtcSfont 11}{section.2.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.1}Basic data types and pattern matching}{\reset@font\mtcSSfont 11}{subsection.2.3.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.2}Dependent Types}{\reset@font\mtcSSfont 11}{subsection.2.3.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.3}Equality, congruence and substitution}{\reset@font\mtcSSfont 12}{subsection.2.3.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.4}Standard library}{\reset@font\mtcSSfont 13}{subsection.2.3.4}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Builtin pragma}{\reset@font\mtcSSSfont 13}{section*.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.5}Interactive programming with holes}{\reset@font\mtcSSfont 13}{subsection.2.3.5}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.4}Requirement Analysis}{\reset@font\mtcSfont 14}{section.2.4}}
