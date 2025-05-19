@@ -9,6 +9,8 @@
 \usepackage{amssymb}
 \usepackage{mathabx}
 \usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{upgreek}
 \setmainfont{Linux Libertine O}
 \setsansfont{Linux Biolinum O}
 
@@ -24,6 +26,15 @@
 \newunicodechar{ʳ}{\ensuremath{\textsuperscript{r}}}
 \newunicodechar{⟨}{\ensuremath{\langle}}
 \newunicodechar{⟩}{\ensuremath{\rangle}}
+\newunicodechar{β}{\ensuremath{\beta}}
+\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{κ}{\ensuremath{\kappa}}
+\newunicodechar{λ}{\ensuremath{\uplambda}}
+\newunicodechar{π}{\ensuremath{\pi}}
+\newunicodechar{ρ}{\ensuremath{\rho}}
+\newunicodechar{σ}{\ensuremath{\sigma}}
+
 
 \begin{document}
 \begin{prev}
@@ -939,15 +950,19 @@
 \AgdaBound{sd}\<%
 \\
 \>[16][@{}l@{\AgdaIndent{0}}]%
-\>[19]\AgdaSymbol{(}\AgdaFunction{sub-sd≤ₛ}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaFunction{–ₛ≡}\AgdaSpace{}%
+\>[19]\AgdaSymbol{(}\AgdaFunction{sub-sd≤ₛ}\<%
+\\
+\>[19][@{}l@{\AgdaIndent{0}}]%
+\>[24]\AgdaSymbol{(}\AgdaFunction{–ₛ≡}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaArgument{n≤d′}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{–→≤}\AgdaSpace{}%
 \AgdaBound{d′≤d″}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{n–[n–m]≡m}\AgdaSpace{}%
-\AgdaBound{d′≤d″}\AgdaSymbol{))}\AgdaSpace{}%
-\AgdaBound{sd≤ₛsd′}\AgdaSymbol{))}\<%
+\AgdaBound{d′≤d″}\AgdaSymbol{))}\<%
+\\
+%
+\>[24]\AgdaBound{sd≤ₛsd′}\AgdaSymbol{))}\<%
 \\
 %
 \>[16]\AgdaBound{r}\<%
@@ -965,7 +980,7 @@
 \\
 %
 \>[8]\AgdaFunction{acc}%
-\>[678I]\AgdaSymbol{\{}\AgdaArgument{sd′}\AgdaSpace{}%
+\>[676I]\AgdaSymbol{\{}\AgdaArgument{sd′}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaBound{sd′}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaBound{sd≤ₛsd′}\AgdaSpace{}%
@@ -974,7 +989,7 @@
 \AgdaBound{f<f′}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaBound{r}\<%
 \\
-\>[.][@{}l@{}]\<[678I]%
+\>[.][@{}l@{}]\<[676I]%
 \>[12]\AgdaSymbol{=}\AgdaSpace{}%
 \AgdaInductiveConstructor{assign-inc}\AgdaSpace{}%
 \AgdaNumber{0}\AgdaSpace{}%
@@ -993,7 +1008,7 @@
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaFunction{assign}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[697I]\AgdaSymbol{(}\AgdaBound{sd}\AgdaSpace{}%
+\>[695I]\AgdaSymbol{(}\AgdaBound{sd}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaRecord{SD}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
@@ -1006,7 +1021,7 @@
 \AgdaFunction{Compl}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaBound{sd}\<%
 \\
-\>[697I][@{}l@{\AgdaIndent{0}}]%
+\>[695I][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{sd}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{≤ₛ}}\AgdaSpace{}%
@@ -1040,14 +1055,14 @@
 \\
 \>[0]\AgdaSymbol{...}\AgdaSpace{}%
 \AgdaSymbol{|}%
-\>[737I]\AgdaInductiveConstructor{leq}\AgdaSpace{}%
+\>[735I]\AgdaInductiveConstructor{leq}\AgdaSpace{}%
 \AgdaBound{δ₁≤δ₂}\<%
 \\
-\>[737I][@{}l@{\AgdaIndent{0}}]%
+\>[735I][@{}l@{\AgdaIndent{0}}]%
 \>[8]\AgdaSymbol{=}%
-\>[739I]\AgdaInductiveConstructor{assign-dec}\<%
+\>[737I]\AgdaInductiveConstructor{assign-dec}\<%
 \\
-\>[739I][@{}l@{\AgdaIndent{0}}]%
+\>[737I][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{((}\AgdaBound{d′}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{suc}\AgdaSpace{}%
@@ -1101,14 +1116,14 @@
 \AgdaInductiveConstructor{geq}\AgdaSpace{}%
 \AgdaBound{δ₂≤δ₁}\AgdaSpace{}%
 \AgdaSymbol{=}%
-\>[768I]\AgdaInductiveConstructor{assign-inc}\AgdaSpace{}%
+\>[766I]\AgdaInductiveConstructor{assign-inc}\AgdaSpace{}%
 \AgdaSymbol{(((}\AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaBound{d}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
 \AgdaBound{d′}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaBound{δ₂≤δ₁}\AgdaSymbol{)}\<%
 \\
-\>[.][@{}l@{}]\<[768I]%
+\>[.][@{}l@{}]\<[766I]%
 \>[18]\AgdaSymbol{(}\AgdaInductiveConstructor{l-var}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⟨}}\AgdaSpace{}%
 \AgdaBound{f}\AgdaSpace{}%
@@ -1360,7 +1375,7 @@
 %
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaOperator{\AgdaFunction{⟦}}%
-\>[970I]\AgdaInductiveConstructor{NewVar}\AgdaSpace{}%
+\>[968I]\AgdaInductiveConstructor{NewVar}\AgdaSpace{}%
 \AgdaBound{c}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaBound{sd}\AgdaSpace{}%
@@ -1372,7 +1387,7 @@
 \AgdaBound{κ}\AgdaSpace{}%
 \AgdaSymbol{=}\<%
 \\
-\>[970I][@{}l@{\AgdaIndent{0}}]%
+\>[968I][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaInductiveConstructor{assign-inc}\AgdaSpace{}%
 \AgdaNumber{1}\<%
 \\
@@ -1390,10 +1405,10 @@
 \\
 %
 \>[8]\AgdaSymbol{(}\AgdaOperator{\AgdaFunction{⟦}}%
-\>[988I]\AgdaBound{c}\AgdaSpace{}%
+\>[986I]\AgdaBound{c}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\<%
 \\
-\>[988I][@{}l@{\AgdaIndent{0}}]%
+\>[986I][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{(}\AgdaBound{sd′}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{+ₛ}}\AgdaSpace{}%
 \AgdaNumber{1}\AgdaSymbol{)}\<%
@@ -1492,7 +1507,7 @@
 %
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaOperator{\AgdaFunction{⟦}}%
-\>[1054I]\AgdaInductiveConstructor{Neg}\AgdaSpace{}%
+\>[1052I]\AgdaInductiveConstructor{Neg}\AgdaSpace{}%
 \AgdaBound{e}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaBound{sd}\AgdaSpace{}%
@@ -1501,7 +1516,7 @@
 \AgdaBound{β}\AgdaSpace{}%
 \AgdaSymbol{=}\<%
 \\
-\>[1054I][@{}l@{\AgdaIndent{0}}]%
+\>[1052I][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaOperator{\AgdaFunction{⟦}}\AgdaSpace{}%
 \AgdaBound{e}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
@@ -1522,7 +1537,7 @@
 \>[0]\<%
 \\
 \>[0]\AgdaOperator{\AgdaFunction{⟦}}%
-\>[1077I]\AgdaInductiveConstructor{Plus}\AgdaSpace{}%
+\>[1075I]\AgdaInductiveConstructor{Plus}\AgdaSpace{}%
 \AgdaBound{e₁}\AgdaSpace{}%
 \AgdaBound{e₂}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
@@ -1532,15 +1547,15 @@
 \AgdaBound{β}\AgdaSpace{}%
 \AgdaSymbol{=}\<%
 \\
-\>[1077I][@{}l@{\AgdaIndent{0}}]%
+\>[1075I][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaOperator{\AgdaFunction{⟦}}%
-\>[1086I]\AgdaBound{e₁}\AgdaSpace{}%
+\>[1084I]\AgdaBound{e₁}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟧}}\AgdaSpace{}%
 \AgdaBound{sd}\AgdaSpace{}%
 \AgdaBound{γ}\AgdaSpace{}%
 \AgdaBound{sd≤ₛsd′}\<%
 \\
-\>[1086I][@{}l@{\AgdaIndent{0}}]%
+\>[1084I][@{}l@{\AgdaIndent{0}}]%
 \>[8]\AgdaSymbol{(}\AgdaFunction{use-temp}\AgdaSpace{}%
 \AgdaSymbol{(λ}\AgdaSpace{}%
 \AgdaBound{sd′≤ₛsd″}\AgdaSpace{}%

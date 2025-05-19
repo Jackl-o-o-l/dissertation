@@ -1,39 +1,39 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.1}Tools used}{\reset@font\mtcSfont 17}{section.3.1}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.2}Repository Overview}{\reset@font\mtcSfont 17}{section.3.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.2.1}Directory structure}{\reset@font\mtcSSfont 17}{subsection.3.2.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.2.2}File dependencies and descriptions}{\reset@font\mtcSSfont 17}{subsection.3.2.2}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.3}Source Language}{\reset@font\mtcSfont 18}{section.3.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.1}Types}{\reset@font\mtcSSfont 18}{subsection.3.3.1}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Subtypes}{\reset@font\mtcSSSfont 19}{section*.4}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.2}Contexts and variables}{\reset@font\mtcSSfont 19}{subsection.3.3.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.3}Terms and the typing judgement}{\reset@font\mtcSSfont 20}{subsection.3.3.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.4}Operational Semantics}{\reset@font\mtcSSfont 21}{subsection.3.3.4}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.4}Target Language}{\reset@font\mtcSfont 21}{section.3.4}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.1}Stack descriptor}{\reset@font\mtcSSfont 22}{subsection.3.4.1}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Order}{\reset@font\mtcSSSfont 22}{section*.5}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Addition and subtraction of stack descriptors}{\reset@font\mtcSSSfont 22}{section*.6}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Properties}{\reset@font\mtcSSSfont 22}{section*.7}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.2}Grammar}{\reset@font\mtcSSfont 23}{subsection.3.4.2}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.5}Customised Library}{\reset@font\mtcSfont 25}{section.3.5}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.1}Definitions from standard library}{\reset@font\mtcSSfont 25}{subsection.3.5.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.2}Subtraction}{\reset@font\mtcSSfont 26}{subsection.3.5.2}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Explicit proof-passing approach}{\reset@font\mtcSSSfont 27}{section*.8}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode \textsf {Fin}-based approach}{\reset@font\mtcSSSfont 27}{section*.9}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Comparison of the two approaches}{\reset@font\mtcSSSfont 28}{section*.10}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.3}Properties with subtractions}{\reset@font\mtcSSfont 29}{subsection.3.5.3}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.6}Compiler}{\reset@font\mtcSfont 29}{section.3.6}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.1}Presheaf semantics}{\reset@font\mtcSSfont 30}{subsection.3.6.1}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Base category}{\reset@font\mtcSSSfont 30}{section*.11}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Semantic category}{\reset@font\mtcSSSfont 30}{section*.12}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.2}Continuations}{\reset@font\mtcSSfont 31}{subsection.3.6.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.3}Denotational semantics of types and contexts}{\reset@font\mtcSSfont 32}{subsection.3.6.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.4}Functorial mapping}{\reset@font\mtcSSfont 32}{subsection.3.6.4}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Functorial mapping for instruction sequences}{\reset@font\mtcSSSfont 33}{section*.13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.5}Compilation}{\reset@font\mtcSSfont 34}{subsection.3.6.5}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Variables}{\reset@font\mtcSSSfont 34}{section*.14}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Subtyping}{\reset@font\mtcSSSfont 34}{section*.15}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Lambda abstraction}{\reset@font\mtcSSSfont 35}{section*.16}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Command}{\reset@font\mtcSSSfont 35}{section*.17}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode New variable}{\reset@font\mtcPfont 36}{section*.18}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Integer expression}{\reset@font\mtcSSSfont 36}{section*.19}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Compilation for closed program}{\reset@font\mtcSSSfont 37}{section*.20}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.1}Tools used}{\reset@font\mtcSfont 15}{section.3.1}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.2}Repository Overview}{\reset@font\mtcSfont 16}{section.3.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.2.1}Directory structure}{\reset@font\mtcSSfont 16}{subsection.3.2.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.2.2}File dependencies and descriptions}{\reset@font\mtcSSfont 16}{subsection.3.2.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.3}Source Language}{\reset@font\mtcSfont 17}{section.3.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.1}Types}{\reset@font\mtcSSfont 17}{subsection.3.3.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Subtypes}{\reset@font\mtcSSSfont 17}{subsection.3.3.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.2}Contexts and variables}{\reset@font\mtcSSfont 18}{subsection.3.3.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.3}Terms and the typing judgement}{\reset@font\mtcSSfont 18}{subsection.3.3.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.4}Operational Semantics}{\reset@font\mtcSSfont 19}{subsection.3.3.4}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.4}Target Language}{\reset@font\mtcSfont 20}{section.3.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.1}Stack descriptor}{\reset@font\mtcSSfont 20}{subsection.3.4.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Order}{\reset@font\mtcSSSfont 20}{subsection.3.4.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Addition and subtraction of stack descriptors}{\reset@font\mtcSSSfont 20}{subsection.3.4.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Properties}{\reset@font\mtcSSSfont 21}{subsection.3.4.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.2}Grammar}{\reset@font\mtcSSfont 21}{subsection.3.4.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.5}Customised Library}{\reset@font\mtcSfont 23}{section.3.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.1}Definitions from standard library}{\reset@font\mtcSSfont 24}{subsection.3.5.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.2}Subtraction}{\reset@font\mtcSSfont 25}{subsection.3.5.2}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Explicit proof-passing approach}{\reset@font\mtcSSSfont 25}{subsection.3.5.2}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode \textsf {Fin}-based approach}{\reset@font\mtcSSSfont 26}{subsection.3.5.2}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Comparison of the two approaches}{\reset@font\mtcSSSfont 27}{figure.3.12}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.3}Properties with subtractions}{\reset@font\mtcSSfont 27}{subsection.3.5.3}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.6}Compiler}{\reset@font\mtcSfont 28}{section.3.6}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.1}Presheaf semantics}{\reset@font\mtcSSfont 28}{subsection.3.6.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Base category}{\reset@font\mtcSSSfont 28}{subsection.3.6.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Semantic category}{\reset@font\mtcSSSfont 28}{subsection.3.6.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.2}Continuations}{\reset@font\mtcSSfont 29}{subsection.3.6.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.3}Denotational semantics of types and contexts}{\reset@font\mtcSSfont 30}{subsection.3.6.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.4}Functorial mapping}{\reset@font\mtcSSfont 31}{subsection.3.6.4}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Functorial mapping for instruction sequences}{\reset@font\mtcSSSfont 32}{subsection.3.6.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.6.5}Compilation}{\reset@font\mtcSSfont 32}{subsection.3.6.5}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Variables}{\reset@font\mtcSSSfont 32}{subsection.3.6.5}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Subtyping}{\reset@font\mtcSSSfont 32}{subsection.3.6.5}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Lambda abstraction}{\reset@font\mtcSSSfont 33}{subsection.3.6.5}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Command}{\reset@font\mtcSSSfont 33}{subsection.3.6.5}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode New variable}{\reset@font\mtcPfont 34}{subsection.3.6.5}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Integer expression}{\reset@font\mtcSSSfont 34}{Item.3}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Compilation for closed program}{\reset@font\mtcSSSfont 35}{Item.3}}

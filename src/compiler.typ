@@ -116,7 +116,9 @@ new-intvar sd = ( exp , acc )
             = assign-dec 
                 ((d″ – d′) d′≤d″) (–→≤ d′≤d″) 
                 (l-var sd
-                   (sub-sd≤ₛ (–ₛ≡ {n≤d′ = –→≤ d′≤d″} (n–[n–m]≡m d′≤d″)) sd≤ₛsd′))
+                   (sub-sd≤ₛ 
+                        (–ₛ≡ {n≤d′ = –→≤ d′≤d″} (n–[n–m]≡m d′≤d″)) 
+                        sd≤ₛsd′))
                 r
                 (I-sub {n = (d″ – d′) d′≤d″}(n–[n–m]≡m d′≤d″) κ)
         acc {sd′ = sd′} sd≤ₛsd′ κ (<-f f<f′) r 

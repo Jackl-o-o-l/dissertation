@@ -8,40 +8,33 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathabx}
-
+\usepackage{fontspec}
 \usepackage{unicode-math}
-\setmathfont{XITS Math}
+\usepackage{upgreek}
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
 
 \usepackage{newunicodechar}
-\newunicodechar{≤}{\ensuremath{\leq}}
-\newunicodechar{≡}{\ensuremath{\equiv}}
-\newunicodechar{∸}{\ensuremath{\dotdiv}}
-\newunicodechar{∀}{\ensuremath{\forall}}
-\newunicodechar{→}{\ensuremath{\rightarrow}}
 \newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
 \newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{∸}{\ensuremath{\dotdiv}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
+\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
+\newunicodechar{ʳ}{\ensuremath{\textsuperscript{r}}}
+\newunicodechar{⟨}{\ensuremath{\langle}}
+\newunicodechar{⟩}{\ensuremath{\rangle}}
 \newunicodechar{β}{\ensuremath{\beta}}
 \newunicodechar{δ}{\ensuremath{\delta}}
 \newunicodechar{γ}{\ensuremath{\gamma}}
 \newunicodechar{κ}{\ensuremath{\kappa}}
-\newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{λ}{\ensuremath{\uplambda}}
 \newunicodechar{π}{\ensuremath{\pi}}
 \newunicodechar{ρ}{\ensuremath{\rho}}
 \newunicodechar{σ}{\ensuremath{\sigma}}
-\newunicodechar{θ}{\ensuremath{\theta}}
-\newunicodechar{∈}{\ensuremath{\in}}
-\newunicodechar{⊢}{\ensuremath{\vdash}}
-\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
-\newunicodechar{⟶}{\ensuremath{\longrightarrow}}
-\newunicodechar{ₛ}{\ensuremath{\textsubscript{s}}}
-\newunicodechar{ᵛ}{\ensuremath{\textsuperscript{v}}}
-\newunicodechar{ʳ}{\ensuremath{\textsuperscript{r}}}
-\newunicodechar{₁}{\ensuremath{\textsubscript{1}}}
-\newunicodechar{₂}{\ensuremath{\textsubscript{2}}}
-\newunicodechar{⟨}{\ensuremath{\langle}}
-\newunicodechar{⟩}{\ensuremath{\rangle}}
-\newunicodechar{–}{\ensuremath{-}}
-\newunicodechar{∅}{\ensuremath{\emptyset}}
+
 
 \begin{document}
 \begin{prev}
@@ -308,7 +301,7 @@
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{l}\AgdaSpace{}%
-\AgdaBound{l'}\AgdaSymbol{\}}\AgdaSpace{}%
+\AgdaBound{l′}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaPrimitive{Set}\AgdaSpace{}%
@@ -316,7 +309,7 @@
 \AgdaSymbol{\{}\AgdaBound{B}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaPrimitive{Set}\AgdaSpace{}%
-\AgdaBound{l'}\AgdaSymbol{\}}\AgdaSpace{}%
+\AgdaBound{l′}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{f}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaBound{A}\AgdaSpace{}%
@@ -349,7 +342,7 @@
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{l}\AgdaSpace{}%
-\AgdaBound{l'}\AgdaSymbol{\}}\AgdaSpace{}%
+\AgdaBound{l′}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaPrimitive{Set}\AgdaSpace{}%
@@ -363,7 +356,7 @@
 \AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaPrimitive{Set}\AgdaSpace{}%
-\AgdaBound{l'}\AgdaSymbol{)}\AgdaSpace{}%
+\AgdaBound{l′}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{≡}}\AgdaSpace{}%
@@ -1413,28 +1406,28 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-\>[0]\AgdaComment{--\ suc\ d\ ≤\ d'\ →\ d\ ≤\ d'\ –\ (d'\ –\ (suc\ d))}\<%
+\>[0]\AgdaComment{--\ suc\ d\ ≤\ d′\ →\ d\ ≤\ d′\ –\ (d′\ –\ (suc\ d))}\<%
 \\
-\>[0]\AgdaFunction{suc-d≤d'→d≤d'–[d'–[suc-d]]}\AgdaSpace{}%
+\>[0]\AgdaFunction{suc-d≤d′→d≤d′–[d′–[suc-d]]}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{d}\AgdaSpace{}%
-\AgdaBound{d'}\AgdaSymbol{\}}\AgdaSpace{}%
+\AgdaBound{d′}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{δ₁≤δ₂}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaBound{d}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{≤}}\AgdaSpace{}%
-\AgdaBound{d'}\AgdaSymbol{)}\<%
+\AgdaBound{d′}\AgdaSymbol{)}\<%
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{d}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{≤}}\AgdaSpace{}%
-\AgdaSymbol{((}\AgdaBound{d'}\AgdaSpace{}%
+\AgdaSymbol{((}\AgdaBound{d′}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
-\AgdaSymbol{((}\AgdaBound{d'}\AgdaSpace{}%
+\AgdaSymbol{((}\AgdaBound{d′}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{–}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaInductiveConstructor{suc}\AgdaSpace{}%
 \AgdaBound{d}\AgdaSymbol{))}\AgdaSpace{}%
@@ -1442,7 +1435,7 @@
 \AgdaSymbol{(}\AgdaFunction{–→≤}\AgdaSpace{}%
 \AgdaBound{δ₁≤δ₂}\AgdaSymbol{))}\<%
 \\
-\>[0]\AgdaFunction{suc-d≤d'→d≤d'–[d'–[suc-d]]}\AgdaSpace{}%
+\>[0]\AgdaFunction{suc-d≤d′→d≤d′–[d′–[suc-d]]}\AgdaSpace{}%
 \AgdaBound{δ₁≤δ₂}\AgdaSpace{}%
 \AgdaSymbol{=}\<%
 \\

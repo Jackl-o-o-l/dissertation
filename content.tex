@@ -162,8 +162,8 @@
         \textbf{Candidate Number:} & 2330G \\
         \textbf{Title of Project:} & Using functor categories to generate intermediate code with Agda \\
         \textbf{Examination} & Computer Science Tripos - Part II - 2025 \\
-        \textbf{Word-count:} & [wordcount] \footnotemark \\
-        \textbf{Code line count:} & [linecount] \footnotemark \\
+        \textbf{Word-count:} & 9574 \footnotemark \\
+        \textbf{Code line count:} & 1727 \footnotemark \\
         \textbf{Project Originator:} & Yulong Huang \\
         \textbf{Project Supervisor:} & Yulong Huang and Yufeng Li \\
     \end{tabular}
@@ -172,15 +172,23 @@
     \textbf{\Large Original Aims of the Project}
     \vspace{1em}
 
+    The original aims of the project were to implement a compiler originated from the denotational semantics, following the work of Reynolds~\autocite{Reynolds}. The compiler is a functor from the source language to the target language. Agda is chosen as the implementation language because it is a dependently typed proof assistant, which ensures that the input source program, the compilation process, and the output target program are all well-typed.
+
     \vspace{2em}
     \textbf{\Large Work Completed}
     \vspace{1em}
 
+    I defined a compiler in Agda for the source language and target language as described in Reynolds' work~\autocite{Reynolds}. The compiler was guaranteed to generate expected code by tests in a separate Agda file. An additional customised library was defined to support the implementation of the compiler. More importantly, I spotted a mistake in Reynolds' definition of the denotational semantics of the source language and provided a corrected version. All success criteria were met, and the project was completed successfully.
+
     \vspace{2em}
     \textbf{\Large Special Difficulties}
     \vspace{1em}
+    
+    None.
+
+
     \begingroup
-        \footnotetext[1]{This word-count was computed by \texttt{texcount -1 -sum -merge -q dissertation.tex}.}
+        \footnotetext[1]{This word-count was computed by \texttt{texcount -sum -1 content.tex}.}
         \footnotetext[2]{This code line count was computed by \texttt{find . -name "*.agda" | xargs wc -l}.}
     \endgroup
 \end{titlepage}
@@ -846,7 +854,7 @@
         \[\includegraphics[scale=1.2]{/source/subtype.pdf}\]
 
         \subsection{Contexts and variables}
-        We define the context as a finite list of types as follows:
+        I define the context as a finite list of types as follows:
         \[\includegraphics[scale=1.2]{/source/contexts.pdf}\]
         When we are looking for a variable, \gnt{Zero} case corresponds to the situation where the variable is the head of the context, and the \gnt{Suc} case corresponds to the situation where the variable is in the tail of the context. The number formed by \gnt{Zero} and \gnt{Suc} is the index of the variable in the context, called the \emph{de Bruijn index}~\autocite{de_bruijn}. 
 
@@ -968,32 +976,7 @@
         \caption{Properties of order and addition of stack descriptors}
         \label{tab: stack_descriptor_properties}
     \end{table}
-    % We can use reflexivity and transitivity of the order $<$ and $\leq$ to prove that the order of stack descriptors $\leq_\mathsf{s}$ is a preorder. The proof in Agda is as follows:
-    % \begin{proof}
-    %     We need to show that $\leq_\mathsf{s}$ is reflexive and transitive. 
-    %     \begin{itemize}
-    %         \item 
-    %             Reflexivity: $\textit{sd} \leq_\mathsf{s} \textit{sd}$ is trivially true since $f = f$ and $d \leq d$.
-    %         \item
-    %             Transitivity: if $\ang{f, d} \leq_\mathsf{s} \ang{f', d'}$ and $\ang{f', d'} \leq_\mathsf{s} \ang{f'', d''}$, we do the following case split:
-    %             \begin{enumerate}
-    %                 \item 
-    %                     If $f < f'$, $f' = f''$ and $d \leq d'$, then $f < f''$; 
-    %                 \item 
-    %                     If $f < f'$ and $f' < f''$, then $f < f''$ by transitivity of $<$;
-    %                 \item
-    %                     If $f = f'$, $d \leq d'$ and $f' < f''$, then $f < f''$;
-    %                 \item
-    %                     Otherwise $f = f''$ and $d \leq d''$ by transitivity of $\leq$. \footnote{Note that the properties of $=$ is not required in as in the Agda definition of $\leq_\mathsf{s}$, we directly define $f'$ to be $f$ instead of defining a equivalence relation, thus equivalence can be checked directly via type checking.}
-    %             \end{enumerate}
-    %     \end{itemize}
-    % \end{proof}
-
-    % The proof is defined in Agda as follows:
-    % \[\includegraphics[scale=1.2]{/target/stack_descriptor_order_proof.pdf}\]
-
-    % When a natural number is added to a stack descriptor, it is guaranteed that the new stack descriptor is not less than the old stack descriptor. This can be proved directly using the same properties of integer addition. The proof is defined in Agda as follows:
-    % \[\includegraphics[scale=1.2]{/target/stack_descriptor_add_proof.pdf}\]
+    The definitions of the above properties can be found in Appendix~\ref{app: target_properties}.
 
     \subsection{Grammar} \label{subsec: grammar}
     The grammar of the target language\footnote{This grammar can be extended with subroutines as an \textsf{L} command, and conditionals as an \textsf{I} command} is defined as follows, given the current stack descriptor $\textit{sd} = \ang{f, d}$, and new stack descriptor $\textit{sd′}$ and $\textit{sd\textsuperscript{v}}$:
@@ -1073,7 +1056,7 @@
         \item
             \textbf{Minimal Dependencies}: Avoiding the standard library reduces external assumptions, making the project self-contained. 
     \end{itemize}
-    All definitions and properties can be found in Appendix~[TBD].
+    All definitions and properties that are listed in this section can be fount in Appendix~\ref{app: lib_properties}.
 
     \subsection{Definitions from standard library}
     The following is a list of definitions (or their variants) from the standard library and PLFA~\cite{plfa} that are redefined in the customised library:
@@ -1087,6 +1070,7 @@
         \item
             Properties of preorder and addition (summarised in Table~\ref{tab: properties}).
     \end{itemize}
+    The properties are defined in a minimalistic way and tailored to the requirements of the compiler. For example, \mbt{≤-compare} in Table~\ref{tab: properties} is a property that states that for all $m, n \in \bN$, either $m \leq n$ or $n \leq m$, which is used to case split in the implementation of the compiler. In the standard library, a similar property is defined to split the cases into $m < n$, $m \equiv n$ and $m > n$, which adds unnecessary complexity to the implementation, as all the proof required for compiler is in the form of $m \leq n$.
     \begin{table}[H]
         \centering
         \begin{tabular}{|l|l|}
@@ -1158,7 +1142,7 @@
 
 
     \subsection{Subtraction} \label{subsec: subtraction}
-    In the standard library~\autocite{agda_std}, the subtraction of natural numbers is defined as follows:\footnote{The definition in the standard library directly uses symbol $\mathsf{-}$, but here for clarity we use $\mathsf{\dotdiv}$ instead.}
+    In the standard library~\autocite{agda_std}, the subtraction of natural numbers is defined as follows:\footnote{The definition in the standard library directly uses symbol $\mathsf{-}$, but here for clarity I use $\mathsf{\dotdiv}$ instead.}
     \[\includegraphics[scale=1.2]{minus.pdf}\]
     Mathematically we have $ n \dotdiv m = \max(0, n - m)$. This definition is valid and ensures that the result is a natural number. However, there are two problems with this definition for our implementation:
     \begin{itemize}
@@ -1278,7 +1262,7 @@
         \item Objects are stack descriptors ($\textit{sd} = \ang{f, d}$);
         \item Morphisms are stack expansions ($\iota : \textit{sd} \to \textit{sd′}$ for $\textit{sd} \leq_\mathsf{s} \textit{sd′}$).
     \end{itemize}
-    We define $\mathsf{SD}$ as the set of stack descriptors. Then the base category is the category determined by preorder $\underline{\mathsf{SD}} = \{\mathsf{SD}, \leq_\mathsf{s}\}$ in Example~\ref{ex: category_preorder}.
+    I define $\mathsf{SD}$ as the set of stack descriptors. Then the base category is the category determined by preorder $\underline{\mathsf{SD}} = \{\mathsf{SD}, \leq_\mathsf{s}\}$ in Example~\ref{ex: category_preorder}.
 
     \subsubsection{Semantic category}
     Semantic category $\mathcal{K}$ is the functor category $\text{PDOM}^{\Upsigma^{\textbf{op}}}$, where $\text{PDOM}$ is the category of predomains and continuous functions.
@@ -1315,7 +1299,7 @@
     The exponential $P \Rightarrow_\textsf{s} Q$ is a function that given a proof of stack growth, transforming a $P$-value at $\textit{sd′}$ into a $Q$-value at $\textit{sd′}$, and the $\forall{\textit{sd′}}$ quantifier guarantees it works no matter how the stack grows. It is designed in this way so that a functor $\intp{-} : \Theta \to \mathcal{K}$ exists that interprets the type constructor $\Rightarrow$ as the exponential functor $\Rightarrow_s$.
 
     \subsection{Continuations}
-    In Reynolds' model, we construct $\mathsf{Compl}$ and $\mathsf{Intcompl}$\footnote{In the work of Reynolds, $\mathsf{compl}$ and $\mathsf{intcompl}$ are introduced as new types in the source language, and the definitions here are the denotational semantics of those types, respectively. Since these two introduced types are only used for the denotational semantics, I think directly defining them as denotational semantics constructs is natural and sufficient.} as tools in the denotational semantics to represent command continuations and integer continuations, respectively. We can think of integer continuations as a function that takes an integer and returns a command continuation. Mathematically we have
+    In Reynolds' model, $\mathsf{Compl}$ and $\mathsf{Intcompl}$\footnote{In the work of Reynolds, $\mathsf{compl}$ and $\mathsf{intcompl}$ are introduced as new types in the source language, and the definitions here are the denotational semantics of those types, respectively. Since these two introduced types are only used for the denotational semantics, I think directly defining them as denotational semantics constructs is natural and sufficient.} are constructed as tools in the denotational semantics to represent command continuations and integer continuations, respectively. We can think of integer continuations as a function that takes an integer and returns a command continuation. Mathematically we have
     \[\mathsf{Compl}\ \textit{sd} : \mathsf{SD} \to O \qquad \mathsf{Intcompl}\ \textit{sd} : \bZ \to (\mathsf{SD} \to O)\]
     where $O$ is an unspecified domain of outputs.
 
@@ -1332,20 +1316,20 @@
     \subsection{Denotational semantics of types and contexts} \label{subsec: type_interpretation}
     With the idea of continuation, the denotational semantics of types can be defined as follows:
     \begin{itemize}
-        \item Command passes on command continuations;
-        \item Integer expressions takes an integer continuation and returns a command continuation;
-        \item Integer acceptors take a command continuation and returns an integer continuation;
-        \item Integer variables can be used both as an integer expression and an integer acceptor, so it has the denotational semantics of both, defined as a product of the two.
+        \item Commands pass on command continuations;
+        \item Integer expressions take integer continuations and return command continuations;
+        \item Integer acceptors take command continuations and return integer continuations;
+        \item Integer variables can be used either as integer expressions or integer acceptors, so they have the denotational semantics of both, defined as a product of the two.
     \end{itemize}
     
-    The denotational semantics of types in Agda as follows:
+    The denotational semantics of types in Agda is as follows:
     \[\includegraphics[scale=1.2]{/compiler/type_interpretation.pdf}\]
 
-    The denotational semantics of contexts is essentially a list expressed by the product of the denotational semantics of the types in the context. The denotational semantics of contexts is defined as follows, where we use \mb{∅} to denote the denotational semantics of the empty context:
+    The denotational semantics of contexts is essentially a list expressed by the product of the denotational semantics of the types in the context. The denotational semantics of contexts is defined as follows, where I use \mb{∅} to denote the denotational semantics of the empty context:
     \[\includegraphics[scale=1.2]{/compiler/context_interpretation.pdf}\]
 
     \subsection{Functorial mapping} \label{subsec: functorial_mapping}
-    The denotational semantics of terms is defined as a functor. Before we define its object mapping, we need to define the functorial mapping, which acts on the morphisms of the base category $\Upsigma$. 
+    The denotational semantics of terms is defined as a functor. Before defining its object mapping, we need to define the functorial mapping, which acts on the morphisms of the base category $\Upsigma$. 
 
     Since the morphisms of the base category $\Upsigma$ are stack expansions, the functorial mapping essentially lifts a semantic object indexed by a stack descriptor $\textit{sd}$ to a semantic object indexed by a larger stack descriptor $\textit{sd′}$. This ensures the denotational semantics of terms remains valid when the stack grows.
 
@@ -1374,13 +1358,13 @@
     The denotational semantics of the terms corresponding to all rules in the typing judgement mentioned in~\secref{subsec: terms} is defined as follows: 
 
         \subsubsection{Variables}
-        We define an auxiliary function that simply gets the variable from the list of variables (the context), and the denotational semantics of variables is given by applying this function:
+        I define an auxiliary function that simply gets the variable from the list of variables (the context), and the denotational semantics of variables is given by applying this function:
         \[\includegraphics[scale=1.2]{/compiler/term_var.pdf}\]
 
         \subsubsection{Subtyping}
-        The idea of subtyping is to use a term of type $A$ as a term of type $A'$, where $A$ is a subtype of $A'$. We define an auxiliary function that takes in the subtype relation $A\leq:A'$ and the denotational semantics of $A$, and returns the denotational semantics of $A'$. 
+        The idea of subtyping is to use a term of type $A$ as a term of type $A'$, where $A$ is a subtype of $A'$. I define an auxiliary function that takes in the subtype relation $A\leq:A'$ and the denotational semantics of $A$, and returns the denotational semantics of $A'$. 
         \begin{itemize}
-            \item For \gnt{var-≤:-exp} and \gnt{⟦var-≤:-acc}, sincethe denotational semantics of integer variable is defined as product of the denotational semantics of integer expression and integer acceptor in~\secref{subsec: type_interpretation}, we can simply use the projection to get the denotational semantics of either side.
+            \item For \gnt{var-≤:-exp} and \gnt{⟦var-≤:-acc}, since the denotational semantics of integer variable is defined as product of the denotational semantics of integer expression and integer acceptor in~\secref{subsec: type_interpretation}, we can simply use the projection to get the denotational semantics of either side.
             \item For \gnt{≤:-refl}, we can simply use the identity function.
             \item For \gnt{≤:-trans}, we can use the composition of the two functions.
             \item For \gnt{≤:-fn}, we can use a contravariant function.
@@ -1423,7 +1407,7 @@
             \item The acceptor component prefixes the continuation $\kappa$ with an assignment of the new variable.
         \end{itemize}
 
-        Please see Appendix~[TBD] for the full implementation of the function \textsf{NewVar}.
+        Please see Appendix~\ref{app: compiler_details} for the full implementation of the function \textsf{NewVar}.
 
         \subsubsection{Integer expression} \label{subsubsec: compiler_intexp}
         The denotational semantics of type $\mathsf{intexp}$ is an exponential from an integer continuation to a command continuation. We need to fill the integer continuation with appropriate $R$ terms to get the command continuation. 
@@ -1444,7 +1428,7 @@
             \item \textit{sd′} is the stack descriptor after the evaluation on the given expression and just before the assignment of the temporary variable. \textit{sd} ≤ₛ \textit{sd′} is guaranteed.
             \item \textit{sd″} = \textit{sd} +ₛ 1 is the stack descriptor after the assignment of the temporary variable, as it is just large enough to hold the temporary variable.
         \end{itemize}
-        In Reynolds' model, the stack descriptor can be directly adjusted from \textit{sd′} to \textit{sd″}. However, in the Agda implementation, we need to know whether the adjustment is positive or negative and use \textsf{assign-inc} or \textsf{assign-dec} respectively. This is done by using \mbt{≤-compare} in Table~\ref{tab: properties}. We also need to show that the adjustment is valid for each case. Please refer to Appendix~[TBD] for the full implementation of the function \textsf{use-temp}.
+        In Reynolds' model, the stack descriptor can be directly adjusted from \textit{sd′} to \textit{sd″}. However, in the Agda implementation, we need to know whether the adjustment is positive or negative and use \textsf{assign-inc} or \textsf{assign-dec} respectively. This is done by using \mbt{≤-compare} in Table~\ref{tab: properties}. We also need to show that the adjustment is valid for each case. Please refer to Appendix~\ref{app: compiler_details} for the full implementation of the function \textsf{use-temp}.
         % The auxiliary function \textsf{use-temp} is defined as follows:
         % \[\includegraphics[scale=1.2]{/compiler/assign_use-temp.pdf}\]
         
@@ -1480,7 +1464,7 @@
         \label{fig: test_case_3′}
     \end{figure}
 
-    The full test cases are available in the appendix [TBD]. Here is a summary of the test cases:
+    Here is a summary of the test cases:
     % \begin{enumerate}[label=\textbf{Test \arabic*.}, leftmargin=*]
     %     \setcounter{enumi}{-1}
     %     \item $\mathsf{skip}$
@@ -1580,7 +1564,7 @@
         \label{tab: feature_checklist}
     \end{table}
 
-    The specifications that include multiple variables, free variables and self-referential assignments ensure that the translation of the Debrujin index of the context works correctly under edge cases.
+    The specifications that include multiple variables, free variables and self-referential assignments ensure that the translation of the de Bruijn index of the context works correctly under edge cases.
 
     The specification of multiple expressions in integer expression is necessary because the target language does not support doing multiple integer operations in a single instruction, as specified in Figure~\ref{fig: target_grammar}. As a result, special tests are required to check that the compiler correctly translates integer expressions with multiple operations into a continuation of single operations defined in the target language. 
 
@@ -1647,20 +1631,93 @@
 \appendix
 
 \chapter{Operational Semantics of the source language} \label{app: operational_semantics}
-    \chapterminitoc
     The operational semantics of the source language is defined with renaming, substitution and reduction rules. The implementation is as follows:
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=1.2]{/source/operational_semantics_1.pdf}
+        \includegraphics[scale=1.2]{/appendix/source_operational_semantics_1.pdf}
         \caption{Operational semantics of the source language (Part 1)}
         \label{fig: operational_semantics_1}
     \end{figure}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=1.2]{/source/operational_semantics_2.pdf}
+        \includegraphics[scale=1.2]{/appendix/source_operational_semantics_2.pdf}
         \caption{Operational semantics of the source language (Part 2)}
         \label{fig: operational_semantics_2}
     \end{figure}
+
+\chapter{Properties of target language} \label{app: target_properties}
+    The properties of the target language are defined as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/appendix/target_properties.pdf}
+        \caption{Properties of the target language}
+        \label{fig: target_properties}
+    \end{figure}
+
+\chapter{Properties of natural numbers} \label{app: lib_properties}
+    The properties of natural numbers are defined as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/appendix/lib_properties_plus.pdf}
+        \caption{Properties related to addition of natural numbers}
+        \label{fig: lib_properties_plus}
+    \end{figure}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=1.2]{/appendix/lib_properties_plus_order.pdf}
+        \caption{Properties related to addition and order of natural numbers}
+        \label{fig: lib_properties_plus_order}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/appendix/lib_properties_order.pdf}
+        \caption{Properties related to order of natural numbers}
+        \label{fig: lib_properties_order}
+    \end{figure}
+
+\chapter{Compiler details} \label{app: compiler_details}
+    The denotational semantics of \gnt{NewVar} is defined as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/appendix/new_var.pdf}
+        \caption{New variable}
+        \label{fig: new_var}
+    \end{figure}
+
+    The implementation of the function \textsf{use-temp} is as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/appendix/use_temp.pdf}
+        \caption{Use temporary variable}
+        \label{fig: use_temp}
+    \end{figure}
+
+
+
+    The helper function \textsf{new-intvar} for the denotational semantics of the new variable is defined as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/appendix/new-intvar.pdf}
+        \caption{New integer variable}
+        \label{fig: new_intvar}
+    \end{figure}
+    The helper function \textsf{assign} for case-split and assignment is defined as follows:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=1.2]{/appendix/assign.pdf}
+        \caption{Assignment}
+        \label{fig: assign}
+    \end{figure}
+
+
+% \chapter{Test cases} \label{app: test_cases}
+%     The test cases are defined as follows:
+%     \begin{figure}[H]
+%         \centering
+%         \includegraphics[scale=1.2]{/appendix/test_1.pdf}
+%         \caption{Test cases}
+%         \label{fig: test_cases}
+%     \end{figure}
 
 
 \cleardoublepage
